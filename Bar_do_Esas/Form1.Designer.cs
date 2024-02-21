@@ -31,7 +31,6 @@
             this.panel1 = new System.Windows.Forms.Panel();
             this.lblNome = new System.Windows.Forms.Label();
             this.label1 = new System.Windows.Forms.Label();
-            this.pb_ledLogado = new System.Windows.Forms.PictureBox();
             this.panel2 = new System.Windows.Forms.Panel();
             this.btnFuncionario = new System.Windows.Forms.Button();
             this.btnComida = new System.Windows.Forms.Button();
@@ -52,10 +51,11 @@
             this.btnRemover = new System.Windows.Forms.Button();
             this.lstComida = new System.Windows.Forms.ListView();
             this.button1 = new System.Windows.Forms.Button();
+            this.pb_ledLogado = new System.Windows.Forms.PictureBox();
             this.panel1.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.pb_ledLogado)).BeginInit();
             this.panel2.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDown1)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pb_ledLogado)).BeginInit();
             this.SuspendLayout();
             // 
             // panel1
@@ -90,16 +90,6 @@
             this.label1.Size = new System.Drawing.Size(115, 20);
             this.label1.TabIndex = 2;
             this.label1.Text = "Funcionário:";
-            // 
-            // pb_ledLogado
-            // 
-            this.pb_ledLogado.Image = global::Bar_do_Esas.Properties.Resources.led_vermelho;
-            this.pb_ledLogado.Location = new System.Drawing.Point(0, 0);
-            this.pb_ledLogado.Name = "pb_ledLogado";
-            this.pb_ledLogado.Size = new System.Drawing.Size(40, 40);
-            this.pb_ledLogado.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
-            this.pb_ledLogado.TabIndex = 1;
-            this.pb_ledLogado.TabStop = false;
             // 
             // panel2
             // 
@@ -146,6 +136,7 @@
             this.btnAluno.TabIndex = 6;
             this.btnAluno.Text = "Checar Alunos";
             this.btnAluno.UseVisualStyleBackColor = true;
+            this.btnAluno.Click += new System.EventHandler(this.btnAluno_Click);
             // 
             // lbl_Aluno
             // 
@@ -314,6 +305,16 @@
             this.button1.Text = "Inserir Código";
             this.button1.UseVisualStyleBackColor = true;
             // 
+            // pb_ledLogado
+            // 
+            this.pb_ledLogado.Image = global::Bar_do_Esas.Properties.Resources.led_vermelho;
+            this.pb_ledLogado.Location = new System.Drawing.Point(0, 0);
+            this.pb_ledLogado.Name = "pb_ledLogado";
+            this.pb_ledLogado.Size = new System.Drawing.Size(40, 40);
+            this.pb_ledLogado.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
+            this.pb_ledLogado.TabIndex = 1;
+            this.pb_ledLogado.TabStop = false;
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
@@ -339,10 +340,10 @@
             this.Load += new System.EventHandler(this.Form1_Load);
             this.panel1.ResumeLayout(false);
             this.panel1.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.pb_ledLogado)).EndInit();
             this.panel2.ResumeLayout(false);
             this.panel2.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDown1)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pb_ledLogado)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 

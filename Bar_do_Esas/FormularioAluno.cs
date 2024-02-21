@@ -7,6 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using MySql.Data.MySqlClient;
 
 namespace Bar_do_Esas
 {
@@ -15,6 +16,19 @@ namespace Bar_do_Esas
         public FormularioAluno()
         {
             InitializeComponent();
+
+            lstAluno.View = View.Details;
+            lstAluno.LabelEdit = true;
+            lstAluno.AllowColumnReorder = true;
+            lstAluno.FullRowSelect = true;
+            lstAluno.GridLines = true;
+
+            lstAluno.Columns.Add("Código", 60, HorizontalAlignment.Left);
+            lstAluno.Columns.Add("Nome", 120, HorizontalAlignment.Left);
+            lstAluno.Columns.Add("Data de Nascimento", 100, HorizontalAlignment.Left);
+            lstAluno.Columns.Add("Saldo", 60, HorizontalAlignment.Left);
+
+            carregarAluno();
         }
 
         private void lbl_Aluno_Click(object sender, EventArgs e)
@@ -24,6 +38,84 @@ namespace Bar_do_Esas
 
         private void listView1_SelectedIndexChanged(object sender, EventArgs e)
         {
+
+        }
+
+        private void btnFuncionario_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                using (MySqlConnection conexao = new MySqlConnection(Globais.data_source))
+                {
+                    conexao.Open();
+                    using (MySqlCommand cmd = new MySqlCommand())
+                    {
+                        cmd.Connection = conexao;
+                        cmd.CommandText = @"INSERT INTO aluno VALUES (@codigo,@nome,@data,@saldo)";
+                        cmd.Parameters.AddWithValue("@codigo",txtCodigo.Text);
+                        cmd.Parameters.AddWithValue("@nome",txtNome.Text);
+                        cmd.Parameters.AddWithValue("@data",txtData.Text);
+                        cmd.Parameters.AddWithValue("@saldo",txtSaldo.Text);
+                        cmd.ExecuteNonQuery();
+                    }
+                }
+            }catch(Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+            }
+        }
+
+        private void FormularioAluno_Load(object sender, EventArgs e)
+        {
+
+        }
+
+        private void textBox2_TextChanged(object sender, EventArgs e)
+        {
+
+        }
+
+        private void label4_Click(object sender, EventArgs e)
+        {
+
+        }
+        public void carregarAluno()
+        {
+            try
+            {
+                using (MySqlConnection conexao = new MySqlConnection(Globais.data_source))
+                {
+                    conexao.Open();
+                    using (MySqlCommand cmd = new MySqlCommand())
+                    {
+                        cmd.Connection = conexao;
+                        cmd.CommandText = @"SELECT * FROM aluno";
+
+                        using (MySqlDataReader reader = cmd.ExecuteReader())
+                        {
+                            while (reader.Read())
+                            {
+                                string codigo = reader.GetInt32(0).ToString();
+                                string nome = reader.GetString(1);
+                                DateTime dataNascimento = reader.GetDateTime(2);
+
+                                string dataNascimentoStr = dataNascimento.ToString("yyyy-MM-dd");
+
+                                string saldo = reader.GetDouble(3).ToString();
+
+                                string[] row = { codigo, nome, dataNascimentoStr, saldo };
+                                var linha_lstView = new ListViewItem(row);
+
+                                lstAluno.Items.Add(linha_lstView);
+                            }
+                        }
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+            }
 
         }
     }

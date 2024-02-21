@@ -34,5 +34,11 @@ namespace Bar_do_Esas
         {
 
         }
+
+        private void btnAluno_Click(object sender, EventArgs e)
+        {
+            FormularioAluno f_aluno = new FormularioAluno();
+            f_aluno.ShowDialog();
+        }
     }
 }
