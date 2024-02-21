@@ -33,12 +33,12 @@
             this.label1 = new System.Windows.Forms.Label();
             this.pb_ledLogado = new System.Windows.Forms.PictureBox();
             this.panel2 = new System.Windows.Forms.Panel();
-            this.lbl_Funcionario = new System.Windows.Forms.Label();
-            this.lbl_Comida = new System.Windows.Forms.Label();
-            this.lbl_Aluno = new System.Windows.Forms.Label();
-            this.btnAluno = new System.Windows.Forms.Button();
-            this.btnComida = new System.Windows.Forms.Button();
             this.btnFuncionario = new System.Windows.Forms.Button();
+            this.btnComida = new System.Windows.Forms.Button();
+            this.btnAluno = new System.Windows.Forms.Button();
+            this.lbl_Aluno = new System.Windows.Forms.Label();
+            this.lbl_Comida = new System.Windows.Forms.Label();
+            this.lbl_Funcionario = new System.Windows.Forms.Label();
             this.lblAluno = new System.Windows.Forms.Label();
             this.lblCodigo = new System.Windows.Forms.Label();
             this.lblSaldo = new System.Windows.Forms.Label();
@@ -51,6 +51,7 @@
             this.btnAdd = new System.Windows.Forms.Button();
             this.btnRemover = new System.Windows.Forms.Button();
             this.lstComida = new System.Windows.Forms.ListView();
+            this.button1 = new System.Windows.Forms.Button();
             this.panel1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pb_ledLogado)).BeginInit();
             this.panel2.SuspendLayout();
@@ -103,6 +104,7 @@
             // panel2
             // 
             this.panel2.BackColor = System.Drawing.SystemColors.ActiveCaption;
+            this.panel2.Controls.Add(this.button1);
             this.panel2.Controls.Add(this.btnFuncionario);
             this.panel2.Controls.Add(this.btnComida);
             this.panel2.Controls.Add(this.btnAluno);
@@ -115,28 +117,35 @@
             this.panel2.Size = new System.Drawing.Size(210, 647);
             this.panel2.TabIndex = 1;
             // 
-            // lbl_Funcionario
+            // btnFuncionario
             // 
-            this.lbl_Funcionario.AutoSize = true;
-            this.lbl_Funcionario.Font = new System.Drawing.Font("Lucida Bright", 13.8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lbl_Funcionario.ForeColor = System.Drawing.SystemColors.ActiveCaptionText;
-            this.lbl_Funcionario.Location = new System.Drawing.Point(31, 491);
-            this.lbl_Funcionario.Name = "lbl_Funcionario";
-            this.lbl_Funcionario.Size = new System.Drawing.Size(150, 26);
-            this.lbl_Funcionario.TabIndex = 3;
-            this.lbl_Funcionario.Text = "Funcionário";
-            this.lbl_Funcionario.Click += new System.EventHandler(this.label2_Click);
+            this.btnFuncionario.Font = new System.Drawing.Font("Lucida Bright", 10.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnFuncionario.Location = new System.Drawing.Point(12, 520);
+            this.btnFuncionario.Name = "btnFuncionario";
+            this.btnFuncionario.Size = new System.Drawing.Size(188, 32);
+            this.btnFuncionario.TabIndex = 8;
+            this.btnFuncionario.Text = "Checar Funcionário";
+            this.btnFuncionario.UseVisualStyleBackColor = true;
             // 
-            // lbl_Comida
+            // btnComida
             // 
-            this.lbl_Comida.AutoSize = true;
-            this.lbl_Comida.Font = new System.Drawing.Font("Lucida Bright", 13.8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lbl_Comida.ForeColor = System.Drawing.SystemColors.ActiveCaptionText;
-            this.lbl_Comida.Location = new System.Drawing.Point(50, 259);
-            this.lbl_Comida.Name = "lbl_Comida";
-            this.lbl_Comida.Size = new System.Drawing.Size(101, 26);
-            this.lbl_Comida.TabIndex = 4;
-            this.lbl_Comida.Text = "Comida";
+            this.btnComida.Font = new System.Drawing.Font("Lucida Bright", 10.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnComida.Location = new System.Drawing.Point(22, 299);
+            this.btnComida.Name = "btnComida";
+            this.btnComida.Size = new System.Drawing.Size(165, 32);
+            this.btnComida.TabIndex = 7;
+            this.btnComida.Text = "Checar Comida";
+            this.btnComida.UseVisualStyleBackColor = true;
+            // 
+            // btnAluno
+            // 
+            this.btnAluno.Font = new System.Drawing.Font("Lucida Bright", 10.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnAluno.Location = new System.Drawing.Point(22, 142);
+            this.btnAluno.Name = "btnAluno";
+            this.btnAluno.Size = new System.Drawing.Size(165, 32);
+            this.btnAluno.TabIndex = 6;
+            this.btnAluno.Text = "Checar Alunos";
+            this.btnAluno.UseVisualStyleBackColor = true;
             // 
             // lbl_Aluno
             // 
@@ -149,35 +158,28 @@
             this.lbl_Aluno.TabIndex = 5;
             this.lbl_Aluno.Text = "Aluno";
             // 
-            // btnAluno
+            // lbl_Comida
             // 
-            this.btnAluno.Font = new System.Drawing.Font("Lucida Bright", 10.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnAluno.Location = new System.Drawing.Point(23, 104);
-            this.btnAluno.Name = "btnAluno";
-            this.btnAluno.Size = new System.Drawing.Size(165, 32);
-            this.btnAluno.TabIndex = 6;
-            this.btnAluno.Text = "Checar Alunos";
-            this.btnAluno.UseVisualStyleBackColor = true;
+            this.lbl_Comida.AutoSize = true;
+            this.lbl_Comida.Font = new System.Drawing.Font("Lucida Bright", 13.8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lbl_Comida.ForeColor = System.Drawing.SystemColors.ActiveCaptionText;
+            this.lbl_Comida.Location = new System.Drawing.Point(50, 259);
+            this.lbl_Comida.Name = "lbl_Comida";
+            this.lbl_Comida.Size = new System.Drawing.Size(101, 26);
+            this.lbl_Comida.TabIndex = 4;
+            this.lbl_Comida.Text = "Comida";
             // 
-            // btnComida
+            // lbl_Funcionario
             // 
-            this.btnComida.Font = new System.Drawing.Font("Lucida Bright", 10.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnComida.Location = new System.Drawing.Point(22, 299);
-            this.btnComida.Name = "btnComida";
-            this.btnComida.Size = new System.Drawing.Size(165, 32);
-            this.btnComida.TabIndex = 7;
-            this.btnComida.Text = "Checar Comida";
-            this.btnComida.UseVisualStyleBackColor = true;
-            // 
-            // btnFuncionario
-            // 
-            this.btnFuncionario.Font = new System.Drawing.Font("Lucida Bright", 10.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnFuncionario.Location = new System.Drawing.Point(12, 520);
-            this.btnFuncionario.Name = "btnFuncionario";
-            this.btnFuncionario.Size = new System.Drawing.Size(188, 32);
-            this.btnFuncionario.TabIndex = 8;
-            this.btnFuncionario.Text = "Checar Funcionário";
-            this.btnFuncionario.UseVisualStyleBackColor = true;
+            this.lbl_Funcionario.AutoSize = true;
+            this.lbl_Funcionario.Font = new System.Drawing.Font("Lucida Bright", 13.8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lbl_Funcionario.ForeColor = System.Drawing.SystemColors.ActiveCaptionText;
+            this.lbl_Funcionario.Location = new System.Drawing.Point(31, 491);
+            this.lbl_Funcionario.Name = "lbl_Funcionario";
+            this.lbl_Funcionario.Size = new System.Drawing.Size(150, 26);
+            this.lbl_Funcionario.TabIndex = 3;
+            this.lbl_Funcionario.Text = "Funcionário";
+            this.lbl_Funcionario.Click += new System.EventHandler(this.label2_Click);
             // 
             // lblAluno
             // 
@@ -302,6 +304,16 @@
             this.lstComida.TabIndex = 18;
             this.lstComida.UseCompatibleStateImageBehavior = false;
             // 
+            // button1
+            // 
+            this.button1.Font = new System.Drawing.Font("Lucida Bright", 10.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.button1.Location = new System.Drawing.Point(22, 104);
+            this.button1.Name = "button1";
+            this.button1.Size = new System.Drawing.Size(165, 32);
+            this.button1.TabIndex = 9;
+            this.button1.Text = "Inserir Código";
+            this.button1.UseVisualStyleBackColor = true;
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
@@ -361,6 +373,7 @@
         private System.Windows.Forms.Button btnAdd;
         private System.Windows.Forms.Button btnRemover;
         private System.Windows.Forms.ListView lstComida;
+        private System.Windows.Forms.Button button1;
     }
 }
 
