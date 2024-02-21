@@ -25,50 +25,6 @@ namespace Bar_do_Esas
 
         }
 
-        private void btnLogar_Click(object sender, EventArgs e)
-        {
-            //var codigo = txtCodigo.Text;
-            //var senha = txtSenha.Text;
-            //try
-            //{
-            //    using (MySqlConnection conexao = new MySqlConnection(Globais.data_source))
-            //    {
-            //        if (!String.IsNullOrEmpty(codigo) || !String.IsNullOrEmpty(senha))
-            //        {
-            //            conexao.Open();
-            //            using (MySqlCommand cmd = new MySqlCommand())
-            //            {
-            //                cmd.Connection = conexao;
-            //                cmd.CommandText = @"SELECT * FROM Funcionario
-            //                               WHERE N_Funcionario = @codigo AND Senha = @senha";
-            //                cmd.Parameters.AddWithValue("@codigo", txtCodigo.Text);
-            //                cmd.Parameters.AddWithValue("@senha", txtSenha.Text);
-
-            //                using (MySqlDataReader reader = cmd.ExecuteReader())
-            //                {
-            //                    if (reader.Read())
-            //                    {
-            //                        MessageBox.Show("Login bem sucedido!!!");
-            //                        this.Close();
-
-            //                        string nomeFuncionario = reader.GetString("Nome_Funcionario");
-            //                        form1.lblNome.Text = nomeFuncionario;
-            //                        form1.pb_ledLogado.Image = Properties.Resources.led_verde;
-            //                        Globais.logado = true;
-            //                    }
-            //                    else MessageBox.Show("Dados Incorretos!!!");
-            //                }
-            //            }
-            //        }
-            //        else MessageBox.Show("Insira dados para poder prosseguir.");
-                    
-            //    }
-            //}catch (Exception ex)
-            //{
-            //    MessageBox.Show(ex.Message);
-            //}
-        }
-
         private void btnGuna_Click(object sender, EventArgs e)
         {
             var codigo = txtGunaCodigo.Text;
@@ -77,12 +33,15 @@ namespace Bar_do_Esas
             {
                 using (MySqlConnection conexao = new MySqlConnection(Globais.data_source))
                 {
+                    // Check if the textboxes are not null or empty
                     if (!String.IsNullOrEmpty(codigo) || !String.IsNullOrEmpty(senha))
                     {
                         conexao.Open();
                         using (MySqlCommand cmd = new MySqlCommand())
                         {
                             cmd.Connection = conexao;
+
+                            // Search for an employee with the given Code and Password
                             cmd.CommandText = @"SELECT * FROM Funcionario
                                            WHERE N_Funcionario = @codigo AND Senha = @senha";
                             cmd.Parameters.AddWithValue("@codigo", txtGunaCodigo.Text);
@@ -97,8 +56,10 @@ namespace Bar_do_Esas
 
                                     string nomeFuncionario = reader.GetString("Nome_Funcionario");
                                     form1.lblNome.Text = nomeFuncionario;
-                                    form1.pb_ledLogado.Image = Properties.Resources.led_verde;
+
+                                    // Set a variable indicating that the user is logged in and update a picture box with a green LED
                                     Globais.logado = true;
+                                    form1.pb_ledLogado.Image = Properties.Resources.led_verde;
                                 }
                                 else MessageBox.Show("Dados Incorretos!!!");
                             }
@@ -118,11 +79,11 @@ namespace Bar_do_Esas
         {
             if (checkSenha.Checked)
             {
-                txtGunaSenha.PasswordChar = '\0'; // Configura para exibir os caracteres da senha
+                txtGunaSenha.PasswordChar = '\0';
             }
             else
             {
-                txtGunaSenha.PasswordChar = '*'; // Substitua '*' pelo caractere desejado para ocultar os caracteres da senha
+                txtGunaSenha.PasswordChar = '*';
             }
         }
     }
