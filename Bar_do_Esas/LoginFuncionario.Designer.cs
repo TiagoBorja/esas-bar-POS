@@ -34,6 +34,10 @@
             this.label2 = new System.Windows.Forms.Label();
             this.btnLogar = new System.Windows.Forms.Button();
             this.button1 = new System.Windows.Forms.Button();
+            this.txtGunaCodigo = new Guna.UI2.WinForms.Guna2TextBox();
+            this.txtGunaSenha = new Guna.UI2.WinForms.Guna2TextBox();
+            this.checkSenha = new Guna.UI2.WinForms.Guna2CheckBox();
+            this.btnGuna = new Guna.UI2.WinForms.Guna2Button();
             this.SuspendLayout();
             // 
             // txtCodigo
@@ -92,11 +96,89 @@
             this.button1.Text = "Logar";
             this.button1.UseVisualStyleBackColor = true;
             // 
+            // txtGunaCodigo
+            // 
+            this.txtGunaCodigo.Cursor = System.Windows.Forms.Cursors.IBeam;
+            this.txtGunaCodigo.DefaultText = "";
+            this.txtGunaCodigo.DisabledState.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(208)))), ((int)(((byte)(208)))), ((int)(((byte)(208)))));
+            this.txtGunaCodigo.DisabledState.FillColor = System.Drawing.Color.FromArgb(((int)(((byte)(226)))), ((int)(((byte)(226)))), ((int)(((byte)(226)))));
+            this.txtGunaCodigo.DisabledState.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(138)))), ((int)(((byte)(138)))), ((int)(((byte)(138)))));
+            this.txtGunaCodigo.DisabledState.PlaceholderForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(138)))), ((int)(((byte)(138)))), ((int)(((byte)(138)))));
+            this.txtGunaCodigo.FocusedState.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(94)))), ((int)(((byte)(148)))), ((int)(((byte)(255)))));
+            this.txtGunaCodigo.Font = new System.Drawing.Font("Lucida Bright", 10F);
+            this.txtGunaCodigo.HoverState.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(94)))), ((int)(((byte)(148)))), ((int)(((byte)(255)))));
+            this.txtGunaCodigo.Location = new System.Drawing.Point(478, 86);
+            this.txtGunaCodigo.Margin = new System.Windows.Forms.Padding(5, 5, 5, 5);
+            this.txtGunaCodigo.Name = "txtGunaCodigo";
+            this.txtGunaCodigo.PasswordChar = '\0';
+            this.txtGunaCodigo.PlaceholderText = "";
+            this.txtGunaCodigo.SelectedText = "";
+            this.txtGunaCodigo.Size = new System.Drawing.Size(249, 41);
+            this.txtGunaCodigo.TabIndex = 6;
+            // 
+            // txtGunaSenha
+            // 
+            this.txtGunaSenha.Cursor = System.Windows.Forms.Cursors.IBeam;
+            this.txtGunaSenha.DefaultText = "";
+            this.txtGunaSenha.DisabledState.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(208)))), ((int)(((byte)(208)))), ((int)(((byte)(208)))));
+            this.txtGunaSenha.DisabledState.FillColor = System.Drawing.Color.FromArgb(((int)(((byte)(226)))), ((int)(((byte)(226)))), ((int)(((byte)(226)))));
+            this.txtGunaSenha.DisabledState.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(138)))), ((int)(((byte)(138)))), ((int)(((byte)(138)))));
+            this.txtGunaSenha.DisabledState.PlaceholderForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(138)))), ((int)(((byte)(138)))), ((int)(((byte)(138)))));
+            this.txtGunaSenha.FocusedState.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(94)))), ((int)(((byte)(148)))), ((int)(((byte)(255)))));
+            this.txtGunaSenha.Font = new System.Drawing.Font("Lucida Bright", 10.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.txtGunaSenha.HoverState.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(94)))), ((int)(((byte)(148)))), ((int)(((byte)(255)))));
+            this.txtGunaSenha.Location = new System.Drawing.Point(478, 137);
+            this.txtGunaSenha.Margin = new System.Windows.Forms.Padding(3, 5, 3, 5);
+            this.txtGunaSenha.Name = "txtGunaSenha";
+            this.txtGunaSenha.PasswordChar = '*';
+            this.txtGunaSenha.PlaceholderText = "";
+            this.txtGunaSenha.SelectedText = "";
+            this.txtGunaSenha.Size = new System.Drawing.Size(249, 35);
+            this.txtGunaSenha.TabIndex = 7;
+            // 
+            // checkSenha
+            // 
+            this.checkSenha.AutoSize = true;
+            this.checkSenha.CheckedState.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(94)))), ((int)(((byte)(148)))), ((int)(((byte)(255)))));
+            this.checkSenha.CheckedState.BorderRadius = 0;
+            this.checkSenha.CheckedState.BorderThickness = 0;
+            this.checkSenha.CheckedState.FillColor = System.Drawing.Color.FromArgb(((int)(((byte)(94)))), ((int)(((byte)(148)))), ((int)(((byte)(255)))));
+            this.checkSenha.Font = new System.Drawing.Font("Microsoft Sans Serif", 7.8F);
+            this.checkSenha.Location = new System.Drawing.Point(478, 200);
+            this.checkSenha.Name = "checkSenha";
+            this.checkSenha.Size = new System.Drawing.Size(92, 20);
+            this.checkSenha.TabIndex = 8;
+            this.checkSenha.Text = "Ver Senha";
+            this.checkSenha.UncheckedState.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(125)))), ((int)(((byte)(137)))), ((int)(((byte)(149)))));
+            this.checkSenha.UncheckedState.BorderRadius = 0;
+            this.checkSenha.UncheckedState.BorderThickness = 0;
+            this.checkSenha.UncheckedState.FillColor = System.Drawing.Color.FromArgb(((int)(((byte)(125)))), ((int)(((byte)(137)))), ((int)(((byte)(149)))));
+            this.checkSenha.CheckedChanged += new System.EventHandler(this.checkSenha_CheckedChanged);
+            // 
+            // btnGuna
+            // 
+            this.btnGuna.DisabledState.BorderColor = System.Drawing.Color.DarkGray;
+            this.btnGuna.DisabledState.CustomBorderColor = System.Drawing.Color.DarkGray;
+            this.btnGuna.DisabledState.FillColor = System.Drawing.Color.FromArgb(((int)(((byte)(169)))), ((int)(((byte)(169)))), ((int)(((byte)(169)))));
+            this.btnGuna.DisabledState.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(141)))), ((int)(((byte)(141)))), ((int)(((byte)(141)))));
+            this.btnGuna.Font = new System.Drawing.Font("Segoe UI", 9F);
+            this.btnGuna.ForeColor = System.Drawing.Color.White;
+            this.btnGuna.Location = new System.Drawing.Point(478, 226);
+            this.btnGuna.Name = "btnGuna";
+            this.btnGuna.Size = new System.Drawing.Size(229, 45);
+            this.btnGuna.TabIndex = 9;
+            this.btnGuna.Text = "Logar";
+            this.btnGuna.Click += new System.EventHandler(this.btnGuna_Click);
+            // 
             // LoginFuncionario
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(368, 318);
+            this.ClientSize = new System.Drawing.Size(1223, 529);
+            this.Controls.Add(this.btnGuna);
+            this.Controls.Add(this.checkSenha);
+            this.Controls.Add(this.txtGunaSenha);
+            this.Controls.Add(this.txtGunaCodigo);
             this.Controls.Add(this.button1);
             this.Controls.Add(this.btnLogar);
             this.Controls.Add(this.label2);
@@ -119,5 +201,9 @@
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.Button btnLogar;
         private System.Windows.Forms.Button button1;
+        private Guna.UI2.WinForms.Guna2TextBox txtGunaCodigo;
+        private Guna.UI2.WinForms.Guna2TextBox txtGunaSenha;
+        private Guna.UI2.WinForms.Guna2CheckBox checkSenha;
+        private Guna.UI2.WinForms.Guna2Button btnGuna;
     }
 }
