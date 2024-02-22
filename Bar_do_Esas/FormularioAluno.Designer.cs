@@ -61,7 +61,7 @@
             // 
             this.btnRemove.BackColor = System.Drawing.Color.Red;
             this.btnRemove.Font = new System.Drawing.Font("Lucida Bright", 10.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnRemove.Location = new System.Drawing.Point(538, 4);
+            this.btnRemove.Location = new System.Drawing.Point(575, 3);
             this.btnRemove.Name = "btnRemove";
             this.btnRemove.Size = new System.Drawing.Size(188, 32);
             this.btnRemove.TabIndex = 11;
@@ -73,7 +73,7 @@
             // 
             this.btnUpdate.BackColor = System.Drawing.Color.MediumTurquoise;
             this.btnUpdate.Font = new System.Drawing.Font("Lucida Bright", 10.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnUpdate.Location = new System.Drawing.Point(331, 4);
+            this.btnUpdate.Location = new System.Drawing.Point(336, 4);
             this.btnUpdate.Name = "btnUpdate";
             this.btnUpdate.Size = new System.Drawing.Size(188, 32);
             this.btnUpdate.TabIndex = 10;
@@ -85,7 +85,7 @@
             // 
             this.btnAdd.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(192)))), ((int)(((byte)(0)))));
             this.btnAdd.Font = new System.Drawing.Font("Lucida Bright", 10.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnAdd.Location = new System.Drawing.Point(118, 4);
+            this.btnAdd.Location = new System.Drawing.Point(108, 4);
             this.btnAdd.Name = "btnAdd";
             this.btnAdd.Size = new System.Drawing.Size(188, 32);
             this.btnAdd.TabIndex = 9;
@@ -109,6 +109,7 @@
             // 
             this.txtCodigo.Location = new System.Drawing.Point(12, 110);
             this.txtCodigo.Name = "txtCodigo";
+            this.txtCodigo.ReadOnly = true;
             this.txtCodigo.Size = new System.Drawing.Size(183, 22);
             this.txtCodigo.TabIndex = 7;
             // 
@@ -116,6 +117,7 @@
             // 
             this.txtNome.Location = new System.Drawing.Point(12, 187);
             this.txtNome.Name = "txtNome";
+            this.txtNome.ReadOnly = true;
             this.txtNome.Size = new System.Drawing.Size(183, 22);
             this.txtNome.TabIndex = 8;
             this.txtNome.TextChanged += new System.EventHandler(this.textBox2_TextChanged);
@@ -124,6 +126,7 @@
             // 
             this.txtSaldo.Location = new System.Drawing.Point(16, 343);
             this.txtSaldo.Name = "txtSaldo";
+            this.txtSaldo.ReadOnly = true;
             this.txtSaldo.Size = new System.Drawing.Size(135, 22);
             this.txtSaldo.TabIndex = 9;
             // 
@@ -165,6 +168,7 @@
             this.txtData.Location = new System.Drawing.Point(12, 265);
             this.txtData.Mask = "0000-00-00";
             this.txtData.Name = "txtData";
+            this.txtData.ReadOnly = true;
             this.txtData.Size = new System.Drawing.Size(179, 22);
             this.txtData.TabIndex = 13;
             // 

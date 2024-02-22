@@ -45,24 +45,36 @@ namespace Bar_do_Esas
         private void btnFuncionario_Click(object sender, EventArgs e)
         {
             try
-            {
-                using (MySqlConnection conexao = new MySqlConnection(Globais.data_source))
+            { 
+                //check if the text box "readOnly" are active. If are, set all text box true.
+                if(!txtNome.ReadOnly == false && !txtData.ReadOnly == false && !txtSaldo.ReadOnly == false && !txtCodigo.ReadOnly == false)
                 {
-                    conexao.Open();
-                    using (MySqlCommand cmd = new MySqlCommand())
+                    tirarReadOnly();
+                }
+                else
+                {
+                    using (MySqlConnection conexao = new MySqlConnection(Globais.data_source))
                     {
-                        cmd.Connection = conexao;
-                        cmd.CommandText = @"INSERT INTO aluno VALUES (@codigo,@nome,@data,@saldo)";
-                        cmd.Parameters.AddWithValue("@codigo",txtCodigo.Text);
-                        cmd.Parameters.AddWithValue("@nome",txtNome.Text);
-                        cmd.Parameters.AddWithValue("@data",txtData.Text);
-                        cmd.Parameters.AddWithValue("@saldo",txtSaldo.Text);
-                        cmd.ExecuteNonQuery();
+                        conexao.Open();
+                        using (MySqlCommand cmd = new MySqlCommand())
+                        {
+                            cmd.Connection = conexao;
+                            cmd.CommandText = @"INSERT INTO aluno VALUES (@codigo,@nome,@data,@saldo)";
+                            cmd.Parameters.AddWithValue("@codigo", txtCodigo.Text);
+                            cmd.Parameters.AddWithValue("@nome", txtNome.Text);
+                            cmd.Parameters.AddWithValue("@data", txtData.Text);
+                            cmd.Parameters.AddWithValue("@saldo", txtSaldo.Text);
+                            cmd.ExecuteNonQuery();
 
-                        MessageBox.Show("Dados inseridos com sucesso!!!");
-                        carregarAluno();
+                            //After add a new row, set all text boxes with ReadOnly.
+                            adicionarReadOnly();
+
+                            MessageBox.Show("Dados inseridos com sucesso!!!");
+                            carregarAluno();
+                        }
                     }
                 }
+                
             }catch(Exception ex)
             {
                 MessageBox.Show(ex.Message);
@@ -177,14 +189,22 @@ namespace Bar_do_Esas
                     conexao.Open();
                     using (MySqlCommand cmd = new MySqlCommand())
                     {
-                        cmd.Connection = conexao;
-                        cmd.CommandText = @"DELETE FROM aluno
-                                           WHERE N_Aluno = @codigo";
-                        cmd.Parameters.AddWithValue("@codigo", txtCodigo.Text);
-                        cmd.ExecuteNonQuery();
+                        //Check if the user really want delete a student.
+                        DialogResult msg = MessageBox.Show("Confirmar exclusão?", "Deletar Aluno", MessageBoxButtons.YesNo);
 
-                        MessageBox.Show("Dados deletados com sucesso!!!");
-                        carregarAluno();
+                        if (msg == DialogResult.Yes)
+                        {
+                            cmd.Connection = conexao;
+                            cmd.CommandText = @"DELETE FROM aluno
+                                           WHERE N_Aluno = @codigo";
+                            cmd.Parameters.AddWithValue("@codigo", txtCodigo.Text);
+                            cmd.ExecuteNonQuery();
+
+                            MessageBox.Show("Dados deletados com sucesso!");
+                            carregarAluno();
+                        }
+                        else MessageBox.Show("Nenhum dado foi deletado.");
+                        
                     }
                 }
             }
@@ -192,6 +212,31 @@ namespace Bar_do_Esas
             {
                 MessageBox.Show(ex.Message);
             }
+        }
+
+        private void tirarReadOnly()
+        {
+            txtNome.ReadOnly = false;
+            txtData.ReadOnly = false;
+            txtSaldo.ReadOnly = false;
+            txtCodigo.ReadOnly = false;
+
+            txtCodigo.Clear();
+            txtNome.Clear();
+            txtData.Clear();
+            txtSaldo.Clear();
+        }
+        private void adicionarReadOnly()
+        {
+            txtNome.ReadOnly = true;
+            txtData.ReadOnly = true;
+            txtSaldo.ReadOnly = true;
+            txtCodigo.ReadOnly = true;
+
+            txtCodigo.Clear();
+            txtNome.Clear();
+            txtData.Clear();
+            txtSaldo.Clear();
         }
     }
 }
