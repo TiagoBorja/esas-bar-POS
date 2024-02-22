@@ -4,6 +4,7 @@ using System.ComponentModel;
 using System.Data;
 using System.Drawing;
 using System.Linq;
+using System.Runtime.InteropServices;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
@@ -57,6 +58,9 @@ namespace Bar_do_Esas
                         cmd.Parameters.AddWithValue("@data",txtData.Text);
                         cmd.Parameters.AddWithValue("@saldo",txtSaldo.Text);
                         cmd.ExecuteNonQuery();
+
+                        MessageBox.Show("Dados inseridos com sucesso!!!");
+                        carregarAluno();
                     }
                 }
             }catch(Exception ex)
@@ -83,13 +87,14 @@ namespace Bar_do_Esas
         {
             try
             {
+                lstAluno.Items.Clear();
                 using (MySqlConnection conexao = new MySqlConnection(Globais.data_source))
                 {
                     conexao.Open();
                     using (MySqlCommand cmd = new MySqlCommand())
                     {
                         cmd.Connection = conexao;
-                        cmd.CommandText = @"SELECT * FROM aluno";
+                        cmd.CommandText = @"SELECT * FROM aluno ORDER BY Nome_Aluno";
 
                         using (MySqlDataReader reader = cmd.ExecuteReader())
                         {
@@ -117,6 +122,49 @@ namespace Bar_do_Esas
                 MessageBox.Show(ex.Message);
             }
 
+        }
+
+        private void btnUpdate_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                using (MySqlConnection conexao = new MySqlConnection(Globais.data_source))
+                {
+                    conexao.Open();
+                    using (MySqlCommand cmd = new MySqlCommand())
+                    {
+                        cmd.Connection = conexao;
+                        cmd.CommandText = @"UPDATE aluno 
+                                            SET Nome_Aluno = @nome, Data_Nasc = @data, Saldo = @saldo
+                                            WHERE N_Aluno = @codigo";
+                        cmd.Parameters.AddWithValue("@codigo", txtCodigo.Text);
+                        cmd.Parameters.AddWithValue("@nome", txtNome.Text);
+                        cmd.Parameters.AddWithValue("@data", txtData.Text);
+                        cmd.Parameters.AddWithValue("@saldo", Convert.ToDouble(txtSaldo.Text));
+                        cmd.ExecuteNonQuery();
+
+                        MessageBox.Show("Dados atualizados com sucesso!!!");
+                        carregarAluno();
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+            }
+        }
+
+        private void lstAluno_ItemSelectionChanged(object sender, ListViewItemSelectionChangedEventArgs e)
+        {
+            ListView.SelectedListViewItemCollection itens_selecionados = lstAluno.SelectedItems;
+
+            foreach (ListViewItem item in itens_selecionados)
+            {
+                txtCodigo.Text = item.SubItems[0].Text;
+                txtNome.Text = item.SubItems[1].Text;
+                txtData.Text = item.SubItems[2].Text;
+                txtSaldo.Text = item.SubItems[3].Text;
+            }
         }
     }
 }

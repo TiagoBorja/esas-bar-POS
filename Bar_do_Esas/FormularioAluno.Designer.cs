@@ -29,9 +29,9 @@
         private void InitializeComponent()
         {
             this.panel1 = new System.Windows.Forms.Panel();
-            this.btnAdd = new System.Windows.Forms.Button();
-            this.btnUpdate = new System.Windows.Forms.Button();
             this.btnRemove = new System.Windows.Forms.Button();
+            this.btnUpdate = new System.Windows.Forms.Button();
+            this.btnAdd = new System.Windows.Forms.Button();
             this.lbl_Aluno = new System.Windows.Forms.Label();
             this.txtCodigo = new System.Windows.Forms.TextBox();
             this.txtNome = new System.Windows.Forms.TextBox();
@@ -57,17 +57,16 @@
             this.panel1.Size = new System.Drawing.Size(918, 39);
             this.panel1.TabIndex = 0;
             // 
-            // btnAdd
+            // btnRemove
             // 
-            this.btnAdd.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(192)))), ((int)(((byte)(0)))));
-            this.btnAdd.Font = new System.Drawing.Font("Lucida Bright", 10.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnAdd.Location = new System.Drawing.Point(118, 4);
-            this.btnAdd.Name = "btnAdd";
-            this.btnAdd.Size = new System.Drawing.Size(188, 32);
-            this.btnAdd.TabIndex = 9;
-            this.btnAdd.Text = "Adicionar Aluno";
-            this.btnAdd.UseVisualStyleBackColor = false;
-            this.btnAdd.Click += new System.EventHandler(this.btnFuncionario_Click);
+            this.btnRemove.BackColor = System.Drawing.Color.Red;
+            this.btnRemove.Font = new System.Drawing.Font("Lucida Bright", 10.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnRemove.Location = new System.Drawing.Point(538, 4);
+            this.btnRemove.Name = "btnRemove";
+            this.btnRemove.Size = new System.Drawing.Size(188, 32);
+            this.btnRemove.TabIndex = 11;
+            this.btnRemove.Text = "Excluir Aluno";
+            this.btnRemove.UseVisualStyleBackColor = false;
             // 
             // btnUpdate
             // 
@@ -79,17 +78,19 @@
             this.btnUpdate.TabIndex = 10;
             this.btnUpdate.Text = "Atualizar Aluno";
             this.btnUpdate.UseVisualStyleBackColor = false;
+            this.btnUpdate.Click += new System.EventHandler(this.btnUpdate_Click);
             // 
-            // btnRemove
+            // btnAdd
             // 
-            this.btnRemove.BackColor = System.Drawing.Color.Red;
-            this.btnRemove.Font = new System.Drawing.Font("Lucida Bright", 10.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnRemove.Location = new System.Drawing.Point(538, 4);
-            this.btnRemove.Name = "btnRemove";
-            this.btnRemove.Size = new System.Drawing.Size(188, 32);
-            this.btnRemove.TabIndex = 11;
-            this.btnRemove.Text = "Excluir Aluno";
-            this.btnRemove.UseVisualStyleBackColor = false;
+            this.btnAdd.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(192)))), ((int)(((byte)(0)))));
+            this.btnAdd.Font = new System.Drawing.Font("Lucida Bright", 10.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnAdd.Location = new System.Drawing.Point(118, 4);
+            this.btnAdd.Name = "btnAdd";
+            this.btnAdd.Size = new System.Drawing.Size(188, 32);
+            this.btnAdd.TabIndex = 9;
+            this.btnAdd.Text = "Adicionar Aluno";
+            this.btnAdd.UseVisualStyleBackColor = false;
+            this.btnAdd.Click += new System.EventHandler(this.btnFuncionario_Click);
             // 
             // lbl_Aluno
             // 
@@ -182,10 +183,12 @@
             // 
             this.lstAluno.HideSelection = false;
             this.lstAluno.Location = new System.Drawing.Point(291, 67);
+            this.lstAluno.MultiSelect = false;
             this.lstAluno.Name = "lstAluno";
             this.lstAluno.Size = new System.Drawing.Size(608, 350);
             this.lstAluno.TabIndex = 1;
             this.lstAluno.UseCompatibleStateImageBehavior = false;
+            this.lstAluno.ItemSelectionChanged += new System.Windows.Forms.ListViewItemSelectionChangedEventHandler(this.lstAluno_ItemSelectionChanged);
             this.lstAluno.SelectedIndexChanged += new System.EventHandler(this.listView1_SelectedIndexChanged);
             // 
             // FormularioAluno
