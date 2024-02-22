@@ -146,18 +146,34 @@ namespace Bar_do_Esas
                     conexao.Open();
                     using (MySqlCommand cmd = new MySqlCommand())
                     {
-                        cmd.Connection = conexao;
-                        cmd.CommandText = @"UPDATE aluno 
+                        if (!txtNome.ReadOnly == false && !txtData.ReadOnly == false && !txtSaldo.ReadOnly == false && !txtCodigo.ReadOnly == false)
+                        {
+                            tirarReadOnlyEmUpdate();
+                        }
+                        else
+                        {
+                            DialogResult msg = MessageBox.Show("Confirmar atualização?", "Atualizar Aluno", MessageBoxButtons.YesNo);
+
+                            if (msg == DialogResult.Yes)
+                            {
+                                cmd.Connection = conexao;
+                                cmd.CommandText = @"UPDATE aluno 
                                             SET Nome_Aluno = @nome, Data_Nasc = @data, Saldo = @saldo
                                             WHERE N_Aluno = @codigo";
-                        cmd.Parameters.AddWithValue("@codigo", txtCodigo.Text);
-                        cmd.Parameters.AddWithValue("@nome", txtNome.Text);
-                        cmd.Parameters.AddWithValue("@data", txtData.Text);
-                        cmd.Parameters.AddWithValue("@saldo", Convert.ToDouble(txtSaldo.Text));
-                        cmd.ExecuteNonQuery();
+                                cmd.Parameters.AddWithValue("@codigo", txtCodigo.Text);
+                                cmd.Parameters.AddWithValue("@nome", txtNome.Text);
+                                cmd.Parameters.AddWithValue("@data", txtData.Text);
+                                cmd.Parameters.AddWithValue("@saldo", Convert.ToDouble(txtSaldo.Text));
+                                cmd.ExecuteNonQuery();
 
-                        MessageBox.Show("Dados atualizados com sucesso!!!");
-                        carregarAluno();
+                                adicionarReadOnlyEmUpdate();
+
+                                MessageBox.Show("Dados atualizados com sucesso!!!");
+                                carregarAluno();
+                            }
+                            else MessageBox.Show("Nenhum dado foi alterado.");
+                        }
+
                     }
                 }
             }
@@ -227,6 +243,25 @@ namespace Bar_do_Esas
             txtSaldo.Clear();
         }
         private void adicionarReadOnly()
+        {
+            txtNome.ReadOnly = true;
+            txtData.ReadOnly = true;
+            txtSaldo.ReadOnly = true;
+            txtCodigo.ReadOnly = true;
+
+            txtCodigo.Clear();
+            txtNome.Clear();
+            txtData.Clear();
+            txtSaldo.Clear();
+        }
+
+        private void tirarReadOnlyEmUpdate()
+        {
+            txtData.ReadOnly = false;
+            txtSaldo.ReadOnly = false;
+            txtNome.ReadOnly = false;
+        }
+        private void adicionarReadOnlyEmUpdate()
         {
             txtNome.ReadOnly = true;
             txtData.ReadOnly = true;
