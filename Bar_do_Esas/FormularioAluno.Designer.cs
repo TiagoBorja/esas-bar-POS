@@ -67,6 +67,7 @@
             this.btnRemove.TabIndex = 11;
             this.btnRemove.Text = "Excluir Aluno";
             this.btnRemove.UseVisualStyleBackColor = false;
+            this.btnRemove.Click += new System.EventHandler(this.btnRemove_Click);
             // 
             // btnUpdate
             // 

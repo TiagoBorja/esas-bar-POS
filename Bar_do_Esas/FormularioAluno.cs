@@ -87,6 +87,7 @@ namespace Bar_do_Esas
         {
             try
             {
+                //Clear a ListView before load all studentes, for that not have a redundance of data.
                 lstAluno.Items.Clear();
                 using (MySqlConnection conexao = new MySqlConnection(Globais.data_source))
                 {
@@ -164,6 +165,32 @@ namespace Bar_do_Esas
                 txtNome.Text = item.SubItems[1].Text;
                 txtData.Text = item.SubItems[2].Text;
                 txtSaldo.Text = item.SubItems[3].Text;
+            }
+        }
+
+        private void btnRemove_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                using (MySqlConnection conexao = new MySqlConnection(Globais.data_source))
+                {
+                    conexao.Open();
+                    using (MySqlCommand cmd = new MySqlCommand())
+                    {
+                        cmd.Connection = conexao;
+                        cmd.CommandText = @"DELETE FROM aluno
+                                           WHERE N_Aluno = @codigo";
+                        cmd.Parameters.AddWithValue("@codigo", txtCodigo.Text);
+                        cmd.ExecuteNonQuery();
+
+                        MessageBox.Show("Dados deletados com sucesso!!!");
+                        carregarAluno();
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message);
             }
         }
     }
