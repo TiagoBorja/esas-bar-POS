@@ -123,7 +123,6 @@ namespace Bar_do_Esas
 
                                 string[] row = { codigo, nome, dataNascimentoStr, saldo };
                                 var linha_lstView = new ListViewItem(row);
-
                                 lstAluno.Items.Add(linha_lstView);
                             }
                         }

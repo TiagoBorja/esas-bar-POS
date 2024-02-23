@@ -121,6 +121,7 @@
             this.lstFuncionario.Size = new System.Drawing.Size(457, 285);
             this.lstFuncionario.TabIndex = 16;
             this.lstFuncionario.UseCompatibleStateImageBehavior = false;
+            this.lstFuncionario.ItemSelectionChanged += new System.Windows.Forms.ListViewItemSelectionChangedEventHandler(this.lstFuncionario_ItemSelectionChanged);
             // 
             // panel1
             // 
