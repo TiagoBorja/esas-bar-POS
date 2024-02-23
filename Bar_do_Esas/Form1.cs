@@ -40,5 +40,10 @@ namespace Bar_do_Esas
             FormularioAluno f_aluno = new FormularioAluno();
             f_aluno.ShowDialog();
         }
+
+        private void btnAdd_Click(object sender, EventArgs e)
+        {
+            MessageBox.Show("Testando Git!");
+        }
     }
 }

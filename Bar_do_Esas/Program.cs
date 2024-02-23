@@ -16,7 +16,7 @@ namespace Bar_do_Esas
         {
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
-            Application.Run(new FormularioAluno());
+            Application.Run(new Form1());
         }
     }
 }
