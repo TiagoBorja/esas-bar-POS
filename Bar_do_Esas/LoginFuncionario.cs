@@ -42,10 +42,14 @@ namespace Bar_do_Esas
                             cmd.Connection = conexao;
 
                             // Search for an employee with the given Code and Password
+
+
                             cmd.CommandText = @"SELECT * FROM Funcionario
                                            WHERE N_Funcionario = @codigo AND Senha = @senha";
                             cmd.Parameters.AddWithValue("@codigo", txtGunaCodigo.Text);
                             cmd.Parameters.AddWithValue("@senha", txtGunaSenha.Text);
+
+                          
 
                             using (MySqlDataReader reader = cmd.ExecuteReader())
                             {

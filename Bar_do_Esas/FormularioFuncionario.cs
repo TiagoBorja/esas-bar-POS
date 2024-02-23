@@ -6,6 +6,7 @@ using System.Drawing;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Web.WebSockets;
 using System.Windows.Forms;
 using MySql.Data.MySqlClient;
 namespace Bar_do_Esas
@@ -32,7 +33,28 @@ namespace Bar_do_Esas
 
         private void btnAdd_Click(object sender, EventArgs e)
         {
+            try
+            {
+                using (MySqlConnection conexao = new MySqlConnection(Globais.data_source))
+                {
+                    conexao.Open();
 
+                    using (MySqlCommand cmd = new MySqlCommand())
+                    {
+                        cmd.Connection = conexao;
+                        cmd.CommandText = @"INSERT INTO Funcionario 
+                                            VALUES(@codigo,@nome,@entrada,@saida)";
+                        cmd.Parameters.AddWithValue("@codigo",txtCodigo.Text);
+                        cmd.Parameters.AddWithValue("@nome",txtNome.Text);
+                        cmd.Parameters.AddWithValue("@entrada",txtEntrada.Text);
+                        cmd.Parameters.AddWithValue("@saida",txtSaida.Text);
+                    }
+                }
+            }
+            catch(Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+            }
         }
 
         private void lstFuncionario_ItemSelectionChanged(object sender, ListViewItemSelectionChangedEventArgs e)
@@ -72,7 +94,7 @@ namespace Bar_do_Esas
                                 string entradaStr = entrada.ToString("yyyy-MM-dd HH:mm-ss");
                                 string saidaStr = entrada.ToString("yyyy-MM-dd HH:mm-ss");
 
-                                string[] row = {codigo,nome,entradaStr,saidaStr };
+                                string[] row = {codigo,nome,entradaStr,saidaStr};
                                 var linha_lstView = new ListViewItem(row);
                                 lstFuncionario.Items.Add(linha_lstView);
                             }
