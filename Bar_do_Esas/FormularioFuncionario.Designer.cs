@@ -143,6 +143,7 @@
             this.btnRemove.TabIndex = 11;
             this.btnRemove.Text = "Excluir Funcionário";
             this.btnRemove.UseVisualStyleBackColor = false;
+            this.btnRemove.Click += new System.EventHandler(this.btnRemove_Click);
             // 
             // btnUpdate
             // 
@@ -155,6 +156,7 @@
             this.btnUpdate.TabIndex = 10;
             this.btnUpdate.Text = "Atualizar Funcionário";
             this.btnUpdate.UseVisualStyleBackColor = false;
+            this.btnUpdate.Click += new System.EventHandler(this.btnUpdate_Click);
             // 
             // btnAdd
             // 

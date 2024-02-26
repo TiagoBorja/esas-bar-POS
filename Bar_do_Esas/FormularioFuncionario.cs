@@ -118,5 +118,64 @@ namespace Bar_do_Esas
                 MessageBox.Show(ex.Message);
             }
         }
+
+        private void btnUpdate_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                using (MySqlConnection conexao = new MySqlConnection(Globais.data_source))
+                {
+                    conexao.Open();
+                    using(MySqlCommand cmd = conexao.CreateCommand())
+                    {
+                        cmd.Connection = conexao;
+                        cmd.CommandText = @"UPDATE funcionario
+                                           SET N_Funcionario = @codigo,
+                                               Nome_Funcionario = @nome,
+                                               Data_Entrada = @entrada,
+                                               Data_Saida = @saida,
+                                               Senha = @senha
+                                               WHERE N_Funcionario = @codigo";
+
+                        cmd.Parameters.AddWithValue("@codigo", txtCodigo.Text);
+                        cmd.Parameters.AddWithValue("@nome", txtNome.Text);
+                        cmd.Parameters.AddWithValue("@entrada", txtEntrada.Text);
+                        cmd.Parameters.AddWithValue("@saida", txtSaida.Text);
+                        cmd.Parameters.AddWithValue("@senha", txtSenha.Text);
+                        cmd.ExecuteNonQuery();
+
+                        carregarFuncionario();
+                    }
+                }
+            }
+            catch(Exception ex) 
+            {
+                MessageBox.Show(ex.Message);
+            }
+        }
+
+        private void btnRemove_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                using (MySqlConnection conexao = new MySqlConnection(Globais.data_source))
+                {
+                    conexao.Open();
+                    using (MySqlCommand cmd = conexao.CreateCommand())
+                    {
+                        cmd.Connection = conexao;
+                        cmd.CommandText = @"DELETE FROM funcionario
+                                           WHERE N_Funcionario = @codigo";
+                        cmd.Parameters.AddWithValue("@codigo", txtCodigo.Text);
+                        cmd.ExecuteNonQuery();
+
+                        carregarFuncionario();
+                    }
+                }
+            }catch(Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+            }
+        }
     }
 }
