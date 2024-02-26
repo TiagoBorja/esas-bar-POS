@@ -36,29 +36,49 @@ namespace Bar_do_Esas
         {
             try
             {
-                using (MySqlConnection conexao = new MySqlConnection(Globais.data_source))
+                if (!txtNome.ReadOnly == false && !txtEntrada.ReadOnly == false && !txtSaida.ReadOnly == false && !txtCodigo.ReadOnly == false && !txtSenha.ReadOnly == false)
                 {
-                    conexao.Open();
+                    tirarReadOnly();
+                }
+                else
+                {
+                    var codigo = txtCodigo.Text;
+                    var nome = txtNome.Text;
+                    var entrada = txtEntrada.Text;
+                    var saida = txtSaida.Text;
+                    var senha = txtSenha.Text;
 
-                    using (MySqlCommand cmd = new MySqlCommand())
+
+                    using (MySqlConnection conexao = new MySqlConnection(Globais.data_source))
                     {
-                        cmd.Connection = conexao;
-                        cmd.CommandText = @"INSERT INTO funcionario (N_Funcionario,
-                                                                     Nome_Funcionario,
-                                                                     Data_Entrada,
-                                                                     Data_Saida,
-                                                                     Senha) 
-                                            VALUES(@codigo,@nome,@entrada,@saida,@senha)";
-                        cmd.Parameters.AddWithValue("@codigo",txtCodigo.Text);
-                        cmd.Parameters.AddWithValue("@nome",txtNome.Text);
-                        cmd.Parameters.AddWithValue("@entrada",txtEntrada.Text);
-                        cmd.Parameters.AddWithValue("@saida",txtSaida.Text);
-                        cmd.Parameters.AddWithValue("@senha",txtSenha.Text);
-                        cmd.ExecuteNonQuery();
+                        conexao.Open();
+                        if (!String.IsNullOrEmpty(codigo) || !String.IsNullOrEmpty(nome) || !String.IsNullOrEmpty(entrada) || !String.IsNullOrEmpty(saida) || !String.IsNullOrEmpty(senha))
+                        {
+                            //using (MySqlCommand cmd = new MySqlCommand())
+                            //{
+                            //    cmd.Connection = conexao;
+                            //    cmd.CommandText = @"INSERT INTO funcionario (N_Funcionario,
+                            //                                         Nome_Funcionario,
+                            //                                         Data_Entrada,
+                            //                                         Data_Saida,
+                            //                                         Senha) 
+                            //                VALUES(@codigo,@nome,@entrada,@saida,@senha)";
+                            //    cmd.Parameters.AddWithValue("@codigo", txtCodigo.Text);
+                            //    cmd.Parameters.AddWithValue("@nome", txtNome.Text);
+                            //    cmd.Parameters.AddWithValue("@entrada", txtEntrada.Text);
+                            //    cmd.Parameters.AddWithValue("@saida", txtSaida.Text);
+                            //    cmd.Parameters.AddWithValue("@senha", txtSenha.Text);
+                            //    cmd.ExecuteNonQuery();
 
-                        carregarFuncionario();
+                            //    adicionarReadOnly();
+                            //    carregarFuncionario();
+                            //}
+                            MessageBox.Show("dsasadasd");
+                        }
+                        else MessageBox.Show("Sem dados suficientes para a inserção de dados.");
                     }
                 }
+                
             }
             catch(Exception ex)
             {
@@ -176,6 +196,56 @@ namespace Bar_do_Esas
             {
                 MessageBox.Show(ex.Message);
             }
+        }
+
+        private void tirarReadOnly()
+        {
+            txtCodigo.ReadOnly = false;
+            txtNome.ReadOnly = false;
+            txtEntrada.ReadOnly = false;
+            txtSaida.ReadOnly = false;
+            txtSenha.ReadOnly = false;  
+
+            txtCodigo.Clear();
+            txtNome.Clear();
+            txtEntrada.Clear();
+            txtSaida.Clear();
+            txtSenha.Clear();
+        }
+        private void adicionarReadOnly()
+        {
+            txtNome.ReadOnly = true;
+            txtEntrada.ReadOnly = true;
+            txtSaida.ReadOnly = true;
+            txtCodigo.ReadOnly = true;
+            txtSenha.ReadOnly = true;
+
+            txtCodigo.Clear();
+            txtNome.Clear();
+            txtEntrada.Clear();
+            txtSaida.Clear();
+            txtSenha.Clear();
+        }
+
+        private void tirarReadOnlyEmUpdate()
+        {
+            txtNome.ReadOnly = false;
+            txtEntrada.ReadOnly = false;
+            txtSaida.ReadOnly = false;
+            txtSenha.ReadOnly = false;
+        }
+        private void adicionarReadOnlyEmUpdate()
+        {
+            txtNome.ReadOnly = true;
+            txtEntrada.ReadOnly = true;
+            txtSaida.ReadOnly = true;
+            txtSenha.ReadOnly = true;
+
+            txtCodigo.Clear();
+            txtNome.Clear();
+            txtEntrada.Clear();
+            txtSaida.Clear();
+            txtSenha.Clear();
         }
     }
 }

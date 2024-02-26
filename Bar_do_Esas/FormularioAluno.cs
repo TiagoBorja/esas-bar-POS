@@ -52,7 +52,7 @@ namespace Bar_do_Esas
                     tirarReadOnly();
                 }
                 else
-                {
+                { 
                     using (MySqlConnection conexao = new MySqlConnection(Globais.data_source))
                     {
                         conexao.Open();

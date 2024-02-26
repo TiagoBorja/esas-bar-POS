@@ -85,6 +85,7 @@
             this.txtNome.Location = new System.Drawing.Point(25, 156);
             this.txtNome.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.txtNome.Name = "txtNome";
+            this.txtNome.ReadOnly = true;
             this.txtNome.Size = new System.Drawing.Size(183, 22);
             this.txtNome.TabIndex = 19;
             // 
@@ -93,6 +94,7 @@
             this.txtCodigo.Location = new System.Drawing.Point(25, 83);
             this.txtCodigo.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.txtCodigo.Name = "txtCodigo";
+            this.txtCodigo.ReadOnly = true;
             this.txtCodigo.Size = new System.Drawing.Size(183, 22);
             this.txtCodigo.TabIndex = 18;
             // 
@@ -188,6 +190,7 @@
             this.txtSaida.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.txtSaida.Mask = "0000/00/00 90:00";
             this.txtSaida.Name = "txtSaida";
+            this.txtSaida.ReadOnly = true;
             this.txtSaida.Size = new System.Drawing.Size(179, 22);
             this.txtSaida.TabIndex = 27;
             this.txtSaida.ValidatingType = typeof(System.DateTime);
@@ -198,6 +201,7 @@
             this.txtEntrada.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.txtEntrada.Mask = "0000/00/00 90:00";
             this.txtEntrada.Name = "txtEntrada";
+            this.txtEntrada.ReadOnly = true;
             this.txtEntrada.Size = new System.Drawing.Size(179, 22);
             this.txtEntrada.TabIndex = 28;
             this.txtEntrada.ValidatingType = typeof(System.DateTime);
@@ -218,6 +222,7 @@
             this.txtSenha.Location = new System.Drawing.Point(25, 376);
             this.txtSenha.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.txtSenha.Name = "txtSenha";
+            this.txtSenha.ReadOnly = true;
             this.txtSenha.Size = new System.Drawing.Size(183, 22);
             this.txtSenha.TabIndex = 29;
             // 
