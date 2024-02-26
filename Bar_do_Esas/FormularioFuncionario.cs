@@ -27,6 +27,7 @@ namespace Bar_do_Esas
             lstFuncionario.Columns.Add("Nome", 120, HorizontalAlignment.Left);
             lstFuncionario.Columns.Add("Data de Entrada", 111, HorizontalAlignment.Left);
             lstFuncionario.Columns.Add("Data de Saída", 111, HorizontalAlignment.Left);
+            lstFuncionario.Columns.Add("Senha", 80, HorizontalAlignment.Left);
 
             carregarFuncionario();
         }
@@ -42,12 +43,20 @@ namespace Bar_do_Esas
                     using (MySqlCommand cmd = new MySqlCommand())
                     {
                         cmd.Connection = conexao;
-                        cmd.CommandText = @"INSERT INTO Funcionario 
-                                            VALUES(@codigo,@nome,@entrada,@saida)";
+                        cmd.CommandText = @"INSERT INTO funcionario (N_Funcionario,
+                                                                     Nome_Funcionario,
+                                                                     Data_Entrada,
+                                                                     Data_Saida,
+                                                                     Senha) 
+                                            VALUES(@codigo,@nome,@entrada,@saida,@senha)";
                         cmd.Parameters.AddWithValue("@codigo",txtCodigo.Text);
                         cmd.Parameters.AddWithValue("@nome",txtNome.Text);
                         cmd.Parameters.AddWithValue("@entrada",txtEntrada.Text);
                         cmd.Parameters.AddWithValue("@saida",txtSaida.Text);
+                        cmd.Parameters.AddWithValue("@senha",txtSenha.Text);
+                        cmd.ExecuteNonQuery();
+
+                        carregarFuncionario();
                     }
                 }
             }
@@ -67,6 +76,7 @@ namespace Bar_do_Esas
                 txtNome.Text = item.SubItems[1].Text;
                 txtEntrada.Text = item.SubItems[2].Text;
                 txtSaida.Text = item.SubItems[3].Text;
+                txtSenha.Text = item.SubItems[4].Text;
             }
         }
 
@@ -90,11 +100,12 @@ namespace Bar_do_Esas
                                 string nome = reader.GetString(1).ToString();
                                 DateTime entrada = reader.GetDateTime(2);
                                 DateTime saida = reader.GetDateTime(3);
+                                string senha = reader.GetInt32(4).ToString();
 
                                 string entradaStr = entrada.ToString("yyyy-MM-dd HH:mm-ss");
-                                string saidaStr = entrada.ToString("yyyy-MM-dd HH:mm-ss");
+                                string saidaStr = saida.ToString("yyyy-MM-dd HH:mm-ss");
 
-                                string[] row = {codigo,nome,entradaStr,saidaStr};
+                                string[] row = {codigo,nome,entradaStr,saidaStr,senha};
                                 var linha_lstView = new ListViewItem(row);
                                 lstFuncionario.Items.Add(linha_lstView);
                             }
