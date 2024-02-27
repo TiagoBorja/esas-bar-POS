@@ -52,28 +52,28 @@ namespace Bar_do_Esas
                     using (MySqlConnection conexao = new MySqlConnection(Globais.data_source))
                     {
                         conexao.Open();
-                        if (!String.IsNullOrEmpty(codigo) || !String.IsNullOrEmpty(nome) || !String.IsNullOrEmpty(entrada) || !String.IsNullOrEmpty(saida) || !String.IsNullOrEmpty(senha))
+                        if (!String.IsNullOrEmpty(codigo) && !String.IsNullOrEmpty(nome) && !txtEntrada.Text.Trim().Equals(String.Empty) && !txtSaida.Text.Trim().Equals(String.Empty) && !String.IsNullOrEmpty(senha))
                         {
-                            //using (MySqlCommand cmd = new MySqlCommand())
-                            //{
-                            //    cmd.Connection = conexao;
-                            //    cmd.CommandText = @"INSERT INTO funcionario (N_Funcionario,
-                            //                                         Nome_Funcionario,
-                            //                                         Data_Entrada,
-                            //                                         Data_Saida,
-                            //                                         Senha) 
-                            //                VALUES(@codigo,@nome,@entrada,@saida,@senha)";
-                            //    cmd.Parameters.AddWithValue("@codigo", txtCodigo.Text);
-                            //    cmd.Parameters.AddWithValue("@nome", txtNome.Text);
-                            //    cmd.Parameters.AddWithValue("@entrada", txtEntrada.Text);
-                            //    cmd.Parameters.AddWithValue("@saida", txtSaida.Text);
-                            //    cmd.Parameters.AddWithValue("@senha", txtSenha.Text);
-                            //    cmd.ExecuteNonQuery();
+                            
+                            using (MySqlCommand cmd = new MySqlCommand())
+                            {
+                                cmd.Connection = conexao;
+                                cmd.CommandText = @"INSERT INTO funcionario (N_Funcionario,
+                                                                     Nome_Funcionario,
+                                                                     Data_Entrada,
+                                                                     Data_Saida,
+                                                                     Senha) 
+                                            VALUES(@codigo,@nome,@entrada,@saida,@senha)";
+                                cmd.Parameters.AddWithValue("@codigo", codigo);
+                                cmd.Parameters.AddWithValue("@nome", nome);
+                                cmd.Parameters.AddWithValue("@entrada", entrada);
+                                cmd.Parameters.AddWithValue("@saida", saida);
+                                cmd.Parameters.AddWithValue("@senha", senha);
+                                cmd.ExecuteNonQuery();
 
-                            //    adicionarReadOnly();
-                            //    carregarFuncionario();
-                            //}
-                            MessageBox.Show("dsasadasd");
+                                adicionarReadOnly();
+                                carregarFuncionario();
+                            }
                         }
                         else MessageBox.Show("Sem dados suficientes para a inserção de dados.");
                     }
