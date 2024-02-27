@@ -9,6 +9,9 @@ using System.Threading.Tasks;
 using System.Web.WebSockets;
 using System.Windows.Forms;
 using MySql.Data.MySqlClient;
+using BCrypt.Net;
+using Org.BouncyCastle.Crypto.Generators;
+
 namespace Bar_do_Esas
 {
     public partial class FormularioFuncionario : Form
@@ -31,6 +34,7 @@ namespace Bar_do_Esas
 
             carregarFuncionario();
         }
+        
 
         private void btnAdd_Click(object sender, EventArgs e)
         {
@@ -46,12 +50,14 @@ namespace Bar_do_Esas
                     var nome = txtNome.Text;
                     var entrada = txtEntrada.Text;
                     var saida = txtSaida.Text;
-                    var senha = txtSenha.Text;
+                    var senha = BCrypt.Net.BCrypt.EnhancedHashPassword(txtSenha.Text, 13);
 
-
+                    
                     using (MySqlConnection conexao = new MySqlConnection(Globais.data_source))
                     {
                         conexao.Open();
+
+                        //Check if all text boxes and all txtMaskedBox are Null or Empty
                         if (!String.IsNullOrEmpty(codigo) && !String.IsNullOrEmpty(nome) && !txtEntrada.Text.Trim().Equals(String.Empty) && !txtSaida.Text.Trim().Equals(String.Empty) && !String.IsNullOrEmpty(senha))
                         {
                             
@@ -64,12 +70,15 @@ namespace Bar_do_Esas
                                                                      Data_Saida,
                                                                      Senha) 
                                             VALUES(@codigo,@nome,@entrada,@saida,@senha)";
+
                                 cmd.Parameters.AddWithValue("@codigo", codigo);
                                 cmd.Parameters.AddWithValue("@nome", nome);
                                 cmd.Parameters.AddWithValue("@entrada", entrada);
                                 cmd.Parameters.AddWithValue("@saida", saida);
                                 cmd.Parameters.AddWithValue("@senha", senha);
                                 cmd.ExecuteNonQuery();
+
+                                
 
                                 adicionarReadOnly();
                                 carregarFuncionario();
@@ -83,6 +92,7 @@ namespace Bar_do_Esas
             catch(Exception ex)
             {
                 MessageBox.Show(ex.Message);
+         
             }
         }
 
@@ -120,8 +130,9 @@ namespace Bar_do_Esas
                                 string nome = reader.GetString(1).ToString();
                                 DateTime entrada = reader.GetDateTime(2);
                                 DateTime saida = reader.GetDateTime(3);
-                                string senha = reader.GetInt32(4).ToString();
 
+                                string senha = reader.GetString(4).ToString();
+                                //Set "entrada" and "saida" with year,month,day and Hour,minute and seconds.
                                 string entradaStr = entrada.ToString("yyyy-MM-dd HH:mm-ss");
                                 string saidaStr = saida.ToString("yyyy-MM-dd HH:mm-ss");
 
@@ -143,29 +154,45 @@ namespace Bar_do_Esas
         {
             try
             {
-                using (MySqlConnection conexao = new MySqlConnection(Globais.data_source))
+                if (!txtNome.ReadOnly == false && !txtEntrada.ReadOnly == false && !txtSaida.ReadOnly == false && !txtSenha.ReadOnly == false)
                 {
-                    conexao.Open();
-                    using(MySqlCommand cmd = conexao.CreateCommand())
+                    tirarReadOnlyEmUpdate();
+                }
+                else
+                {
+                    DialogResult msg = MessageBox.Show("Confirmar atualização?", "Atualizar Funcionário", MessageBoxButtons.YesNo);
+
+                    if (msg == DialogResult.Yes)
                     {
-                        cmd.Connection = conexao;
-                        cmd.CommandText = @"UPDATE funcionario
-                                           SET N_Funcionario = @codigo,
-                                               Nome_Funcionario = @nome,
-                                               Data_Entrada = @entrada,
-                                               Data_Saida = @saida,
-                                               Senha = @senha
-                                               WHERE N_Funcionario = @codigo";
+                        using (MySqlConnection conexao = new MySqlConnection(Globais.data_source))
+                        {
+                            conexao.Open();
+                            using (MySqlCommand cmd = conexao.CreateCommand())
+                            {
+                                cmd.Connection = conexao;
+                                cmd.CommandText = @"UPDATE funcionario
+                                                   SET N_Funcionario = @codigo,
+                                                   Nome_Funcionario = @nome,
+                                                   Data_Entrada = @entrada,
+                                                   Data_Saida = @saida,
+                                                   Senha = @senha
+                                                   WHERE N_Funcionario = @codigo";
 
-                        cmd.Parameters.AddWithValue("@codigo", txtCodigo.Text);
-                        cmd.Parameters.AddWithValue("@nome", txtNome.Text);
-                        cmd.Parameters.AddWithValue("@entrada", txtEntrada.Text);
-                        cmd.Parameters.AddWithValue("@saida", txtSaida.Text);
-                        cmd.Parameters.AddWithValue("@senha", txtSenha.Text);
-                        cmd.ExecuteNonQuery();
+                                cmd.Parameters.AddWithValue("@codigo", txtCodigo.Text);
+                                cmd.Parameters.AddWithValue("@nome", txtNome.Text);
+                                cmd.Parameters.AddWithValue("@entrada", txtEntrada.Text);
+                                cmd.Parameters.AddWithValue("@saida", txtSaida.Text);
 
-                        carregarFuncionario();
+                                var senha = BCrypt.Net.BCrypt.EnhancedHashPassword(txtSenha.Text, 13);
+                                cmd.Parameters.AddWithValue("@senha", senha);
+                                cmd.ExecuteNonQuery();
+
+                                MessageBox.Show("Dados atualizados com sucesso!");
+                                carregarFuncionario();
+                            }
+                        }
                     }
+                    else MessageBox.Show("Nenhum dado foi alterado.");
                 }
             }
             catch(Exception ex) 
@@ -178,20 +205,27 @@ namespace Bar_do_Esas
         {
             try
             {
-                using (MySqlConnection conexao = new MySqlConnection(Globais.data_source))
-                {
-                    conexao.Open();
-                    using (MySqlCommand cmd = conexao.CreateCommand())
-                    {
-                        cmd.Connection = conexao;
-                        cmd.CommandText = @"DELETE FROM funcionario
-                                           WHERE N_Funcionario = @codigo";
-                        cmd.Parameters.AddWithValue("@codigo", txtCodigo.Text);
-                        cmd.ExecuteNonQuery();
+                DialogResult msg = MessageBox.Show("Confirmar exclusão?", "Deletar Aluno", MessageBoxButtons.YesNo);
 
-                        carregarFuncionario();
+                if (msg == DialogResult.Yes)
+                {
+                    using (MySqlConnection conexao = new MySqlConnection(Globais.data_source))
+                    {
+                        conexao.Open();
+                        using (MySqlCommand cmd = conexao.CreateCommand())
+                        {
+                            cmd.Connection = conexao;
+                            cmd.CommandText = @"DELETE FROM funcionario
+                                           WHERE N_Funcionario = @codigo";
+                            cmd.Parameters.AddWithValue("@codigo", txtCodigo.Text);
+                            cmd.ExecuteNonQuery();
+
+                            MessageBox.Show("Dados deletados com sucesso!");
+                            carregarFuncionario();
+                        }
                     }
                 }
+                else MessageBox.Show("Nenhum dado foi deletado.");
             }catch(Exception ex)
             {
                 MessageBox.Show(ex.Message);

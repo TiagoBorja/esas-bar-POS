@@ -28,7 +28,8 @@ namespace Bar_do_Esas
         private void btnGuna_Click(object sender, EventArgs e)
         {
             var codigo = txtGunaCodigo.Text;
-            var senha = txtGunaSenha.Text;
+            var senha =  BCrypt.Net.BCrypt.EnhancedHashPassword(txtGunaSenha.Text,13);
+
             try
             {
                 using (MySqlConnection conexao = new MySqlConnection(Globais.data_source))
@@ -42,28 +43,35 @@ namespace Bar_do_Esas
                             cmd.Connection = conexao;
 
                             // Search for an employee with the given Code and Password
-
-
                             cmd.CommandText = @"SELECT * FROM Funcionario
                                            WHERE N_Funcionario = @codigo AND Senha = @senha";
-                            cmd.Parameters.AddWithValue("@codigo", txtGunaCodigo.Text);
-                            cmd.Parameters.AddWithValue("@senha", txtGunaSenha.Text);
+                            cmd.Parameters.AddWithValue("@codigo", codigo);
+                            cmd.Parameters.AddWithValue("@senha", senha);
 
                           
 
                             using (MySqlDataReader reader = cmd.ExecuteReader())
                             {
+                                MessageBox.Show(senha);
                                 if (reader.Read())
                                 {
-                                    MessageBox.Show("Login bem sucedido!!!");
-                                    this.Close();
+                                    string senhaHash = reader.GetString("Senha");
+                                    bool senhaCorreta = BCrypt.Net.BCrypt.EnhancedVerify(senha, senhaHash);
 
-                                    string nomeFuncionario = reader.GetString("Nome_Funcionario");
-                                    form1.lblNome.Text = nomeFuncionario;
+                                    if (senhaCorreta)
+                                    {
+                                        MessageBox.Show("Login bem sucedido!!!");
+                                        this.Close();
 
-                                    // Set a variable indicating that the user is logged in and update a picture box with a green LED
-                                    Globais.logado = true;
-                                    form1.pb_ledLogado.Image = Properties.Resources.led_verde;
+                                        string nomeFuncionario = reader.GetString("Nome_Funcionario");
+                                        form1.lblNome.Text = nomeFuncionario;
+
+                                        // Set a variable indicating that the user is logged in and update a picture box with a green LED
+                                        Globais.logado = true;
+                                        form1.pb_ledLogado.Image = Properties.Resources.led_verde;
+                                    }
+                                    else MessageBox.Show("Dados Incorretos!!!");
+                                    
                                 }
                                 else MessageBox.Show("Dados Incorretos!!!");
                             }
