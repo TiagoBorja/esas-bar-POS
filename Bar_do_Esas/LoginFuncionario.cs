@@ -28,8 +28,7 @@ namespace Bar_do_Esas
         private void btnGuna_Click(object sender, EventArgs e)
         {
             var codigo = txtGunaCodigo.Text;
-            var senha =  BCrypt.Net.BCrypt.EnhancedHashPassword(txtGunaSenha.Text,13);
-
+            var senha = txtGunaSenha.Text;
             try
             {
                 using (MySqlConnection conexao = new MySqlConnection(Globais.data_source))
@@ -43,19 +42,17 @@ namespace Bar_do_Esas
                             cmd.Connection = conexao;
 
                             // Search for an employee with the given Code and Password
-                            cmd.CommandText = @"SELECT * FROM Funcionario
-                                           WHERE N_Funcionario = @codigo AND Senha = @senha";
+                            cmd.CommandText = @"SELECT * FROM dados_funcionario
+                                           WHERE N_Funcionario = @codigo";
                             cmd.Parameters.AddWithValue("@codigo", codigo);
-                            cmd.Parameters.AddWithValue("@senha", senha);
-
-                          
 
                             using (MySqlDataReader reader = cmd.ExecuteReader())
                             {
-                                MessageBox.Show(senha);
+                               
                                 if (reader.Read())
                                 {
                                     string senhaHash = reader.GetString("Senha");
+                                    MessageBox.Show(senhaHash);
                                     bool senhaCorreta = BCrypt.Net.BCrypt.EnhancedVerify(senha, senhaHash);
 
                                     if (senhaCorreta)
