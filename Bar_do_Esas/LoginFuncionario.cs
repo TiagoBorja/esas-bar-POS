@@ -98,5 +98,11 @@ namespace Bar_do_Esas
                 txtGunaSenha.PasswordChar = '*';
             }
         }
+
+        private void label3_Click(object sender, EventArgs e)
+        {
+            CriarFuncionario funcionario = new CriarFuncionario();
+            funcionario.ShowDialog();
+        }
     }
 }
