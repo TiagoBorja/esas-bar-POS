@@ -45,12 +45,12 @@ CREATE TABLE IF NOT EXISTS `bar` (
   `Data_Compra` datetime NOT NULL,
   `N_Funcionario` int(11) NOT NULL,
   `Qt_Pedida` int(11) NOT NULL,
-  PRIMARY KEY (`N_Aluno`,`Cod_Comida`,`Data_Compra`),
-  KEY `N_Funcionario` (`N_Funcionario`),
+  PRIMARY KEY (`N_Aluno`,`Cod_Comida`,`Data_Compra`,`N_Funcionario`),
   KEY `FK_bar_infocomida` (`Cod_Comida`),
+  KEY `FK_bar_dados_funcionario` (`N_Funcionario`),
   CONSTRAINT `FK_bar_aluno` FOREIGN KEY (`N_Aluno`) REFERENCES `aluno` (`N_Aluno`) ON DELETE NO ACTION ON UPDATE NO ACTION,
-  CONSTRAINT `FK_bar_infocomida` FOREIGN KEY (`Cod_Comida`) REFERENCES `infocomida` (`Cod_Comida`) ON DELETE NO ACTION ON UPDATE NO ACTION,
-  CONSTRAINT `bar_ibfk_1` FOREIGN KEY (`N_Funcionario`) REFERENCES `funcionario` (`N_Funcionario`)
+  CONSTRAINT `FK_bar_dados_funcionario` FOREIGN KEY (`N_Funcionario`) REFERENCES `dados_funcionario` (`N_Funcionario`) ON DELETE NO ACTION ON UPDATE NO ACTION,
+  CONSTRAINT `FK_bar_infocomida` FOREIGN KEY (`Cod_Comida`) REFERENCES `infocomida` (`Cod_Comida`) ON DELETE NO ACTION ON UPDATE NO ACTION
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- A despejar dados para tabela bar_do_esas.bar: ~0 rows (aproximadamente)
@@ -72,14 +72,27 @@ DELETE FROM `dados_funcionario`;
 DROP TABLE IF EXISTS `funcionario`;
 CREATE TABLE IF NOT EXISTS `funcionario` (
   `N_Funcionario` int(11) NOT NULL,
-  `Data_Entrada` datetime NOT NULL,
-  `Data_Saida` datetime NOT NULL,
-  PRIMARY KEY (`N_Funcionario`,`Data_Entrada`,`Data_Saida`) USING BTREE,
-  CONSTRAINT `FK_funcionario_dados_funcionario` FOREIGN KEY (`N_Funcionario`) REFERENCES `dados_funcionario` (`N_Funcionario`) ON DELETE NO ACTION ON UPDATE NO ACTION
+  `Horario_Entrada` time NOT NULL,
+  `Horario_Saida` time NOT NULL,
+  PRIMARY KEY (`Horario_Entrada`,`Horario_Saida`,`N_Funcionario`) USING BTREE,
+  KEY `FK_funcionario_dados_funcionario` (`N_Funcionario`),
+  CONSTRAINT `FK_funcionario_dados_funcionario` FOREIGN KEY (`N_Funcionario`) REFERENCES `dados_funcionario` (`N_Funcionario`) ON DELETE NO ACTION ON UPDATE NO ACTION,
+  CONSTRAINT `FK_funcionario_horarios` FOREIGN KEY (`Horario_Entrada`, `Horario_Saida`) REFERENCES `horarios` (`Horario_Entrada`, `Horario_Saida`) ON DELETE NO ACTION ON UPDATE NO ACTION
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- A despejar dados para tabela bar_do_esas.funcionario: ~0 rows (aproximadamente)
 DELETE FROM `funcionario`;
+
+-- A despejar estrutura para tabela bar_do_esas.horarios
+DROP TABLE IF EXISTS `horarios`;
+CREATE TABLE IF NOT EXISTS `horarios` (
+  `Horario_Entrada` time NOT NULL,
+  `Horario_Saida` time NOT NULL,
+  PRIMARY KEY (`Horario_Entrada`,`Horario_Saida`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+-- A despejar dados para tabela bar_do_esas.horarios: ~0 rows (aproximadamente)
+DELETE FROM `horarios`;
 
 -- A despejar estrutura para tabela bar_do_esas.infocomida
 DROP TABLE IF EXISTS `infocomida`;
