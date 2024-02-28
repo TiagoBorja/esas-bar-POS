@@ -51,8 +51,10 @@ namespace Bar_do_Esas
                                
                                 if (reader.Read())
                                 {
+                                    //Search column "senha" and read a password hashed
                                     string senhaHash = reader.GetString("Senha");
-                                    MessageBox.Show(senhaHash);
+                                    
+                                    //Check if the password hashed are correct
                                     bool senhaCorreta = BCrypt.Net.BCrypt.EnhancedVerify(senha, senhaHash);
 
                                     if (senhaCorreta)
