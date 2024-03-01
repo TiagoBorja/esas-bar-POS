@@ -60,7 +60,7 @@ namespace Bar_do_Esas
                     {
                         cmd.Connection = conexao;
                         cmd.CommandText = @"SELECT N_Aluno,Nome_Aluno,Saldo FROM aluno
-                                           WHERE N_Aluno = @codigo";
+                                            WHERE N_Aluno = @codigo";
                         cmd.Parameters.AddWithValue("@codigo", numero);
                         
                         using (MySqlDataReader reader = cmd.ExecuteReader())
