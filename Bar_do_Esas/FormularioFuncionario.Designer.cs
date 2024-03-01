@@ -29,7 +29,7 @@
         private void InitializeComponent()
         {
             this.lbl_Aluno = new System.Windows.Forms.Label();
-            this.lstAluno = new System.Windows.Forms.ListView();
+            this.lstFuncionario = new System.Windows.Forms.ListView();
             this.panel1 = new System.Windows.Forms.Panel();
             this.btnRemove = new System.Windows.Forms.Button();
             this.btnUpdate = new System.Windows.Forms.Button();
@@ -55,16 +55,17 @@
             this.lbl_Aluno.TabIndex = 9;
             this.lbl_Aluno.Text = "Lista de Funcionário";
             // 
-            // lstAluno
+            // lstFuncionario
             // 
-            this.lstAluno.HideSelection = false;
-            this.lstAluno.Location = new System.Drawing.Point(218, 39);
-            this.lstAluno.Margin = new System.Windows.Forms.Padding(2);
-            this.lstAluno.MultiSelect = false;
-            this.lstAluno.Name = "lstAluno";
-            this.lstAluno.Size = new System.Drawing.Size(457, 285);
-            this.lstAluno.TabIndex = 8;
-            this.lstAluno.UseCompatibleStateImageBehavior = false;
+            this.lstFuncionario.HideSelection = false;
+            this.lstFuncionario.Location = new System.Drawing.Point(218, 39);
+            this.lstFuncionario.Margin = new System.Windows.Forms.Padding(2);
+            this.lstFuncionario.MultiSelect = false;
+            this.lstFuncionario.Name = "lstFuncionario";
+            this.lstFuncionario.Size = new System.Drawing.Size(457, 285);
+            this.lstFuncionario.TabIndex = 8;
+            this.lstFuncionario.UseCompatibleStateImageBehavior = false;
+            this.lstFuncionario.ItemSelectionChanged += new System.Windows.Forms.ListViewItemSelectionChangedEventHandler(this.lstAluno_ItemSelectionChanged);
             // 
             // panel1
             // 
@@ -90,6 +91,7 @@
             this.btnRemove.TabIndex = 11;
             this.btnRemove.Text = "Excluir Funcionário";
             this.btnRemove.UseVisualStyleBackColor = false;
+            this.btnRemove.Click += new System.EventHandler(this.btnRemove_Click);
             // 
             // btnUpdate
             // 
@@ -102,6 +104,7 @@
             this.btnUpdate.TabIndex = 10;
             this.btnUpdate.Text = "Atualizar Funcionário";
             this.btnUpdate.UseVisualStyleBackColor = false;
+            this.btnUpdate.Click += new System.EventHandler(this.btnUpdate_Click);
             // 
             // btnAdd
             // 
@@ -191,7 +194,7 @@
             this.Controls.Add(this.txtNome);
             this.Controls.Add(this.txtCodigo);
             this.Controls.Add(this.lbl_Aluno);
-            this.Controls.Add(this.lstAluno);
+            this.Controls.Add(this.lstFuncionario);
             this.Controls.Add(this.panel1);
             this.Name = "FormularioFuncionario";
             this.Text = "FormularioFuncionario";
@@ -204,7 +207,7 @@
         #endregion
 
         private System.Windows.Forms.Label lbl_Aluno;
-        private System.Windows.Forms.ListView lstAluno;
+        private System.Windows.Forms.ListView lstFuncionario;
         private System.Windows.Forms.Panel panel1;
         private System.Windows.Forms.Button btnRemove;
         private System.Windows.Forms.Button btnUpdate;
