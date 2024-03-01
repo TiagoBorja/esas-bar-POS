@@ -66,7 +66,7 @@
             this.panel1.Controls.Add(this.pb_ledLogado);
             this.panel1.Dock = System.Windows.Forms.DockStyle.Bottom;
             this.panel1.Location = new System.Drawing.Point(0, 526);
-            this.panel1.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.panel1.Margin = new System.Windows.Forms.Padding(2);
             this.panel1.Name = "panel1";
             this.panel1.Size = new System.Drawing.Size(813, 32);
             this.panel1.TabIndex = 0;
@@ -98,7 +98,7 @@
             // 
             this.pb_ledLogado.Image = global::Bar_do_Esas.Properties.Resources.led_vermelho;
             this.pb_ledLogado.Location = new System.Drawing.Point(0, 0);
-            this.pb_ledLogado.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.pb_ledLogado.Margin = new System.Windows.Forms.Padding(2);
             this.pb_ledLogado.Name = "pb_ledLogado";
             this.pb_ledLogado.Size = new System.Drawing.Size(30, 32);
             this.pb_ledLogado.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
@@ -117,7 +117,7 @@
             this.panel2.Controls.Add(this.lbl_Funcionario);
             this.panel2.Dock = System.Windows.Forms.DockStyle.Left;
             this.panel2.Location = new System.Drawing.Point(0, 0);
-            this.panel2.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.panel2.Margin = new System.Windows.Forms.Padding(2);
             this.panel2.Name = "panel2";
             this.panel2.Size = new System.Drawing.Size(158, 526);
             this.panel2.TabIndex = 1;
@@ -126,18 +126,19 @@
             // 
             this.button1.Font = new System.Drawing.Font("Lucida Bright", 10.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.button1.Location = new System.Drawing.Point(16, 84);
-            this.button1.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.button1.Margin = new System.Windows.Forms.Padding(2);
             this.button1.Name = "button1";
             this.button1.Size = new System.Drawing.Size(124, 26);
             this.button1.TabIndex = 9;
             this.button1.Text = "Inserir Código";
             this.button1.UseVisualStyleBackColor = true;
+            this.button1.Click += new System.EventHandler(this.button1_Click);
             // 
             // btnFuncionario
             // 
             this.btnFuncionario.Font = new System.Drawing.Font("Lucida Bright", 10.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.btnFuncionario.Location = new System.Drawing.Point(9, 422);
-            this.btnFuncionario.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.btnFuncionario.Margin = new System.Windows.Forms.Padding(2);
             this.btnFuncionario.Name = "btnFuncionario";
             this.btnFuncionario.Size = new System.Drawing.Size(141, 26);
             this.btnFuncionario.TabIndex = 8;
@@ -148,7 +149,7 @@
             // 
             this.btnComida.Font = new System.Drawing.Font("Lucida Bright", 10.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.btnComida.Location = new System.Drawing.Point(16, 243);
-            this.btnComida.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.btnComida.Margin = new System.Windows.Forms.Padding(2);
             this.btnComida.Name = "btnComida";
             this.btnComida.Size = new System.Drawing.Size(124, 26);
             this.btnComida.TabIndex = 7;
@@ -159,7 +160,7 @@
             // 
             this.btnAluno.Font = new System.Drawing.Font("Lucida Bright", 10.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.btnAluno.Location = new System.Drawing.Point(16, 115);
-            this.btnAluno.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.btnAluno.Margin = new System.Windows.Forms.Padding(2);
             this.btnAluno.Name = "btnAluno";
             this.btnAluno.Size = new System.Drawing.Size(124, 26);
             this.btnAluno.TabIndex = 6;
@@ -255,7 +256,7 @@
             // numericUpDown1
             // 
             this.numericUpDown1.Location = new System.Drawing.Point(682, 244);
-            this.numericUpDown1.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.numericUpDown1.Margin = new System.Windows.Forms.Padding(2);
             this.numericUpDown1.Name = "numericUpDown1";
             this.numericUpDown1.Size = new System.Drawing.Size(110, 20);
             this.numericUpDown1.TabIndex = 11;
@@ -264,7 +265,7 @@
             // 
             this.comboBox1.FormattingEnabled = true;
             this.comboBox1.Location = new System.Drawing.Point(542, 242);
-            this.comboBox1.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.comboBox1.Margin = new System.Windows.Forms.Padding(2);
             this.comboBox1.Name = "comboBox1";
             this.comboBox1.Size = new System.Drawing.Size(123, 21);
             this.comboBox1.TabIndex = 12;
@@ -310,7 +311,7 @@
             this.btnAdd.BackColor = System.Drawing.Color.Lime;
             this.btnAdd.Font = new System.Drawing.Font("Lucida Bright", 10.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.btnAdd.Location = new System.Drawing.Point(542, 479);
-            this.btnAdd.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.btnAdd.Margin = new System.Windows.Forms.Padding(2);
             this.btnAdd.Name = "btnAdd";
             this.btnAdd.Size = new System.Drawing.Size(124, 26);
             this.btnAdd.TabIndex = 16;
@@ -323,7 +324,7 @@
             this.btnRemover.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(192)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
             this.btnRemover.Font = new System.Drawing.Font("Lucida Bright", 10.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.btnRemover.Location = new System.Drawing.Point(682, 479);
-            this.btnRemover.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.btnRemover.Margin = new System.Windows.Forms.Padding(2);
             this.btnRemover.Name = "btnRemover";
             this.btnRemover.Size = new System.Drawing.Size(124, 26);
             this.btnRemover.TabIndex = 17;
@@ -334,7 +335,7 @@
             // 
             this.lstComida.HideSelection = false;
             this.lstComida.Location = new System.Drawing.Point(175, 244);
-            this.lstComida.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.lstComida.Margin = new System.Windows.Forms.Padding(2);
             this.lstComida.Name = "lstComida";
             this.lstComida.Size = new System.Drawing.Size(312, 263);
             this.lstComida.TabIndex = 18;
@@ -359,7 +360,7 @@
             this.Controls.Add(this.lblAluno);
             this.Controls.Add(this.panel2);
             this.Controls.Add(this.panel1);
-            this.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.Margin = new System.Windows.Forms.Padding(2);
             this.Name = "Form1";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Bar do Esas";

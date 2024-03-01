@@ -1,4 +1,5 @@
-﻿using System;
+﻿using MySql.Data.MySqlClient;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -44,6 +45,40 @@ namespace Bar_do_Esas
         private void btnAdd_Click(object sender, EventArgs e)
         {
             MessageBox.Show("Testando Git!");
+        }
+
+        private void button1_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                int numero = Convert.ToInt32(Microsoft.VisualBasic.Interaction.InputBox("Insira o código do aluno.", "Código Aluno"));
+
+                using (MySqlConnection conexao = new MySqlConnection(Globais.data_source))
+                {
+                    conexao.Open();
+                    using (MySqlCommand cmd = new MySqlCommand())
+                    {
+                        cmd.Connection = conexao;
+                        cmd.CommandText = @"SELECT N_Aluno,Nome_Aluno,Saldo FROM aluno
+                                           WHERE N_Aluno = @codigo";
+                        cmd.Parameters.AddWithValue("@codigo", numero);
+                        
+                        using (MySqlDataReader reader = cmd.ExecuteReader())
+                        {
+                            while (reader.Read())
+                            {
+                                lblCodigo.Text = $"Código Aluno: {reader.GetInt32(0)}";
+                                lblAluno.Text = $"Nome Aluno: {reader.GetString(1)}";
+                                lblSaldo.Text = $"Saldo: {reader.GetDouble(2)}";
+                            }
+                        }
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+            }
         }
     }
 }
