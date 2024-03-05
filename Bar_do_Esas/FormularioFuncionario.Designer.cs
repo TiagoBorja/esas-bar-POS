@@ -197,6 +197,7 @@
             this.Controls.Add(this.lstFuncionario);
             this.Controls.Add(this.panel1);
             this.Name = "FormularioFuncionario";
+            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "FormularioFuncionario";
             this.panel1.ResumeLayout(false);
             this.ResumeLayout(false);

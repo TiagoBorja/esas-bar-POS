@@ -209,23 +209,28 @@ namespace Bar_do_Esas
         {
             try
             {
-                using (MySqlConnection conexao = new MySqlConnection(Globais.data_source))
+                DialogResult msg = MessageBox.Show("Confirmar exclusão?", "Excluir Aluno", MessageBoxButtons.YesNo);
+
+                if(msg == DialogResult.Yes)
                 {
-                    conexao.Open();
-
-                    using (MySqlCommand cmd = new MySqlCommand())
+                    using (MySqlConnection conexao = new MySqlConnection(Globais.data_source))
                     {
-                        cmd.Connection = conexao;
-                        cmd.CommandText = @"DELETE FROM dados_funcionario
-                                           WHERE N_Funcionario = @codigo";
-                        cmd.Parameters.AddWithValue("@codigo", txtCodigo.Text);
-                        cmd.ExecuteNonQuery();
+                        conexao.Open();
 
-                        MessageBox.Show("Funcionário deletado com sucesso!");
+                        using (MySqlCommand cmd = new MySqlCommand())
+                        {
+                            cmd.Connection = conexao;
+                            cmd.CommandText = @"DELETE FROM dados_funcionario
+                                           WHERE N_Funcionario = @codigo";
+                            cmd.Parameters.AddWithValue("@codigo", txtCodigo.Text);
+                            cmd.ExecuteNonQuery();
+
+                            MessageBox.Show("Funcionário deletado com sucesso!");
+                        }
                     }
-                }
-                carregarFuncionario();
-                adicionarReadOnly();
+                    carregarFuncionario();
+                    adicionarReadOnly();
+                }    
             }
             catch(Exception ex)
             {
