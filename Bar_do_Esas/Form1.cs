@@ -80,5 +80,11 @@ namespace Bar_do_Esas
                 MessageBox.Show(ex.Message);
             }
         }
+
+        private void btnFuncionario_Click(object sender, EventArgs e)
+        {
+            FormularioFuncionario f = new FormularioFuncionario();
+            f.ShowDialog();
+        }
     }
 }

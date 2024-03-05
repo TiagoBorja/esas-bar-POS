@@ -144,6 +144,7 @@
             this.btnFuncionario.TabIndex = 8;
             this.btnFuncionario.Text = "Checar Funcionário";
             this.btnFuncionario.UseVisualStyleBackColor = true;
+            this.btnFuncionario.Click += new System.EventHandler(this.btnFuncionario_Click);
             // 
             // btnComida
             // 

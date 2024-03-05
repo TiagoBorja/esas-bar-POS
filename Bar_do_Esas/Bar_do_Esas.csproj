@@ -131,6 +131,12 @@
     <Compile Include="FormularioAluno.Designer.cs">
       <DependentUpon>FormularioAluno.cs</DependentUpon>
     </Compile>
+    <Compile Include="FormularioComida.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FormularioComida.Designer.cs">
+      <DependentUpon>FormularioComida.cs</DependentUpon>
+    </Compile>
     <Compile Include="FormularioFuncionario.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -154,6 +160,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="FormularioAluno.resx">
       <DependentUpon>FormularioAluno.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="FormularioComida.resx">
+      <DependentUpon>FormularioComida.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="FormularioFuncionario.resx">
       <DependentUpon>FormularioFuncionario.cs</DependentUpon>

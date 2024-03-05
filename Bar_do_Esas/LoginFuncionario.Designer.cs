@@ -70,6 +70,7 @@
             this.txtGunaSenha.HoverState.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(94)))), ((int)(((byte)(148)))), ((int)(((byte)(255)))));
             this.txtGunaSenha.Location = new System.Drawing.Point(49, 119);
             this.txtGunaSenha.Margin = new System.Windows.Forms.Padding(2, 4, 2, 4);
+            this.txtGunaSenha.MaxLength = 4;
             this.txtGunaSenha.Name = "txtGunaSenha";
             this.txtGunaSenha.PasswordChar = '*';
             this.txtGunaSenha.PlaceholderText = "";

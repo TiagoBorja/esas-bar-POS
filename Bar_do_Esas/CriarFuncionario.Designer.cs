@@ -72,7 +72,7 @@
             this.btnGuna.Margin = new System.Windows.Forms.Padding(2);
             this.btnGuna.Name = "btnGuna";
             this.btnGuna.Size = new System.Drawing.Size(187, 37);
-            this.btnGuna.TabIndex = 15;
+            this.btnGuna.TabIndex = 16;
             this.btnGuna.Text = "Criar";
             this.btnGuna.Click += new System.EventHandler(this.btnGuna_Click);
             // 
@@ -88,7 +88,7 @@
             this.checkSenha.Margin = new System.Windows.Forms.Padding(2);
             this.checkSenha.Name = "checkSenha";
             this.checkSenha.Size = new System.Drawing.Size(76, 17);
-            this.checkSenha.TabIndex = 14;
+            this.checkSenha.TabIndex = 15;
             this.checkSenha.Text = "Ver Senha";
             this.checkSenha.UncheckedState.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(125)))), ((int)(((byte)(137)))), ((int)(((byte)(149)))));
             this.checkSenha.UncheckedState.BorderRadius = 0;
@@ -114,7 +114,7 @@
             this.txtGunaSenha.PlaceholderText = "";
             this.txtGunaSenha.SelectedText = "";
             this.txtGunaSenha.Size = new System.Drawing.Size(187, 28);
-            this.txtGunaSenha.TabIndex = 13;
+            this.txtGunaSenha.TabIndex = 14;
             // 
             // txtGunaCodigo
             // 
@@ -165,7 +165,7 @@
             this.txtGunaNome.PlaceholderText = "";
             this.txtGunaNome.SelectedText = "";
             this.txtGunaNome.Size = new System.Drawing.Size(187, 28);
-            this.txtGunaNome.TabIndex = 18;
+            this.txtGunaNome.TabIndex = 13;
             // 
             // CriarFuncionario
             // 

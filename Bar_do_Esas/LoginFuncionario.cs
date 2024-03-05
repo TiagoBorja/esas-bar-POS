@@ -43,9 +43,9 @@ namespace Bar_do_Esas
 
                             // Search for an employee with the given Code and Password
                             cmd.CommandText = @"SELECT * FROM dados_funcionario
-                                           WHERE N_Funcionario = @codigo";
+                                                WHERE N_Funcionario = @codigo";
                             cmd.Parameters.AddWithValue("@codigo", codigo);
-
+                           
                             using (MySqlDataReader reader = cmd.ExecuteReader())
                             {
                                
@@ -53,10 +53,10 @@ namespace Bar_do_Esas
                                 {
                                     //Search column "senha" and read a password hashed
                                     string senhaHash = reader.GetString("Senha");
-                                    
-                                    //Check if the password hashed are correct
-                                    bool senhaCorreta = BCrypt.Net.BCrypt.EnhancedVerify(senha, senhaHash);
 
+                                    //Check if the password hashed are correct
+
+                                    bool senhaCorreta = BCrypt.Net.BCrypt.EnhancedVerify(senha, senhaHash);
                                     if (senhaCorreta)
                                     {
                                         MessageBox.Show("Login bem sucedido!!!");
