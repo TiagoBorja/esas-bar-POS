@@ -1,6 +1,6 @@
 ﻿namespace Bar_do_Esas
 {
-    partial class Form1
+    partial class FormularioBar
     {
         /// <summary>
         /// Variável de designer necessária.
@@ -33,6 +33,7 @@
             this.label1 = new System.Windows.Forms.Label();
             this.pb_ledLogado = new System.Windows.Forms.PictureBox();
             this.panel2 = new System.Windows.Forms.Panel();
+            this.btnClear = new System.Windows.Forms.Button();
             this.button1 = new System.Windows.Forms.Button();
             this.btnFuncionario = new System.Windows.Forms.Button();
             this.btnComida = new System.Windows.Forms.Button();
@@ -52,7 +53,6 @@
             this.btnAdd = new System.Windows.Forms.Button();
             this.btnRemover = new System.Windows.Forms.Button();
             this.lstComida = new System.Windows.Forms.ListView();
-            this.btnClear = new System.Windows.Forms.Button();
             this.lblCodigoAluno = new System.Windows.Forms.Label();
             this.lblNomeAluno = new System.Windows.Forms.Label();
             this.lblSaldoAluno = new System.Windows.Forms.Label();
@@ -128,6 +128,18 @@
             this.panel2.Name = "panel2";
             this.panel2.Size = new System.Drawing.Size(158, 526);
             this.panel2.TabIndex = 1;
+            // 
+            // btnClear
+            // 
+            this.btnClear.Font = new System.Drawing.Font("Lucida Bright", 10.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnClear.Location = new System.Drawing.Point(16, 114);
+            this.btnClear.Margin = new System.Windows.Forms.Padding(2);
+            this.btnClear.Name = "btnClear";
+            this.btnClear.Size = new System.Drawing.Size(124, 26);
+            this.btnClear.TabIndex = 10;
+            this.btnClear.Text = "Limpar";
+            this.btnClear.UseVisualStyleBackColor = true;
+            this.btnClear.Click += new System.EventHandler(this.btnClear_Click);
             // 
             // button1
             // 
@@ -350,18 +362,6 @@
             this.lstComida.TabIndex = 18;
             this.lstComida.UseCompatibleStateImageBehavior = false;
             // 
-            // btnClear
-            // 
-            this.btnClear.Font = new System.Drawing.Font("Lucida Bright", 10.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnClear.Location = new System.Drawing.Point(16, 114);
-            this.btnClear.Margin = new System.Windows.Forms.Padding(2);
-            this.btnClear.Name = "btnClear";
-            this.btnClear.Size = new System.Drawing.Size(124, 26);
-            this.btnClear.TabIndex = 10;
-            this.btnClear.Text = "Limpar";
-            this.btnClear.UseVisualStyleBackColor = true;
-            this.btnClear.Click += new System.EventHandler(this.btnClear_Click);
-            // 
             // lblCodigoAluno
             // 
             this.lblCodigoAluno.AutoSize = true;
@@ -418,7 +418,7 @@
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "Dados do Aluno";
             // 
-            // Form1
+            // FormularioBar
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
@@ -436,7 +436,7 @@
             this.Controls.Add(this.panel2);
             this.Controls.Add(this.panel1);
             this.Margin = new System.Windows.Forms.Padding(2);
-            this.Name = "Form1";
+            this.Name = "FormularioBar";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Bar do Esas";
             this.Load += new System.EventHandler(this.Form1_Load);

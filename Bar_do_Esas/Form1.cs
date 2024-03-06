@@ -11,9 +11,9 @@ using System.Windows.Forms;
 
 namespace Bar_do_Esas
 {
-    public partial class Form1 : Form
+    public partial class FormularioBar : Form
     {
-        public Form1()
+        public FormularioBar()
         {
             InitializeComponent();
 

@@ -13,8 +13,8 @@ namespace Bar_do_Esas
 {
     public partial class LoginFuncionario : Form
     {
-       Form1 form1;
-        public LoginFuncionario(Form1 form1)
+       FormularioBar form1;
+        public LoginFuncionario(FormularioBar form1)
         {
             InitializeComponent();
             this.form1 = form1;
