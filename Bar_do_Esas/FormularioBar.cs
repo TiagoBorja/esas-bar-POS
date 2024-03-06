@@ -31,6 +31,8 @@ namespace Bar_do_Esas
             lstComida.Columns.Add("Nome", 158, HorizontalAlignment.Left);
             lstComida.Columns.Add("Valor", 80, HorizontalAlignment.Left);
             lstComida.Columns.Add("Quantidade", 80, HorizontalAlignment.Left);
+
+            
         }
 
         private void lblNome_Click(object sender, EventArgs e)
@@ -177,14 +179,35 @@ namespace Bar_do_Esas
 
         private void lstComida_ItemSelectionChanged(object sender, ListViewItemSelectionChangedEventArgs e)
         {
-            ListView.SelectedListViewItemCollection itens_selecionados = lstComida.SelectedItems;
 
-            foreach (ListViewItem item in itens_selecionados)
+        }
+
+        private void btnRemover_Click(object sender, EventArgs e)
+        {
+            foreach (ListViewItem item in lstComida.SelectedItems)
             {
-                comboBox1.Text = item.SubItems[0].Text;
-                //txtNome.Text = item.SubItems[1].Text;
-                //txtValor.Text = item.SubItems[2].Text;
-            }
+                lstComida.Items.Remove(item);
+            }  
+        }
+
+        private void timer1_Tick(object sender, EventArgs e)
+        {
+
+        }
+
+        private void lblHora_Click(object sender, EventArgs e)
+        {
+            
+        }
+
+        private void timer1_Tick_1(object sender, EventArgs e)
+        {
+            this.lblHora.Text = DateTime.Now.ToString("yyyy-MM-dd : HH:mm:ss");
+        }
+
+        private void lstComida_SelectedIndexChanged(object sender, EventArgs e)
+        {
+
         }
     }
 }

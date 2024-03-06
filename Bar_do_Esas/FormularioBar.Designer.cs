@@ -28,7 +28,9 @@
         /// </summary>
         private void InitializeComponent()
         {
+            this.components = new System.ComponentModel.Container();
             this.panel1 = new System.Windows.Forms.Panel();
+            this.lblHora = new System.Windows.Forms.Label();
             this.lblNome = new System.Windows.Forms.Label();
             this.label1 = new System.Windows.Forms.Label();
             this.pb_ledLogado = new System.Windows.Forms.PictureBox();
@@ -57,6 +59,7 @@
             this.lblNomeAluno = new System.Windows.Forms.Label();
             this.lblSaldoAluno = new System.Windows.Forms.Label();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
+            this.timer1 = new System.Windows.Forms.Timer(this.components);
             this.panel1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pb_ledLogado)).BeginInit();
             this.panel2.SuspendLayout();
@@ -67,6 +70,7 @@
             // panel1
             // 
             this.panel1.BackColor = System.Drawing.Color.Gray;
+            this.panel1.Controls.Add(this.lblHora);
             this.panel1.Controls.Add(this.lblNome);
             this.panel1.Controls.Add(this.label1);
             this.panel1.Controls.Add(this.pb_ledLogado);
@@ -76,6 +80,19 @@
             this.panel1.Name = "panel1";
             this.panel1.Size = new System.Drawing.Size(827, 32);
             this.panel1.TabIndex = 0;
+            // 
+            // lblHora
+            // 
+            this.lblHora.AutoSize = true;
+            this.lblHora.Font = new System.Drawing.Font("Lucida Bright", 10.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblHora.ForeColor = System.Drawing.Color.White;
+            this.lblHora.Location = new System.Drawing.Point(662, 7);
+            this.lblHora.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
+            this.lblHora.Name = "lblHora";
+            this.lblHora.Size = new System.Drawing.Size(19, 16);
+            this.lblHora.TabIndex = 4;
+            this.lblHora.Text = "---";
+            this.lblHora.Click += new System.EventHandler(this.lblHora_Click);
             // 
             // lblNome
             // 
@@ -367,6 +384,7 @@
             this.btnRemover.TabIndex = 17;
             this.btnRemover.Text = "Remover";
             this.btnRemover.UseVisualStyleBackColor = false;
+            this.btnRemover.Click += new System.EventHandler(this.btnRemover_Click);
             // 
             // lstComida
             // 
@@ -378,6 +396,7 @@
             this.lstComida.TabIndex = 18;
             this.lstComida.UseCompatibleStateImageBehavior = false;
             this.lstComida.ItemSelectionChanged += new System.Windows.Forms.ListViewItemSelectionChangedEventHandler(this.lstComida_ItemSelectionChanged);
+            this.lstComida.SelectedIndexChanged += new System.EventHandler(this.lstComida_SelectedIndexChanged);
             // 
             // lblCodigoAluno
             // 
@@ -434,6 +453,11 @@
             this.groupBox1.TabIndex = 22;
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "Dados do Aluno";
+            // 
+            // timer1
+            // 
+            this.timer1.Enabled = true;
+            this.timer1.Tick += new System.EventHandler(this.timer1_Tick_1);
             // 
             // FormularioBar
             // 
@@ -501,6 +525,8 @@
         public System.Windows.Forms.Label lblNomeAluno;
         public System.Windows.Forms.Label lblSaldoAluno;
         private System.Windows.Forms.GroupBox groupBox1;
+        public System.Windows.Forms.Label lblHora;
+        private System.Windows.Forms.Timer timer1;
     }
 }
 
