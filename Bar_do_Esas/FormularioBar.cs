@@ -13,6 +13,9 @@ namespace Bar_do_Esas
 {
     public partial class FormularioBar : Form
     {
+
+        DataSet comida;
+
         public FormularioBar()
         {
             InitializeComponent();
@@ -69,7 +72,8 @@ namespace Bar_do_Esas
                     using(MySqlCommand cmd = new MySqlCommand())
                     {
                         cmd.Connection = conexao;
-                        cmd.CommandText = @"SELECT Descricao_Comida,Valor_Comida FROM infocomida";
+                        cmd.CommandText = @"SELECT Descricao_Comida,Valor_Comida FROM infocomida Where Cod_Comida = @id";
+                        cmd.Parameters.AddWithValue("@id",comboBox1.SelectedValue.ToString());
 
                         using(MySqlDataReader reader = cmd.ExecuteReader())
                         {
@@ -152,22 +156,20 @@ namespace Bar_do_Esas
 
         private void preencherCombo()
         {
+            string sql = "SELECT * FROM infocomida";
             try
             {
                 using (MySqlConnection conexao = new MySqlConnection(Globais.data_source))
                 {
                     conexao.Open();
-                    using (MySqlCommand cmd = new MySqlCommand())
+                    using (MySqlDataAdapter daComida = new MySqlDataAdapter(sql, conexao))
                     {
-                        cmd.Connection = conexao;
-                        cmd.CommandText = @"SELECT Descricao_Comida FROM infocomida ORDER BY Valor_Comida";
-                        using(MySqlDataReader reader = cmd.ExecuteReader())
-                        {
-                            while (reader.Read())
-                            {
-                                comboBox1.Items.Add(reader.GetString(0));
-                            }
-                        }
+                        comida = new DataSet();
+                        daComida.Fill(comida);
+                        comboBox1.DataSource = comida.Tables[0];
+                        comboBox1.ValueMember = "Cod_Comida";
+                        comboBox1.DisplayMember = "Descricao_Comida";
+                        comboBox1.SelectedIndex = -1;
                     }
                 }
             }
