@@ -239,11 +239,15 @@ namespace Bar_do_Esas
                                             WHERE Cod_Comida = @codigo";
                             cmd.Parameters.AddWithValue("@codigo", txtCodigo.Text);
                             cmd.ExecuteNonQuery();
+
+                            //After insert, uptade the list view
                             carregarComida();
                         }
                     }
                 }
                 else MessageBox.Show("Nenhum item foi excluido.");
+
+                //Use the "adicionarReadOnly" for clear the all text boxes.
                 adicionarReadOnly();
             }
             catch (Exception ex)

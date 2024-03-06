@@ -67,9 +67,13 @@ namespace Bar_do_Esas
                         {
                             while (reader.Read())
                             {
-                                lblCodigo.Text = $"Código Aluno: {reader.GetInt32(0)}";
-                                lblAluno.Text = $"Nome Aluno: {reader.GetString(1)}";
-                                lblSaldo.Text = $"Saldo: {reader.GetDouble(2)}";
+                                lblCodigoAluno.Text = reader.GetInt32(0).ToString();
+                                lblNomeAluno.Text = reader.GetString(1);
+                                lblSaldoAluno.Text = reader.GetDouble(2).ToString();
+
+                                lblCodigoAluno.Visible = true;
+                                lblNomeAluno.Visible = true;
+                                lblSaldoAluno.Visible = true;
                             }
                         }
                     }
@@ -84,7 +88,22 @@ namespace Bar_do_Esas
         private void btnFuncionario_Click(object sender, EventArgs e)
         {
             FormularioFuncionario f = new FormularioFuncionario();
+
+            //Open the FormularioFuncionario.
             f.ShowDialog();
+        }
+
+        private void btnComida_Click(object sender, EventArgs e)
+        {
+            FormularioComida f = new FormularioComida();
+            f.ShowDialog();
+        }
+
+        private void btnClear_Click(object sender, EventArgs e)
+        {
+            lblCodigoAluno.ResetText();
+            lblNomeAluno.ResetText();
+            lblSaldoAluno.ResetText();
         }
     }
 }

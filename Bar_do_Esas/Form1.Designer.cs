@@ -52,10 +52,16 @@
             this.btnAdd = new System.Windows.Forms.Button();
             this.btnRemover = new System.Windows.Forms.Button();
             this.lstComida = new System.Windows.Forms.ListView();
+            this.btnClear = new System.Windows.Forms.Button();
+            this.lblCodigoAluno = new System.Windows.Forms.Label();
+            this.lblNomeAluno = new System.Windows.Forms.Label();
+            this.lblSaldoAluno = new System.Windows.Forms.Label();
+            this.groupBox1 = new System.Windows.Forms.GroupBox();
             this.panel1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pb_ledLogado)).BeginInit();
             this.panel2.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDown1)).BeginInit();
+            this.groupBox1.SuspendLayout();
             this.SuspendLayout();
             // 
             // panel1
@@ -108,6 +114,7 @@
             // panel2
             // 
             this.panel2.BackColor = System.Drawing.SystemColors.ActiveCaption;
+            this.panel2.Controls.Add(this.btnClear);
             this.panel2.Controls.Add(this.button1);
             this.panel2.Controls.Add(this.btnFuncionario);
             this.panel2.Controls.Add(this.btnComida);
@@ -156,11 +163,12 @@
             this.btnComida.TabIndex = 7;
             this.btnComida.Text = "Checar Comida";
             this.btnComida.UseVisualStyleBackColor = true;
+            this.btnComida.Click += new System.EventHandler(this.btnComida_Click);
             // 
             // btnAluno
             // 
             this.btnAluno.Font = new System.Drawing.Font("Lucida Bright", 10.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnAluno.Location = new System.Drawing.Point(16, 115);
+            this.btnAluno.Location = new System.Drawing.Point(16, 144);
             this.btnAluno.Margin = new System.Windows.Forms.Padding(2);
             this.btnAluno.Name = "btnAluno";
             this.btnAluno.Size = new System.Drawing.Size(124, 26);
@@ -210,8 +218,8 @@
             // 
             this.lblAluno.AutoSize = true;
             this.lblAluno.Font = new System.Drawing.Font("Lucida Bright", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblAluno.ForeColor = System.Drawing.SystemColors.ActiveCaptionText;
-            this.lblAluno.Location = new System.Drawing.Point(172, 50);
+            this.lblAluno.ForeColor = System.Drawing.Color.Black;
+            this.lblAluno.Location = new System.Drawing.Point(5, 70);
             this.lblAluno.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.lblAluno.Name = "lblAluno";
             this.lblAluno.Size = new System.Drawing.Size(107, 20);
@@ -222,8 +230,8 @@
             // 
             this.lblCodigo.AutoSize = true;
             this.lblCodigo.Font = new System.Drawing.Font("Lucida Bright", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblCodigo.ForeColor = System.Drawing.SystemColors.ActiveCaptionText;
-            this.lblCodigo.Location = new System.Drawing.Point(172, 15);
+            this.lblCodigo.ForeColor = System.Drawing.Color.Black;
+            this.lblCodigo.Location = new System.Drawing.Point(5, 35);
             this.lblCodigo.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.lblCodigo.Name = "lblCodigo";
             this.lblCodigo.Size = new System.Drawing.Size(119, 20);
@@ -234,8 +242,8 @@
             // 
             this.lblSaldo.AutoSize = true;
             this.lblSaldo.Font = new System.Drawing.Font("Lucida Bright", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblSaldo.ForeColor = System.Drawing.SystemColors.ActiveCaptionText;
-            this.lblSaldo.Location = new System.Drawing.Point(172, 84);
+            this.lblSaldo.ForeColor = System.Drawing.Color.Black;
+            this.lblSaldo.Location = new System.Drawing.Point(5, 104);
             this.lblSaldo.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.lblSaldo.Name = "lblSaldo";
             this.lblSaldo.Size = new System.Drawing.Size(56, 20);
@@ -342,11 +350,80 @@
             this.lstComida.TabIndex = 18;
             this.lstComida.UseCompatibleStateImageBehavior = false;
             // 
+            // btnClear
+            // 
+            this.btnClear.Font = new System.Drawing.Font("Lucida Bright", 10.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnClear.Location = new System.Drawing.Point(16, 114);
+            this.btnClear.Margin = new System.Windows.Forms.Padding(2);
+            this.btnClear.Name = "btnClear";
+            this.btnClear.Size = new System.Drawing.Size(124, 26);
+            this.btnClear.TabIndex = 10;
+            this.btnClear.Text = "Limpar";
+            this.btnClear.UseVisualStyleBackColor = true;
+            this.btnClear.Click += new System.EventHandler(this.btnClear_Click);
+            // 
+            // lblCodigoAluno
+            // 
+            this.lblCodigoAluno.AutoSize = true;
+            this.lblCodigoAluno.Font = new System.Drawing.Font("Lucida Bright", 10.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblCodigoAluno.ForeColor = System.Drawing.Color.White;
+            this.lblCodigoAluno.Location = new System.Drawing.Point(119, 37);
+            this.lblCodigoAluno.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
+            this.lblCodigoAluno.Name = "lblCodigoAluno";
+            this.lblCodigoAluno.Size = new System.Drawing.Size(19, 16);
+            this.lblCodigoAluno.TabIndex = 19;
+            this.lblCodigoAluno.Text = "---";
+            this.lblCodigoAluno.Visible = false;
+            // 
+            // lblNomeAluno
+            // 
+            this.lblNomeAluno.AutoSize = true;
+            this.lblNomeAluno.Font = new System.Drawing.Font("Lucida Bright", 10.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblNomeAluno.ForeColor = System.Drawing.Color.White;
+            this.lblNomeAluno.Location = new System.Drawing.Point(110, 72);
+            this.lblNomeAluno.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
+            this.lblNomeAluno.Name = "lblNomeAluno";
+            this.lblNomeAluno.Size = new System.Drawing.Size(19, 16);
+            this.lblNomeAluno.TabIndex = 20;
+            this.lblNomeAluno.Text = "---";
+            this.lblNomeAluno.Visible = false;
+            // 
+            // lblSaldoAluno
+            // 
+            this.lblSaldoAluno.AutoSize = true;
+            this.lblSaldoAluno.Font = new System.Drawing.Font("Lucida Bright", 10.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblSaldoAluno.ForeColor = System.Drawing.Color.White;
+            this.lblSaldoAluno.Location = new System.Drawing.Point(57, 107);
+            this.lblSaldoAluno.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
+            this.lblSaldoAluno.Name = "lblSaldoAluno";
+            this.lblSaldoAluno.Size = new System.Drawing.Size(19, 16);
+            this.lblSaldoAluno.TabIndex = 21;
+            this.lblSaldoAluno.Text = "---";
+            this.lblSaldoAluno.Visible = false;
+            // 
+            // groupBox1
+            // 
+            this.groupBox1.BackColor = System.Drawing.Color.Salmon;
+            this.groupBox1.Controls.Add(this.lblAluno);
+            this.groupBox1.Controls.Add(this.lblSaldoAluno);
+            this.groupBox1.Controls.Add(this.lblCodigo);
+            this.groupBox1.Controls.Add(this.lblNomeAluno);
+            this.groupBox1.Controls.Add(this.lblSaldo);
+            this.groupBox1.Controls.Add(this.lblCodigoAluno);
+            this.groupBox1.ForeColor = System.Drawing.Color.White;
+            this.groupBox1.Location = new System.Drawing.Point(175, 27);
+            this.groupBox1.Name = "groupBox1";
+            this.groupBox1.Size = new System.Drawing.Size(312, 143);
+            this.groupBox1.TabIndex = 22;
+            this.groupBox1.TabStop = false;
+            this.groupBox1.Text = "Dados do Aluno";
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(813, 558);
+            this.Controls.Add(this.groupBox1);
             this.Controls.Add(this.lstComida);
             this.Controls.Add(this.btnRemover);
             this.Controls.Add(this.btnAdd);
@@ -356,9 +433,6 @@
             this.Controls.Add(this.comboBox1);
             this.Controls.Add(this.numericUpDown1);
             this.Controls.Add(this.label2);
-            this.Controls.Add(this.lblSaldo);
-            this.Controls.Add(this.lblCodigo);
-            this.Controls.Add(this.lblAluno);
             this.Controls.Add(this.panel2);
             this.Controls.Add(this.panel1);
             this.Margin = new System.Windows.Forms.Padding(2);
@@ -372,6 +446,8 @@
             this.panel2.ResumeLayout(false);
             this.panel2.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDown1)).EndInit();
+            this.groupBox1.ResumeLayout(false);
+            this.groupBox1.PerformLayout();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -403,6 +479,11 @@
         private System.Windows.Forms.Button btnRemover;
         private System.Windows.Forms.ListView lstComida;
         private System.Windows.Forms.Button button1;
+        private System.Windows.Forms.Button btnClear;
+        public System.Windows.Forms.Label lblCodigoAluno;
+        public System.Windows.Forms.Label lblNomeAluno;
+        public System.Windows.Forms.Label lblSaldoAluno;
+        private System.Windows.Forms.GroupBox groupBox1;
     }
 }
 
