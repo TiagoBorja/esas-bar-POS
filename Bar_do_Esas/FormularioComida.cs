@@ -24,9 +24,9 @@ namespace Bar_do_Esas
             lstComida.FullRowSelect = true;
             lstComida.GridLines = true;
 
-            lstComida.Columns.Add("Código", 60, HorizontalAlignment.Left);
-            lstComida.Columns.Add("Nome", 200, HorizontalAlignment.Left);
-            lstComida.Columns.Add("Valor", 60, HorizontalAlignment.Left);
+            lstComida.Columns.Add("Código", 148, HorizontalAlignment.Left);
+            lstComida.Columns.Add("Nome", 158, HorizontalAlignment.Left);
+            lstComida.Columns.Add("Valor", 147, HorizontalAlignment.Left);
 
             carregarComida();
         }
@@ -133,10 +133,12 @@ namespace Bar_do_Esas
                 }
                 else
                 {
+
                     if (!String.IsNullOrEmpty(codigo) && !String.IsNullOrEmpty(nome) && !String.IsNullOrEmpty(valor))
                     {
                         using (MySqlConnection conexao = new MySqlConnection(Globais.data_source))
                         {
+                            //Open the conection
                             conexao.Open();
                             using (MySqlCommand cmd = new MySqlCommand())
                             {
@@ -150,8 +152,10 @@ namespace Bar_do_Esas
                                 cmd.ExecuteNonQuery();
 
                                 MessageBox.Show("Comida inserida com sucesso!!!");
-                            }
-                            carregarComida();       
+
+                                //After insert, uptade the list view
+                                carregarComida();
+                            }   
                         }
                     }
                     else MessageBox.Show("Sem dados suficientes para a inserção de dados.");
@@ -181,6 +185,7 @@ namespace Bar_do_Esas
                     {
                         DialogResult msg = MessageBox.Show("Confirmar atualização?", "Atualizar Comida", MessageBoxButtons.YesNo);
 
+                        // Check if the user want realize update in the student.
                         if (msg == DialogResult.Yes)
                         {
                             using (MySqlConnection conexao = new MySqlConnection(Globais.data_source))
@@ -198,9 +203,11 @@ namespace Bar_do_Esas
                                     cmd.ExecuteNonQuery();
 
                                     MessageBox.Show("Comida atualizado com sucesso!");
+
+                                    //After insert, uptade the list view
+                                    carregarComida();
                                 }
                             }
-                            carregarComida();
                         }
                         else MessageBox.Show("Nenhum dado foi alterado.");   
                     }
