@@ -283,9 +283,20 @@
             0,
             0,
             0});
+            this.qntItem.Minimum = new decimal(new int[] {
+            1,
+            0,
+            0,
+            0});
             this.qntItem.Name = "qntItem";
+            this.qntItem.ReadOnly = true;
             this.qntItem.Size = new System.Drawing.Size(110, 20);
             this.qntItem.TabIndex = 11;
+            this.qntItem.Value = new decimal(new int[] {
+            1,
+            0,
+            0,
+            0});
             // 
             // comboBox1
             // 

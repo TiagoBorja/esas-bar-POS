@@ -29,7 +29,8 @@ namespace Bar_do_Esas
             lstComida.GridLines = true;
 
             lstComida.Columns.Add("Nome", 158, HorizontalAlignment.Left);
-            lstComida.Columns.Add("Valor", 148, HorizontalAlignment.Left);
+            lstComida.Columns.Add("Valor", 80, HorizontalAlignment.Left);
+            lstComida.Columns.Add("Quantidade", 80, HorizontalAlignment.Left);
         }
 
         private void lblNome_Click(object sender, EventArgs e)
@@ -55,6 +56,7 @@ namespace Bar_do_Esas
 
         private void btnAdd_Click(object sender, EventArgs e)
         {
+            // Add items from combo box in the list view
             lstComida.Items.Add(comboBox1.SelectedItem.ToString());
         }
 
