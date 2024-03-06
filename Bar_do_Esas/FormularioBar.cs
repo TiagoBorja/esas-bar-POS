@@ -19,6 +19,17 @@ namespace Bar_do_Esas
 
             LoginFuncionario f_login = new LoginFuncionario(this);
             f_login.ShowDialog();
+
+            preencherCombo();
+
+            lstComida.View = View.Details;
+            lstComida.LabelEdit = true;
+            lstComida.AllowColumnReorder = true;
+            lstComida.FullRowSelect = true;
+            lstComida.GridLines = true;
+
+            lstComida.Columns.Add("Nome", 158, HorizontalAlignment.Left);
+            lstComida.Columns.Add("Valor", 148, HorizontalAlignment.Left);
         }
 
         private void lblNome_Click(object sender, EventArgs e)
@@ -44,7 +55,7 @@ namespace Bar_do_Esas
 
         private void btnAdd_Click(object sender, EventArgs e)
         {
-            MessageBox.Show("Testando Git!");
+            lstComida.Items.Add(comboBox1.SelectedItem.ToString());
         }
 
         private void button1_Click(object sender, EventArgs e)
@@ -104,6 +115,45 @@ namespace Bar_do_Esas
             lblCodigoAluno.ResetText();
             lblNomeAluno.ResetText();
             lblSaldoAluno.ResetText();
+        }
+
+        private void preencherCombo()
+        {
+            try
+            {
+                using (MySqlConnection conexao = new MySqlConnection(Globais.data_source))
+                {
+                    conexao.Open();
+                    using (MySqlCommand cmd = new MySqlCommand())
+                    {
+                        cmd.Connection = conexao;
+                        cmd.CommandText = @"SELECT Descricao_Comida FROM infocomida ORDER BY Valor_Comida";
+                        using(MySqlDataReader reader = cmd.ExecuteReader())
+                        {
+                            while (reader.Read())
+                            {
+                                comboBox1.Items.Add(reader.GetString(0));
+                            }
+                        }
+                    }
+                }
+            }
+            catch(Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+            }
+        }
+
+        private void lstComida_ItemSelectionChanged(object sender, ListViewItemSelectionChangedEventArgs e)
+        {
+            ListView.SelectedListViewItemCollection itens_selecionados = lstComida.SelectedItems;
+
+            foreach (ListViewItem item in itens_selecionados)
+            {
+                comboBox1.Text = item.SubItems[0].Text;
+                //txtNome.Text = item.SubItems[1].Text;
+                //txtValor.Text = item.SubItems[2].Text;
+            }
         }
     }
 }

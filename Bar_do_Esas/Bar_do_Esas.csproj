@@ -119,11 +119,11 @@
     <Compile Include="CriarFuncionario.Designer.cs">
       <DependentUpon>CriarFuncionario.cs</DependentUpon>
     </Compile>
-    <Compile Include="Form1.cs">
+    <Compile Include="FormularioBar.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Form1.Designer.cs">
-      <DependentUpon>Form1.cs</DependentUpon>
+    <Compile Include="FormularioBar.Designer.cs">
+      <DependentUpon>FormularioBar.cs</DependentUpon>
     </Compile>
     <Compile Include="FormularioAluno.cs">
       <SubType>Form</SubType>
@@ -155,8 +155,8 @@
     <EmbeddedResource Include="CriarFuncionario.resx">
       <DependentUpon>CriarFuncionario.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Form1.resx">
-      <DependentUpon>Form1.cs</DependentUpon>
+    <EmbeddedResource Include="FormularioBar.resx">
+      <DependentUpon>FormularioBar.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="FormularioAluno.resx">
       <DependentUpon>FormularioAluno.cs</DependentUpon>

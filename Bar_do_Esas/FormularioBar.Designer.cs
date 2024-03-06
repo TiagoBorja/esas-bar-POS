@@ -45,7 +45,7 @@
             this.lblCodigo = new System.Windows.Forms.Label();
             this.lblSaldo = new System.Windows.Forms.Label();
             this.label2 = new System.Windows.Forms.Label();
-            this.numericUpDown1 = new System.Windows.Forms.NumericUpDown();
+            this.qntItem = new System.Windows.Forms.NumericUpDown();
             this.comboBox1 = new System.Windows.Forms.ComboBox();
             this.lblTotal = new System.Windows.Forms.Label();
             this.lblItem = new System.Windows.Forms.Label();
@@ -60,7 +60,7 @@
             this.panel1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pb_ledLogado)).BeginInit();
             this.panel2.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.numericUpDown1)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.qntItem)).BeginInit();
             this.groupBox1.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -74,7 +74,7 @@
             this.panel1.Location = new System.Drawing.Point(0, 526);
             this.panel1.Margin = new System.Windows.Forms.Padding(2);
             this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(813, 32);
+            this.panel1.Size = new System.Drawing.Size(827, 32);
             this.panel1.TabIndex = 0;
             // 
             // lblNome
@@ -274,21 +274,26 @@
             this.label2.TabIndex = 10;
             this.label2.Text = "Itens Selecionados";
             // 
-            // numericUpDown1
+            // qntItem
             // 
-            this.numericUpDown1.Location = new System.Drawing.Point(682, 244);
-            this.numericUpDown1.Margin = new System.Windows.Forms.Padding(2);
-            this.numericUpDown1.Name = "numericUpDown1";
-            this.numericUpDown1.Size = new System.Drawing.Size(110, 20);
-            this.numericUpDown1.TabIndex = 11;
+            this.qntItem.Location = new System.Drawing.Point(696, 242);
+            this.qntItem.Margin = new System.Windows.Forms.Padding(2);
+            this.qntItem.Maximum = new decimal(new int[] {
+            10,
+            0,
+            0,
+            0});
+            this.qntItem.Name = "qntItem";
+            this.qntItem.Size = new System.Drawing.Size(110, 20);
+            this.qntItem.TabIndex = 11;
             // 
             // comboBox1
             // 
             this.comboBox1.FormattingEnabled = true;
-            this.comboBox1.Location = new System.Drawing.Point(542, 242);
+            this.comboBox1.Location = new System.Drawing.Point(521, 241);
             this.comboBox1.Margin = new System.Windows.Forms.Padding(2);
             this.comboBox1.Name = "comboBox1";
-            this.comboBox1.Size = new System.Drawing.Size(123, 21);
+            this.comboBox1.Size = new System.Drawing.Size(160, 21);
             this.comboBox1.TabIndex = 12;
             // 
             // lblTotal
@@ -308,7 +313,7 @@
             this.lblItem.AutoSize = true;
             this.lblItem.Font = new System.Drawing.Font("Lucida Bright", 10F);
             this.lblItem.ForeColor = System.Drawing.SystemColors.ActiveCaptionText;
-            this.lblItem.Location = new System.Drawing.Point(580, 222);
+            this.lblItem.Location = new System.Drawing.Point(578, 221);
             this.lblItem.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.lblItem.Name = "lblItem";
             this.lblItem.Size = new System.Drawing.Size(38, 16);
@@ -320,7 +325,7 @@
             this.label3.AutoSize = true;
             this.label3.Font = new System.Drawing.Font("Lucida Bright", 10F);
             this.label3.ForeColor = System.Drawing.SystemColors.ActiveCaptionText;
-            this.label3.Location = new System.Drawing.Point(699, 222);
+            this.label3.Location = new System.Drawing.Point(713, 220);
             this.label3.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.label3.Name = "label3";
             this.label3.Size = new System.Drawing.Size(89, 16);
@@ -331,10 +336,10 @@
             // 
             this.btnAdd.BackColor = System.Drawing.Color.Lime;
             this.btnAdd.Font = new System.Drawing.Font("Lucida Bright", 10.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnAdd.Location = new System.Drawing.Point(542, 479);
+            this.btnAdd.Location = new System.Drawing.Point(521, 479);
             this.btnAdd.Margin = new System.Windows.Forms.Padding(2);
             this.btnAdd.Name = "btnAdd";
-            this.btnAdd.Size = new System.Drawing.Size(124, 26);
+            this.btnAdd.Size = new System.Drawing.Size(120, 26);
             this.btnAdd.TabIndex = 16;
             this.btnAdd.Text = "Adicionar";
             this.btnAdd.UseVisualStyleBackColor = false;
@@ -361,6 +366,7 @@
             this.lstComida.Size = new System.Drawing.Size(312, 263);
             this.lstComida.TabIndex = 18;
             this.lstComida.UseCompatibleStateImageBehavior = false;
+            this.lstComida.ItemSelectionChanged += new System.Windows.Forms.ListViewItemSelectionChangedEventHandler(this.lstComida_ItemSelectionChanged);
             // 
             // lblCodigoAluno
             // 
@@ -422,7 +428,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(813, 558);
+            this.ClientSize = new System.Drawing.Size(827, 558);
             this.Controls.Add(this.groupBox1);
             this.Controls.Add(this.lstComida);
             this.Controls.Add(this.btnRemover);
@@ -431,7 +437,7 @@
             this.Controls.Add(this.lblItem);
             this.Controls.Add(this.lblTotal);
             this.Controls.Add(this.comboBox1);
-            this.Controls.Add(this.numericUpDown1);
+            this.Controls.Add(this.qntItem);
             this.Controls.Add(this.label2);
             this.Controls.Add(this.panel2);
             this.Controls.Add(this.panel1);
@@ -445,7 +451,7 @@
             ((System.ComponentModel.ISupportInitialize)(this.pb_ledLogado)).EndInit();
             this.panel2.ResumeLayout(false);
             this.panel2.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.numericUpDown1)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.qntItem)).EndInit();
             this.groupBox1.ResumeLayout(false);
             this.groupBox1.PerformLayout();
             this.ResumeLayout(false);
@@ -470,7 +476,7 @@
         private System.Windows.Forms.Label lblCodigo;
         private System.Windows.Forms.Label lblSaldo;
         private System.Windows.Forms.Label label2;
-        private System.Windows.Forms.NumericUpDown numericUpDown1;
+        private System.Windows.Forms.NumericUpDown qntItem;
         private System.Windows.Forms.ComboBox comboBox1;
         private System.Windows.Forms.Label lblTotal;
         private System.Windows.Forms.Label lblItem;
