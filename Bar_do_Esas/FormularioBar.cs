@@ -8,6 +8,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using static System.Windows.Forms.VisualStyles.VisualStyleElement;
 
 namespace Bar_do_Esas
 {
@@ -23,8 +24,6 @@ namespace Bar_do_Esas
             LoginFuncionario f_login = new LoginFuncionario(this);
             f_login.ShowDialog();
 
-            preencherCombo();
-
             lstComida.View = View.Details;
             lstComida.LabelEdit = true;
             lstComida.AllowColumnReorder = true;
@@ -35,7 +34,7 @@ namespace Bar_do_Esas
             lstComida.Columns.Add("Valor", 80, HorizontalAlignment.Left);
             lstComida.Columns.Add("Quantidade", 80, HorizontalAlignment.Left);
 
-            
+            preencherCombo();
         }
 
         private void lblNome_Click(object sender, EventArgs e)
@@ -72,7 +71,7 @@ namespace Bar_do_Esas
                     using(MySqlCommand cmd = new MySqlCommand())
                     {
                         cmd.Connection = conexao;
-                        cmd.CommandText = @"SELECT Descricao_Comida,Valor_Comida FROM infocomida Where Cod_Comida = @id";
+                        cmd.CommandText = @"SELECT Descricao_Comida,Valor_Comida FROM infocomida WHERE Cod_Comida = @id";
                         cmd.Parameters.AddWithValue("@id",comboBox1.SelectedValue.ToString());
 
                         using(MySqlDataReader reader = cmd.ExecuteReader())
@@ -85,6 +84,7 @@ namespace Bar_do_Esas
                                 string[] row = {comida, valor, quantidade};
 
                                 lstComida.Items.Add(new ListViewItem(row));
+                                totalAdicionado();
                             }
                         }
                     }
@@ -208,6 +208,29 @@ namespace Bar_do_Esas
         }
 
         private void lstComida_SelectedIndexChanged(object sender, EventArgs e)
+        {
+
+        }
+
+        private void totalAdicionado()
+        {
+            double total = 0;
+
+            foreach (ListViewItem item in lstComida.Items)
+            {
+                var valorString = item.SubItems[1].Text;
+                var quantidadeString = qntItem.Value.ToString();
+
+                if (double.TryParse(valorString, out double valor) && int.TryParse(quantidadeString, out int quantidade))
+                {
+                    total += valor * quantidade;
+                }
+            }
+
+            lblTotal.Text = $"Total: {total:C2}";
+        }
+
+        private void btnConcluir_Click(object sender, EventArgs e)
         {
 
         }

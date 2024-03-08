@@ -139,6 +139,7 @@
             // label3
             // 
             this.label3.AutoSize = true;
+            this.label3.Cursor = System.Windows.Forms.Cursors.Hand;
             this.label3.Font = new System.Drawing.Font("Lucida Bright", 8F);
             this.label3.Location = new System.Drawing.Point(46, 230);
             this.label3.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);

@@ -60,6 +60,7 @@
             this.lblSaldoAluno = new System.Windows.Forms.Label();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
             this.timer1 = new System.Windows.Forms.Timer(this.components);
+            this.btnConcluir = new System.Windows.Forms.Button();
             this.panel1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pb_ledLogado)).BeginInit();
             this.panel2.SuspendLayout();
@@ -332,9 +333,9 @@
             this.lblTotal.Location = new System.Drawing.Point(718, 7);
             this.lblTotal.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.lblTotal.Name = "lblTotal";
-            this.lblTotal.Size = new System.Drawing.Size(52, 20);
+            this.lblTotal.Size = new System.Drawing.Size(105, 20);
             this.lblTotal.TabIndex = 13;
-            this.lblTotal.Text = "Total:";
+            this.lblTotal.Text = "Total: 0,00 €";
             // 
             // lblItem
             // 
@@ -362,9 +363,9 @@
             // 
             // btnAdd
             // 
-            this.btnAdd.BackColor = System.Drawing.Color.Lime;
+            this.btnAdd.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(192)))), ((int)(((byte)(192)))));
             this.btnAdd.Font = new System.Drawing.Font("Lucida Bright", 10.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnAdd.Location = new System.Drawing.Point(521, 479);
+            this.btnAdd.Location = new System.Drawing.Point(521, 416);
             this.btnAdd.Margin = new System.Windows.Forms.Padding(2);
             this.btnAdd.Name = "btnAdd";
             this.btnAdd.Size = new System.Drawing.Size(120, 26);
@@ -377,7 +378,7 @@
             // 
             this.btnRemover.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(192)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
             this.btnRemover.Font = new System.Drawing.Font("Lucida Bright", 10.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnRemover.Location = new System.Drawing.Point(682, 479);
+            this.btnRemover.Location = new System.Drawing.Point(682, 416);
             this.btnRemover.Margin = new System.Windows.Forms.Padding(2);
             this.btnRemover.Name = "btnRemover";
             this.btnRemover.Size = new System.Drawing.Size(124, 26);
@@ -459,11 +460,25 @@
             this.timer1.Enabled = true;
             this.timer1.Tick += new System.EventHandler(this.timer1_Tick_1);
             // 
+            // btnConcluir
+            // 
+            this.btnConcluir.BackColor = System.Drawing.Color.Green;
+            this.btnConcluir.Font = new System.Drawing.Font("Lucida Bright", 10.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnConcluir.Location = new System.Drawing.Point(521, 463);
+            this.btnConcluir.Margin = new System.Windows.Forms.Padding(2);
+            this.btnConcluir.Name = "btnConcluir";
+            this.btnConcluir.Size = new System.Drawing.Size(285, 26);
+            this.btnConcluir.TabIndex = 23;
+            this.btnConcluir.Text = "Concluir";
+            this.btnConcluir.UseVisualStyleBackColor = false;
+            this.btnConcluir.Click += new System.EventHandler(this.btnConcluir_Click);
+            // 
             // FormularioBar
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(827, 558);
+            this.Controls.Add(this.btnConcluir);
             this.Controls.Add(this.groupBox1);
             this.Controls.Add(this.lstComida);
             this.Controls.Add(this.btnRemover);
@@ -527,6 +542,7 @@
         private System.Windows.Forms.GroupBox groupBox1;
         public System.Windows.Forms.Label lblHora;
         private System.Windows.Forms.Timer timer1;
+        private System.Windows.Forms.Button btnConcluir;
     }
 }
 
