@@ -16,7 +16,7 @@ namespace Bar_do_Esas
     {
 
         DataSet comida;
-
+        double totalAcumulado = 0;
         public FormularioBar()
         {
             InitializeComponent();
@@ -84,12 +84,14 @@ namespace Bar_do_Esas
                                 string[] row = {comida, valor, quantidade};
 
                                 lstComida.Items.Add(new ListViewItem(row));
-                                totalAdicionado();
+                                
                             }
                         }
                     }
                 }
-            }catch(Exception ex)
+                totalAdicionado();
+            }
+            catch(Exception ex)
             {
                 MessageBox.Show(ex.Message);
             }
@@ -152,6 +154,7 @@ namespace Bar_do_Esas
             lblCodigoAluno.ResetText();
             lblNomeAluno.ResetText();
             lblSaldoAluno.ResetText();
+
         }
 
         private void preencherCombo()
@@ -186,10 +189,8 @@ namespace Bar_do_Esas
 
         private void btnRemover_Click(object sender, EventArgs e)
         {
-            foreach (ListViewItem item in lstComida.SelectedItems)
-            {
-                lstComida.Items.Remove(item);
-            }  
+            
+            totalRemovido();
         }
 
         private void timer1_Tick(object sender, EventArgs e)
@@ -219,7 +220,7 @@ namespace Bar_do_Esas
             foreach (ListViewItem item in lstComida.Items)
             {
                 var valorString = item.SubItems[1].Text;
-                var quantidadeString = qntItem.Value.ToString();
+                var quantidadeString = item.SubItems[2].Text;
 
                 if (double.TryParse(valorString, out double valor) && int.TryParse(quantidadeString, out int quantidade))
                 {
@@ -227,7 +228,23 @@ namespace Bar_do_Esas
                 }
             }
 
-            lblTotal.Text = $"Total: {total:C2}";
+            totalAcumulado = total;
+            MessageBox.Show(totalAcumulado.ToString());
+            lblTotal.Text = $"Total: {totalAcumulado:C2}";
+
+
+        }
+
+        private void totalRemovido()
+        {
+
+            foreach (ListViewItem item in lstComida.SelectedItems)
+            {
+                totalAcumulado -= double.Parse(item.SubItems[1].Text) * int.Parse(item.SubItems[2].Text);
+                lstComida.Items.Remove(item);
+            }
+
+            lblTotal.Text = $"Total: {totalAcumulado:C2}";
         }
 
         private void btnConcluir_Click(object sender, EventArgs e)
