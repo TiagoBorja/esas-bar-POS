@@ -151,10 +151,7 @@ namespace Bar_do_Esas
 
         private void btnClear_Click(object sender, EventArgs e)
         {
-            lblCodigoAluno.ResetText();
-            lblNomeAluno.ResetText();
-            lblSaldoAluno.ResetText();
-
+            limparTudo();
         }
 
         private void preencherCombo()
@@ -245,6 +242,18 @@ namespace Bar_do_Esas
             }
 
             lblTotal.Text = $"Total: {totalAcumulado:C2}";
+        }
+
+        private void limparTudo()
+        {
+            lblCodigoAluno.ResetText();
+            lblNomeAluno.ResetText();
+            lblSaldoAluno.ResetText();
+            lstComida.Items.Clear();
+            lblTotal.Text = "Total: 0,00 €";
+            qntItem.Refresh();
+            comboBox1.ResetText();
+            comboBox1.SelectedIndex = -1;
         }
 
         private void btnConcluir_Click(object sender, EventArgs e)
