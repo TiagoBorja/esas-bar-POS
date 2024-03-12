@@ -154,39 +154,13 @@ namespace Bar_do_Esas
             limparTudo();
         }
 
-        private void preencherCombo()
-        {
-            string sql = "SELECT * FROM infocomida";
-            try
-            {
-                using (MySqlConnection conexao = new MySqlConnection(Globais.data_source))
-                {
-                    conexao.Open();
-                    using (MySqlDataAdapter daComida = new MySqlDataAdapter(sql, conexao))
-                    {
-                        comida = new DataSet();
-                        daComida.Fill(comida);
-                        comboBox1.DataSource = comida.Tables[0];
-                        comboBox1.ValueMember = "Cod_Comida";
-                        comboBox1.DisplayMember = "Descricao_Comida";
-                        comboBox1.SelectedIndex = -1;
-                    }
-                }
-            }
-            catch(Exception ex)
-            {
-                MessageBox.Show(ex.Message);
-            }
-        }
-
         private void lstComida_ItemSelectionChanged(object sender, ListViewItemSelectionChangedEventArgs e)
         {
 
         }
 
         private void btnRemover_Click(object sender, EventArgs e)
-        {
-            
+        {         
             totalRemovido();
         }
 
@@ -209,7 +183,40 @@ namespace Bar_do_Esas
         {
 
         }
+        private void btnConcluir_Click(object sender, EventArgs e)
+        {
 
+        }
+
+        #region Functions
+
+        //Reset all items 
+        private void limparTudo()
+        {
+            lblCodigoAluno.ResetText();
+            lblNomeAluno.ResetText();
+            lblSaldoAluno.ResetText();
+            lstComida.Items.Clear();
+            lblTotal.Text = "Total: 0,00 €";
+            qntItem.Refresh();
+            comboBox1.ResetText();
+            comboBox1.SelectedIndex = -1;
+        }
+
+        //Remove item in the lstComida and subtract value in the lblTotal
+        private void totalRemovido()
+        {
+
+            foreach (ListViewItem item in lstComida.SelectedItems)
+            {
+                totalAcumulado -= double.Parse(item.SubItems[1].Text) * int.Parse(item.SubItems[2].Text);
+                lstComida.Items.Remove(item);
+            }
+
+            lblTotal.Text = $"Total: {totalAcumulado:C2}";
+        }
+
+        //Sum value insert in the lstComida and sum value in the lblTotal
         private void totalAdicionado()
         {
             double total = 0;
@@ -228,37 +235,33 @@ namespace Bar_do_Esas
             totalAcumulado = total;
             MessageBox.Show(totalAcumulado.ToString());
             lblTotal.Text = $"Total: {totalAcumulado:C2}";
-
-
         }
 
-        private void totalRemovido()
+        //Read the all items in the table "infocomida" and add in the combobox
+        private void preencherCombo()
         {
-
-            foreach (ListViewItem item in lstComida.SelectedItems)
+            string sql = "SELECT * FROM infocomida";
+            try
             {
-                totalAcumulado -= double.Parse(item.SubItems[1].Text) * int.Parse(item.SubItems[2].Text);
-                lstComida.Items.Remove(item);
+                using (MySqlConnection conexao = new MySqlConnection(Globais.data_source))
+                {
+                    conexao.Open();
+                    using (MySqlDataAdapter daComida = new MySqlDataAdapter(sql, conexao))
+                    {
+                        comida = new DataSet();
+                        daComida.Fill(comida);
+                        comboBox1.DataSource = comida.Tables[0];
+                        comboBox1.ValueMember = "Cod_Comida";
+                        comboBox1.DisplayMember = "Descricao_Comida";
+                        comboBox1.SelectedIndex = -1;
+                    }
+                }
             }
-
-            lblTotal.Text = $"Total: {totalAcumulado:C2}";
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+            }
         }
-
-        private void limparTudo()
-        {
-            lblCodigoAluno.ResetText();
-            lblNomeAluno.ResetText();
-            lblSaldoAluno.ResetText();
-            lstComida.Items.Clear();
-            lblTotal.Text = "Total: 0,00 €";
-            qntItem.Refresh();
-            comboBox1.ResetText();
-            comboBox1.SelectedIndex = -1;
-        }
-
-        private void btnConcluir_Click(object sender, EventArgs e)
-        {
-
-        }
+        #endregion
     }
 }
