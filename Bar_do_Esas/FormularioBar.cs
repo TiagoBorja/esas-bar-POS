@@ -14,9 +14,8 @@ namespace Bar_do_Esas
 {
     public partial class FormularioBar : Form
     {
-
-        DataSet comida;
         double totalAcumulado = 0;
+        int idComidaSelecionada = 0;
         public FormularioBar()
         {
             InitializeComponent();
@@ -185,7 +184,7 @@ namespace Bar_do_Esas
         }
         private void btnConcluir_Click(object sender, EventArgs e)
         {
-
+          
         }
 
         #region Functions
@@ -246,14 +245,20 @@ namespace Bar_do_Esas
                 using (MySqlConnection conexao = new MySqlConnection(Globais.data_source))
                 {
                     conexao.Open();
-                    using (MySqlDataAdapter daComida = new MySqlDataAdapter(sql, conexao))
+                   using(MySqlCommand cmd = new MySqlCommand())
                     {
-                        comida = new DataSet();
-                        daComida.Fill(comida);
-                        comboBox1.DataSource = comida.Tables[0];
-                        comboBox1.ValueMember = "Cod_Comida";
-                        comboBox1.DisplayMember = "Descricao_Comida";
-                        comboBox1.SelectedIndex = -1;
+                        cmd.Connection = conexao;
+                        cmd.CommandText = sql;
+                        using(MySqlDataReader reader = cmd.ExecuteReader())
+                        {
+                            while (reader.Read())
+                            {
+                                comboBox1.Items.Add(reader["Descricao_Comida"]).ToString();
+                                comboBox1.DisplayMember = reader["Descricao_Comida"].ToString();
+                                comboBox1.ValueMember = reader["Cod_Comida"].ToString();
+                                comboBox1.SelectedIndex = -1;
+                            }
+                        }
                     }
                 }
             }
@@ -263,5 +268,37 @@ namespace Bar_do_Esas
             }
         }
         #endregion
+
+        private void comboBox1_SelectedIndexChanged(object sender, EventArgs e)
+        {
+
+            string nomeComida  = comboBox1.SelectedItem.ToString();
+            try
+            { 
+                using (MySqlConnection conexao = new MySqlConnection(Globais.data_source))
+                {
+                    conexao.Open();
+                    using (MySqlCommand cmd = new MySqlCommand())
+                    {
+                        cmd.Connection = conexao;
+                        cmd.CommandText = "SELECT Cod_Comida FROM infocomida WHERE Descricao_Comida = @nomeComida";
+                        cmd.Parameters.AddWithValue("@nomeComida", nomeComida);
+                        using (MySqlDataReader reader = cmd.ExecuteReader())
+                        {
+                            while (reader.Read())
+                            {
+                                //Set the id from select item in the combo box
+                                idComidaSelecionada = reader.GetInt32("Cod_Comida");
+                                MessageBox.Show(idComidaSelecionada.ToString());
+                            }
+                        }
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+            }
+        }
     }
 }
