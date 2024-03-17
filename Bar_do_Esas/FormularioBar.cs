@@ -36,20 +36,6 @@ namespace Bar_do_Esas
             preencherCombo();
         }
 
-        private void lblNome_Click(object sender, EventArgs e)
-        {
-
-        }
-
-        private void Form1_Load(object sender, EventArgs e)
-        {
-
-        }
-
-        private void label2_Click(object sender, EventArgs e)
-        {
-
-        }
 
         private void btnAluno_Click(object sender, EventArgs e)
         {
@@ -71,7 +57,7 @@ namespace Bar_do_Esas
                     {
                         cmd.Connection = conexao;
                         cmd.CommandText = @"SELECT Descricao_Comida,Valor_Comida FROM infocomida WHERE Cod_Comida = @id";
-                        cmd.Parameters.AddWithValue("@id",comboBox1.SelectedValue.ToString());
+                        cmd.Parameters.AddWithValue("@id",idComidaSelecionada);
 
                         using(MySqlDataReader reader = cmd.ExecuteReader())
                         {
@@ -153,24 +139,9 @@ namespace Bar_do_Esas
             limparTudo();
         }
 
-        private void lstComida_ItemSelectionChanged(object sender, ListViewItemSelectionChangedEventArgs e)
-        {
-
-        }
-
         private void btnRemover_Click(object sender, EventArgs e)
         {         
             totalRemovido();
-        }
-
-        private void timer1_Tick(object sender, EventArgs e)
-        {
-
-        }
-
-        private void lblHora_Click(object sender, EventArgs e)
-        {
-            
         }
 
         private void timer1_Tick_1(object sender, EventArgs e)
@@ -178,13 +149,9 @@ namespace Bar_do_Esas
             this.lblHora.Text = DateTime.Now.ToString("yyyy-MM-dd : HH:mm:ss");
         }
 
-        private void lstComida_SelectedIndexChanged(object sender, EventArgs e)
-        {
-
-        }
         private void btnConcluir_Click(object sender, EventArgs e)
         {
-          
+            checarSaldo();  
         }
 
         #region Functions
@@ -267,14 +234,44 @@ namespace Bar_do_Esas
                 MessageBox.Show(ex.Message);
             }
         }
-        #endregion
+
+        private void checarSaldo()
+        {
+            try
+            {
+                double valorComidaSelecionada = 0;
+                double saldoAluno = Convert.ToDouble(lblSaldoAluno.Text);
+                using (MySqlConnection conexao = new MySqlConnection(Globais.data_source))
+                {
+                    conexao.Open();
+                    using (MySqlCommand cmd = new MySqlCommand())
+                    {
+                        cmd.Connection = conexao;
+                        cmd.CommandText = "SELECT Valor_Comida FROM infocomida WHERE Cod_Comida = @id";
+                        cmd.Parameters.AddWithValue("@id",idComidaSelecionada);
+
+                        using(MySqlDataReader reader = cmd.ExecuteReader())
+                        {
+                            while (reader.Read())
+                            {
+                                valorComidaSelecionada = reader.GetDouble("Valor_Comida");
+                            }
+                        }
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+            }
+        }
 
         private void comboBox1_SelectedIndexChanged(object sender, EventArgs e)
         {
 
-            string nomeComida  = comboBox1.SelectedItem.ToString();
+            string nomeComida = comboBox1.SelectedItem.ToString();
             try
-            { 
+            {
                 using (MySqlConnection conexao = new MySqlConnection(Globais.data_source))
                 {
                     conexao.Open();
@@ -300,5 +297,46 @@ namespace Bar_do_Esas
                 MessageBox.Show(ex.Message);
             }
         }
+        #endregion
+
+        #region Dont Used
+
+        private void lstComida_SelectedIndexChanged(object sender, EventArgs e)
+        {
+
+        }
+
+        private void timer1_Tick(object sender, EventArgs e)
+        {
+
+        }
+
+        private void lblHora_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void lstComida_ItemSelectionChanged(object sender, ListViewItemSelectionChangedEventArgs e)
+        {
+
+        }
+
+
+        private void lblNome_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void Form1_Load(object sender, EventArgs e)
+        {
+
+        }
+
+        private void label2_Click(object sender, EventArgs e)
+        {
+
+        }
+        #endregion
+
     }
 }
