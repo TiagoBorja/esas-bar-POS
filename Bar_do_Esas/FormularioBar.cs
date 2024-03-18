@@ -16,6 +16,7 @@ namespace Bar_do_Esas
     {
         double totalAcumulado = 0;
         int idComidaSelecionada = 0;
+        double valorTotal = 0;
         public FormularioBar()
         {
             InitializeComponent();
@@ -45,41 +46,7 @@ namespace Bar_do_Esas
 
         private void btnAdd_Click(object sender, EventArgs e)
         {
-            // Add items from combo box in the list view
-            //lstComida.Items.Add(comboBox1.SelectedItem.ToString());
-
-            try
-            {
-                using (MySqlConnection conexao = new MySqlConnection(Globais.data_source))
-                {
-                    conexao.Open();
-                    using(MySqlCommand cmd = new MySqlCommand())
-                    {
-                        cmd.Connection = conexao;
-                        cmd.CommandText = @"SELECT Descricao_Comida,Valor_Comida FROM infocomida WHERE Cod_Comida = @id";
-                        cmd.Parameters.AddWithValue("@id",idComidaSelecionada);
-
-                        using(MySqlDataReader reader = cmd.ExecuteReader())
-                        {
-                            while (reader.Read())
-                            {
-                                var comida = reader.GetString(0);
-                                var valor = reader.GetDouble(1).ToString();
-                                var quantidade = qntItem.Value.ToString();
-                                string[] row = {comida, valor, quantidade};
-
-                                lstComida.Items.Add(new ListViewItem(row));
-                                
-                            }
-                        }
-                    }
-                }
-                totalAdicionado();
-            }
-            catch(Exception ex)
-            {
-                MessageBox.Show(ex.Message);
-            }
+            
         }
 
         private void button1_Click(object sender, EventArgs e)
@@ -235,6 +202,41 @@ namespace Bar_do_Esas
             }
         }
 
+        private void addItem()
+        {
+            try
+            {
+                using (MySqlConnection conexao = new MySqlConnection(Globais.data_source))
+                {
+                    conexao.Open();
+                    using (MySqlCommand cmd = new MySqlCommand())
+                    {
+                        cmd.Connection = conexao;
+                        cmd.CommandText = @"SELECT Descricao_Comida,Valor_Comida FROM infocomida WHERE Cod_Comida = @id";
+                        cmd.Parameters.AddWithValue("@id", idComidaSelecionada);
+
+                        using (MySqlDataReader reader = cmd.ExecuteReader())
+                        {
+                            while (reader.Read())
+                            {
+                                var comida = reader.GetString(0);
+                                var valor = reader.GetDouble(1).ToString();
+                                var quantidade = qntItem.Value.ToString();
+                                string[] row = { comida, valor, quantidade };
+
+                                lstComida.Items.Add(new ListViewItem(row));
+
+                            }
+                        }
+                    }
+                }
+                totalAdicionado();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+            }
+        }
         private void checarSaldo()
         {
             try
@@ -255,6 +257,13 @@ namespace Bar_do_Esas
                             while (reader.Read())
                             {
                                 valorComidaSelecionada = reader.GetDouble("Valor_Comida");
+
+                                if (valorComidaSelecionada <= saldoAluno)
+                                {
+                                    addItem();
+                                    saldoAluno -= valorComidaSelecionada;
+                                }
+                                else MessageBox.Show("Seu saldo é inferior ao saldo requisitado", "Saldo Insuficiente");
                             }
                         }
                     }
@@ -286,7 +295,6 @@ namespace Bar_do_Esas
                             {
                                 //Set the id from select item in the combo box
                                 idComidaSelecionada = reader.GetInt32("Cod_Comida");
-                                MessageBox.Show(idComidaSelecionada.ToString());
                             }
                         }
                     }
