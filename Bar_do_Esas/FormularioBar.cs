@@ -16,7 +16,7 @@ namespace Bar_do_Esas
     {
         double totalAcumulado = 0;
         int idComidaSelecionada = 0;
-        double valorTotal = 0;
+
         public FormularioBar()
         {
             InitializeComponent();
@@ -46,13 +46,14 @@ namespace Bar_do_Esas
 
         private void btnAdd_Click(object sender, EventArgs e)
         {
-            
+            checarSaldo();
         }
 
         private void button1_Click(object sender, EventArgs e)
         {
             try
             {
+                //Search code from someone student
                 int numero = Convert.ToInt32(Microsoft.VisualBasic.Interaction.InputBox("Insira o código do aluno.", "Código Aluno"));
 
                 using (MySqlConnection conexao = new MySqlConnection(Globais.data_source))
@@ -76,6 +77,7 @@ namespace Bar_do_Esas
                                 lblCodigoAluno.Visible = true;
                                 lblNomeAluno.Visible = true;
                                 lblSaldoAluno.Visible = true;
+
                             }
                         }
                     }
@@ -118,7 +120,7 @@ namespace Bar_do_Esas
 
         private void btnConcluir_Click(object sender, EventArgs e)
         {
-            checarSaldo();  
+            
         }
 
         #region Functions
@@ -132,7 +134,7 @@ namespace Bar_do_Esas
             lstComida.Items.Clear();
             lblTotal.Text = "Total: 0,00 €";
             qntItem.Refresh();
-            comboBox1.ResetText();
+            //comboBox1.ResetText();
             comboBox1.SelectedIndex = -1;
         }
 
@@ -145,7 +147,6 @@ namespace Bar_do_Esas
                 totalAcumulado -= double.Parse(item.SubItems[1].Text) * int.Parse(item.SubItems[2].Text);
                 lstComida.Items.Remove(item);
             }
-
             lblTotal.Text = $"Total: {totalAcumulado:C2}";
         }
 
@@ -242,6 +243,7 @@ namespace Bar_do_Esas
             try
             {
                 double valorComidaSelecionada = 0;
+                int quantidade = Convert.ToInt32(qntItem.Value);
                 double saldoAluno = Convert.ToDouble(lblSaldoAluno.Text);
                 using (MySqlConnection conexao = new MySqlConnection(Globais.data_source))
                 {
@@ -257,11 +259,12 @@ namespace Bar_do_Esas
                             while (reader.Read())
                             {
                                 valorComidaSelecionada = reader.GetDouble("Valor_Comida");
-
+                                valorComidaSelecionada *= Convert.ToDouble(quantidade);
                                 if (valorComidaSelecionada <= saldoAluno)
                                 {
                                     addItem();
                                     saldoAluno -= valorComidaSelecionada;
+                                    lblSaldoAluno.Text = saldoAluno.ToString();
                                 }
                                 else MessageBox.Show("Seu saldo é inferior ao saldo requisitado", "Saldo Insuficiente");
                             }
