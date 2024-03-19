@@ -16,7 +16,7 @@ namespace Bar_do_Esas
     {
         double totalAcumulado = 0;
         int idComidaSelecionada = 0;
-
+        double soma = 0;
         public FormularioBar()
         {
             InitializeComponent();
@@ -46,7 +46,7 @@ namespace Bar_do_Esas
 
         private void btnAdd_Click(object sender, EventArgs e)
         {
-            checarSaldo();
+            checarSaldo_addItem();
         }
 
         private void button1_Click(object sender, EventArgs e)
@@ -141,13 +141,21 @@ namespace Bar_do_Esas
         //Remove item in the lstComida and subtract value in the lblTotal
         private void totalRemovido()
         {
+            totalAcumulado = 0;
 
             foreach (ListViewItem item in lstComida.SelectedItems)
             {
-                totalAcumulado -= double.Parse(item.SubItems[1].Text) * int.Parse(item.SubItems[2].Text);
+                totalAcumulado = double.Parse(item.SubItems[1].Text) * int.Parse(item.SubItems[2].Text);
                 lstComida.Items.Remove(item);
+                
             }
-            lblTotal.Text = $"Total: {totalAcumulado:C2}";
+
+          //  lblTotal.Text = totalAcumulado.ToString();
+
+            soma=Convert.ToDouble(lblSaldoAluno.Text)+Convert.ToDouble(totalAcumulado);
+            lblSaldoAluno.Text = soma.ToString();
+           // MessageBox.Show(lblTotal.Text);
+            lblTotal.Text =Convert.ToString(Convert.ToDouble(lblTotal.Text)-totalAcumulado);
         }
 
         //Sum value insert in the lstComida and sum value in the lblTotal
@@ -167,8 +175,7 @@ namespace Bar_do_Esas
             }
 
             totalAcumulado = total;
-            MessageBox.Show(totalAcumulado.ToString());
-            lblTotal.Text = $"Total: {totalAcumulado:C2}";
+            lblTotal.Text = totalAcumulado.ToString();
         }
 
         //Read the all items in the table "infocomida" and add in the combobox
@@ -238,10 +245,11 @@ namespace Bar_do_Esas
                 MessageBox.Show(ex.Message);
             }
         }
-        private void checarSaldo()
+        private void checarSaldo_addItem()
         {
             try
             {
+                
                 double valorComidaSelecionada = 0;
                 int quantidade = Convert.ToInt32(qntItem.Value);
                 double saldoAluno = Convert.ToDouble(lblSaldoAluno.Text);
