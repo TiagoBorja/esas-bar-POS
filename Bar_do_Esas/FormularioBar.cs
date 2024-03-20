@@ -14,9 +14,14 @@ namespace Bar_do_Esas
 {
     public partial class FormularioBar : Form
     {
+        //variable that stores the balances 
         double totalAcumulado = 0;
+
+        //store de id food 
         int idComidaSelecionada = 0;
-        double soma = 0;
+
+        //Sum the value in your balance when you remove a item
+        double somarValorFaltante = 0;
         public FormularioBar()
         {
             InitializeComponent();
@@ -34,6 +39,7 @@ namespace Bar_do_Esas
             lstComida.Columns.Add("Valor", 80, HorizontalAlignment.Left);
             lstComida.Columns.Add("Quantidade", 80, HorizontalAlignment.Left);
 
+            //Pupulation the combo
             preencherCombo();
         }
 
@@ -147,15 +153,13 @@ namespace Bar_do_Esas
             {
                 totalAcumulado = double.Parse(item.SubItems[1].Text) * int.Parse(item.SubItems[2].Text);
                 lstComida.Items.Remove(item);
-                
+
             }
 
-          //  lblTotal.Text = totalAcumulado.ToString();
+            somarValorFaltante = Convert.ToDouble(lblSaldoAluno.Text) + Convert.ToDouble(totalAcumulado);
+            lblSaldoAluno.Text = somarValorFaltante.ToString();
 
-            soma=Convert.ToDouble(lblSaldoAluno.Text)+Convert.ToDouble(totalAcumulado);
-            lblSaldoAluno.Text = soma.ToString();
-           // MessageBox.Show(lblTotal.Text);
-            lblTotal.Text =Convert.ToString(Convert.ToDouble(lblTotal.Text)-totalAcumulado);
+            lblTotal.Text = Convert.ToString(Convert.ToDouble(lblTotal.Text) - totalAcumulado);
         }
 
         //Sum value insert in the lstComida and sum value in the lblTotal
@@ -165,6 +169,7 @@ namespace Bar_do_Esas
 
             foreach (ListViewItem item in lstComida.Items)
             {
+                //remove the items from your respectives columns and atribute your value in variables
                 var valorString = item.SubItems[1].Text;
                 var quantidadeString = item.SubItems[2].Text;
 
@@ -173,7 +178,7 @@ namespace Bar_do_Esas
                     total += valor * quantidade;
                 }
             }
-
+            //Variable receive the total value when something is added
             totalAcumulado = total;
             lblTotal.Text = totalAcumulado.ToString();
         }
@@ -249,8 +254,9 @@ namespace Bar_do_Esas
         {
             try
             {
-                
+                //This variable holds the id when one has an item selected
                 double valorComidaSelecionada = 0;
+
                 int quantidade = Convert.ToInt32(qntItem.Value);
                 double saldoAluno = Convert.ToDouble(lblSaldoAluno.Text);
                 using (MySqlConnection conexao = new MySqlConnection(Globais.data_source))
@@ -260,17 +266,25 @@ namespace Bar_do_Esas
                     {
                         cmd.Connection = conexao;
                         cmd.CommandText = "SELECT Valor_Comida FROM infocomida WHERE Cod_Comida = @id";
+                        
+                        //Select the value when the id is equals a idComidaSelecionada
                         cmd.Parameters.AddWithValue("@id",idComidaSelecionada);
 
                         using(MySqlDataReader reader = cmd.ExecuteReader())
                         {
                             while (reader.Read())
                             {
+                                //Search the column in the database
                                 valorComidaSelecionada = reader.GetDouble("Valor_Comida");
+
+                                //Sum the value the food * quantity solicited
                                 valorComidaSelecionada *= Convert.ToDouble(quantidade);
+                                
                                 if (valorComidaSelecionada <= saldoAluno)
                                 {
                                     addItem();
+
+                                    //after add a item, subtract the value in your balance in an abstract way
                                     saldoAluno -= valorComidaSelecionada;
                                     lblSaldoAluno.Text = saldoAluno.ToString();
                                 }
@@ -288,7 +302,7 @@ namespace Bar_do_Esas
 
         private void comboBox1_SelectedIndexChanged(object sender, EventArgs e)
         {
-
+            //Keep the name food in the combo
             string nomeComida = comboBox1.SelectedItem.ToString();
             try
             {
@@ -299,6 +313,8 @@ namespace Bar_do_Esas
                     {
                         cmd.Connection = conexao;
                         cmd.CommandText = "SELECT Cod_Comida FROM infocomida WHERE Descricao_Comida = @nomeComida";
+
+                        //Remove the Cod_Comida (id) when the food name is equal to the variable
                         cmd.Parameters.AddWithValue("@nomeComida", nomeComida);
                         using (MySqlDataReader reader = cmd.ExecuteReader())
                         {
