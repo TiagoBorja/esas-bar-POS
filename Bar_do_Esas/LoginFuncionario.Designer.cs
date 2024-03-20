@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            this.components = new System.ComponentModel.Container();
             this.txtGunaCodigo = new Guna.UI2.WinForms.Guna2TextBox();
             this.txtGunaSenha = new Guna.UI2.WinForms.Guna2TextBox();
             this.checkSenha = new Guna.UI2.WinForms.Guna2CheckBox();
@@ -35,6 +36,7 @@
             this.label1 = new System.Windows.Forms.Label();
             this.label2 = new System.Windows.Forms.Label();
             this.label3 = new System.Windows.Forms.Label();
+            this.toolTip1 = new System.Windows.Forms.ToolTip(this.components);
             this.SuspendLayout();
             // 
             // txtGunaCodigo
@@ -56,6 +58,7 @@
             this.txtGunaCodigo.SelectedText = "";
             this.txtGunaCodigo.Size = new System.Drawing.Size(187, 33);
             this.txtGunaCodigo.TabIndex = 6;
+            this.toolTip1.SetToolTip(this.txtGunaCodigo, "BRUH");
             // 
             // txtGunaSenha
             // 
@@ -178,5 +181,6 @@
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.Label label3;
+        private System.Windows.Forms.ToolTip toolTip1;
     }
 }

@@ -27,6 +27,9 @@ namespace Bar_do_Esas
 
         private void btnGuna_Click(object sender, EventArgs e)
         {
+
+            
+
             var codigo = txtGunaCodigo.Text;
             var senha = txtGunaSenha.Text;
             try

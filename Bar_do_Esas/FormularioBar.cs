@@ -83,7 +83,6 @@ namespace Bar_do_Esas
                                 lblCodigoAluno.Visible = true;
                                 lblNomeAluno.Visible = true;
                                 lblSaldoAluno.Visible = true;
-
                             }
                         }
                     }
@@ -99,7 +98,6 @@ namespace Bar_do_Esas
         {
             FormularioFuncionario f = new FormularioFuncionario();
 
-            //Open the FormularioFuncionario.
             f.ShowDialog();
         }
 
@@ -140,8 +138,7 @@ namespace Bar_do_Esas
             lstComida.Items.Clear();
             lblTotal.Text = "Total: 0,00 €";
             qntItem.Refresh();
-            //comboBox1.ResetText();
-            comboBox1.SelectedIndex = -1;
+            comboBox1.ResetText();
         }
 
         //Remove item in the lstComida and subtract value in the lblTotal
