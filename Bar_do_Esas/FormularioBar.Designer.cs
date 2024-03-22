@@ -61,6 +61,7 @@
             this.groupBox1 = new System.Windows.Forms.GroupBox();
             this.timer1 = new System.Windows.Forms.Timer(this.components);
             this.btnConcluir = new System.Windows.Forms.Button();
+            this.label4 = new System.Windows.Forms.Label();
             this.panel1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pb_ledLogado)).BeginInit();
             this.panel2.SuspendLayout();
@@ -87,12 +88,12 @@
             this.lblHora.AutoSize = true;
             this.lblHora.Font = new System.Drawing.Font("Lucida Bright", 10.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lblHora.ForeColor = System.Drawing.Color.White;
-            this.lblHora.Location = new System.Drawing.Point(662, 7);
+            this.lblHora.Location = new System.Drawing.Point(666, 9);
             this.lblHora.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.lblHora.Name = "lblHora";
-            this.lblHora.Size = new System.Drawing.Size(19, 16);
+            this.lblHora.Size = new System.Drawing.Size(136, 16);
             this.lblHora.TabIndex = 4;
-            this.lblHora.Text = "---";
+            this.lblHora.Text = "0000/00/00 00:00";
             this.lblHora.Click += new System.EventHandler(this.lblHora_Click);
             // 
             // lblNome
@@ -331,11 +332,12 @@
             this.lblTotal.AutoSize = true;
             this.lblTotal.Font = new System.Drawing.Font("Lucida Bright", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lblTotal.ForeColor = System.Drawing.SystemColors.ActiveCaptionText;
-            this.lblTotal.Location = new System.Drawing.Point(718, 7);
+            this.lblTotal.Location = new System.Drawing.Point(749, 9);
             this.lblTotal.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.lblTotal.Name = "lblTotal";
-            this.lblTotal.Size = new System.Drawing.Size(0, 20);
+            this.lblTotal.Size = new System.Drawing.Size(57, 20);
             this.lblTotal.TabIndex = 13;
+            this.lblTotal.Text = "0,00 €";
             // 
             // lblItem
             // 
@@ -473,11 +475,22 @@
             this.btnConcluir.UseVisualStyleBackColor = false;
             this.btnConcluir.Click += new System.EventHandler(this.btnConcluir_Click);
             // 
+            // label4
+            // 
+            this.label4.AutoSize = true;
+            this.label4.Font = new System.Drawing.Font("Lucida Bright", 12F);
+            this.label4.Location = new System.Drawing.Point(701, 9);
+            this.label4.Name = "label4";
+            this.label4.Size = new System.Drawing.Size(52, 20);
+            this.label4.TabIndex = 24;
+            this.label4.Text = "Total:";
+            // 
             // FormularioBar
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(827, 558);
+            this.Controls.Add(this.label4);
             this.Controls.Add(this.btnConcluir);
             this.Controls.Add(this.groupBox1);
             this.Controls.Add(this.lstComida);
@@ -543,6 +556,7 @@
         public System.Windows.Forms.Label lblHora;
         private System.Windows.Forms.Timer timer1;
         private System.Windows.Forms.Button btnConcluir;
+        private System.Windows.Forms.Label label4;
     }
 }
 

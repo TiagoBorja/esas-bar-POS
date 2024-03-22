@@ -8,20 +8,27 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using System.Xml;
 using static System.Windows.Forms.VisualStyles.VisualStyleElement;
 
 namespace Bar_do_Esas
 {
+    struct ColunasLst {
+        public int Quantidade;
+        public int idComida;
+        public double Valor_Comida;
+        public string Nome_Comida;
+    }
+
+
+
     public partial class FormularioBar : Form
-    {
-        //variable that stores the balances 
-        double totalAcumulado = 0;
+    {    
+        double totalAcumulado = 0; //variable that stores the balances        
+        int idComidaSelecionada = 0; //store de id food  
+        double somarValorFaltante = 0;  //Sum the value in your balance when you remove a item
 
-        //store de id food 
-        int idComidaSelecionada = 0;
-
-        //Sum the value in your balance when you remove a item
-        double somarValorFaltante = 0;
+        ColunasLst[] coluna = new ColunasLst[4];
         public FormularioBar()
         {
             InitializeComponent();
@@ -42,8 +49,8 @@ namespace Bar_do_Esas
             //Pupulation the combo
             preencherCombo();
         }
-
-
+     
+        #region Buttons
         private void btnAluno_Click(object sender, EventArgs e)
         {
             FormularioAluno f_aluno = new FormularioAluno();
@@ -123,9 +130,20 @@ namespace Bar_do_Esas
         }
 
         private void btnConcluir_Click(object sender, EventArgs e)
-        {
-            
+        {        
+
+            //using(MySqlConnection conexao = new MySqlConnection(Globais.data_source))
+            //{
+            //    conexao.Open();
+            //    using(MySqlCommand cmd = new MySqlCommand())
+            //    {
+            //        cmd.Connection = conexao;
+            //        cmd.CommandText = @"INSERT INTO bar (N_Aluno,Cod_Comida,Data_Compra,N_Funcionario,Valor_Gasto)
+            //                            VALUES (@aluno,@comida,@data,@funcionario,@valor)";
+            //    }
+            //}
         }
+        #endregion
 
         #region Functions
 
@@ -136,7 +154,7 @@ namespace Bar_do_Esas
             lblNomeAluno.ResetText();
             lblSaldoAluno.ResetText();
             lstComida.Items.Clear();
-            lblTotal.Text = "Total: 0,00 €";
+            lblTotal.Text = "0,00 €";
             qntItem.Refresh();
             comboBox1.ResetText();
         }
@@ -215,7 +233,7 @@ namespace Bar_do_Esas
         private void addItem()
         {
             try
-            {
+            { 
                 using (MySqlConnection conexao = new MySqlConnection(Globais.data_source))
                 {
                     conexao.Open();
@@ -223,7 +241,7 @@ namespace Bar_do_Esas
                     {
                         cmd.Connection = conexao;
                         cmd.CommandText = @"SELECT Descricao_Comida,Valor_Comida FROM infocomida WHERE Cod_Comida = @id";
-                        cmd.Parameters.AddWithValue("@id", idComidaSelecionada);
+                        cmd.Parameters.AddWithValue("@id", coluna[0].idComida);
 
                         using (MySqlDataReader reader = cmd.ExecuteReader())
                         {
@@ -300,7 +318,7 @@ namespace Bar_do_Esas
         private void comboBox1_SelectedIndexChanged(object sender, EventArgs e)
         {
             //Keep the name food in the combo
-            string nomeComida = comboBox1.SelectedItem.ToString();
+            string nomeComida = comboBox1.SelectedItem.ToString();           
             try
             {
                 using (MySqlConnection conexao = new MySqlConnection(Globais.data_source))
@@ -318,7 +336,8 @@ namespace Bar_do_Esas
                             while (reader.Read())
                             {
                                 //Set the id from select item in the combo box
-                                idComidaSelecionada = reader.GetInt32("Cod_Comida");
+                                coluna[0].idComida = reader.GetInt32("Cod_Comida");
+                                MessageBox.Show(coluna[0].idComida.ToString());
                             }
                         }
                     }
@@ -369,6 +388,5 @@ namespace Bar_do_Esas
 
         }
         #endregion
-
     }
 }
