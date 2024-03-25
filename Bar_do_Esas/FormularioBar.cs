@@ -281,9 +281,9 @@ namespace Bar_do_Esas
                     {
                         cmd.Connection = conexao;
                         cmd.CommandText = "SELECT Valor_Comida FROM infocomida WHERE Cod_Comida = @id";
-                        
+
                         //Select the value when the id is equals a idComidaSelecionada
-                        cmd.Parameters.AddWithValue("@id",idComidaSelecionada);
+                        cmd.Parameters.AddWithValue("@id", coluna[0].idComida);
 
                         using(MySqlDataReader reader = cmd.ExecuteReader())
                         {
@@ -337,7 +337,6 @@ namespace Bar_do_Esas
                             {
                                 //Set the id from select item in the combo box
                                 coluna[0].idComida = reader.GetInt32("Cod_Comida");
-                                MessageBox.Show(coluna[0].idComida.ToString());
                             }
                         }
                     }
