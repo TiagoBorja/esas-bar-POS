@@ -16,14 +16,14 @@ namespace Bar_do_Esas
     struct ColunasLst {
         public int idComida;
         public string Nome_Comida;
-        public double Valor_Comida;
+        public decimal Valor_Comida;
         public int Quantidade;
     }
 
     public partial class FormularioBar : Form
     {    
-        double totalAcumulado = 0; //variable that stores the balances        
-        double somarValorFaltante = 0;  //Sum the value in your balance when you remove a item
+        decimal totalAcumulado = 0; //variable that stores the balances        
+        decimal somarValorFaltante = 0;  //Sum the value in your balance when you remove a item
         public int N_Funcionario;
         ColunasLst[] coluna = new ColunasLst[1];
         public FormularioBar()
@@ -135,13 +135,14 @@ namespace Bar_do_Esas
                     conexao.Open();
                     for (int i = 0; i < coluna.Length; i++) 
                     {
-                        double total = coluna[i].Valor_Comida * coluna[i].Quantidade;
+                        decimal total = coluna[i].Valor_Comida * coluna[i].Quantidade;
 
                         using (MySqlCommand cmd = new MySqlCommand())
                         {
                             cmd.Connection = conexao;
                             cmd.CommandText = @"INSERT INTO bar (N_Aluno, Cod_Comida,Data_Compra,N_Funcionario, Valor_Gasto, Quantidade) 
                                                 VALUES (@N_Aluno, @Cod_Comida, @data_compra, @N_Funcionario, @valorGasto, @quantidade)";
+
                             cmd.Parameters.AddWithValue("@N_Aluno", lblCodigoAluno.Text);
                             cmd.Parameters.AddWithValue("@Cod_Comida", coluna[i].idComida);
                             cmd.Parameters.AddWithValue("@data_compra", DateTime.Now);
@@ -179,7 +180,7 @@ namespace Bar_do_Esas
         //Sum value insert in the lstComida and sum value in the lblTotal
         private void totalAdicionado()
         {
-            double total = 0;
+            decimal total = 0;
             int i = 0;
 
             //Expand the array based in the total item in the lstComida
@@ -191,12 +192,12 @@ namespace Bar_do_Esas
                 var valorString = item.SubItems[1].Text;
                 var quantidadeString = item.SubItems[2].Text;
 
-                if (double.TryParse(valorString, out double valor) && int.TryParse(quantidadeString, out int quantidade))
+                if (decimal.TryParse(valorString, out decimal valor) && int.TryParse(quantidadeString, out int quantidade))
                 {
                     total += valor * quantidade;
                 }
 
-                coluna[i].Valor_Comida = Convert.ToDouble(item.SubItems[1].Text);
+                coluna[i].Valor_Comida = Convert.ToDecimal(item.SubItems[1].Text);
                 coluna[i].Nome_Comida = item.SubItems[0].Text;
                 coluna[i].Quantidade = Convert.ToInt32(item.SubItems[2].Text);
                 i++;
