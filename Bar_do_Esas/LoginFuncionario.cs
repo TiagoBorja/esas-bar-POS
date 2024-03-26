@@ -14,22 +14,15 @@ namespace Bar_do_Esas
     public partial class LoginFuncionario : Form
     {
        FormularioBar form1;
-        public LoginFuncionario(FormularioBar form1)
+        public LoginFuncionario(FormularioBar form1,int id)
         {
             InitializeComponent();
             this.form1 = form1;
-        }
-
-        private void label1_Click(object sender, EventArgs e)
-        {
-
+            this.txtGunaCodigo.Text = id.ToString();
         }
 
         private void btnGuna_Click(object sender, EventArgs e)
         {
-
-            
-
             var codigo = txtGunaCodigo.Text;
             var senha = txtGunaSenha.Text;
             try
@@ -71,6 +64,7 @@ namespace Bar_do_Esas
                                         // Set a variable indicating that the user is logged in and update a picture box with a green LED
                                         Globais.logado = true;
                                         form1.pb_ledLogado.Image = Properties.Resources.led_verde;
+                                        form1.N_Funcionario = Convert.ToInt32(txtGunaCodigo.Text);
                                     }
                                     else MessageBox.Show("Dados Incorretos!!!");
                                     

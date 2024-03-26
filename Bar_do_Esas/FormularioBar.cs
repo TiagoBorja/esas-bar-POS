@@ -24,15 +24,14 @@ namespace Bar_do_Esas
     {    
         double totalAcumulado = 0; //variable that stores the balances        
         double somarValorFaltante = 0;  //Sum the value in your balance when you remove a item
-
+        public int N_Funcionario;
         ColunasLst[] coluna = new ColunasLst[1];
         public FormularioBar()
         {
             InitializeComponent();
 
-            LoginFuncionario f_login = new LoginFuncionario(this);
+            LoginFuncionario f_login = new LoginFuncionario(this,N_Funcionario);
             f_login.ShowDialog();
-
             lstComida.View = View.Details;
             lstComida.LabelEdit = true;
             lstComida.AllowColumnReorder = true;
@@ -57,6 +56,7 @@ namespace Bar_do_Esas
         private void btnAdd_Click(object sender, EventArgs e)
         {
             checarSaldo_addItem();
+            MessageBox.Show(N_Funcionario.ToString());
         }
 
         private void button1_Click(object sender, EventArgs e)
@@ -145,7 +145,7 @@ namespace Bar_do_Esas
                             cmd.Parameters.AddWithValue("@N_Aluno", lblCodigoAluno.Text);
                             cmd.Parameters.AddWithValue("@Cod_Comida", coluna[i].idComida);
                             cmd.Parameters.AddWithValue("@data_compra", DateTime.Now);
-                            cmd.Parameters.AddWithValue("@N_Funcionario", 1922);
+                            cmd.Parameters.AddWithValue("@N_Funcionario", N_Funcionario);
                             cmd.Parameters.AddWithValue("@valorGasto", total);
                             cmd.Parameters.AddWithValue("@quantidade", coluna[i].Quantidade);
 
@@ -406,7 +406,7 @@ namespace Bar_do_Esas
 
         private void Form1_Load(object sender, EventArgs e)
         {
-
+            
         }
 
         private void label2_Click(object sender, EventArgs e)
