@@ -14,21 +14,18 @@ using static System.Windows.Forms.VisualStyles.VisualStyleElement;
 namespace Bar_do_Esas
 {
     struct ColunasLst {
-        public int Quantidade;
         public int idComida;
-        public double Valor_Comida;
         public string Nome_Comida;
+        public double Valor_Comida;
+        public int Quantidade;
     }
-
-
 
     public partial class FormularioBar : Form
     {    
         double totalAcumulado = 0; //variable that stores the balances        
-        int idComidaSelecionada = 0; //store de id food  
         double somarValorFaltante = 0;  //Sum the value in your balance when you remove a item
 
-        ColunasLst[] coluna = new ColunasLst[4];
+        ColunasLst[] coluna = new ColunasLst[1];
         public FormularioBar()
         {
             InitializeComponent();
@@ -130,19 +127,15 @@ namespace Bar_do_Esas
         }
 
         private void btnConcluir_Click(object sender, EventArgs e)
-        {        
-
-            //using(MySqlConnection conexao = new MySqlConnection(Globais.data_source))
-            //{
-            //    conexao.Open();
-            //    using(MySqlCommand cmd = new MySqlCommand())
-            //    {
-            //        cmd.Connection = conexao;
-            //        cmd.CommandText = @"INSERT INTO bar (N_Aluno,Cod_Comida,Data_Compra,N_Funcionario,Valor_Gasto)
-            //                            VALUES (@aluno,@comida,@data,@funcionario,@valor)";
-            //    }
-            //}
+        {
+            MessageBox.Show(coluna.Length.ToString());
+            for (int j = 0; j < coluna.Length; j++)
+            {
+                MessageBox.Show("nome " + coluna[j].Nome_Comida);
+                MessageBox.Show("valor " + coluna[j].Valor_Comida.ToString());
+            }
         }
+
         #endregion
 
         #region Functions
@@ -157,6 +150,36 @@ namespace Bar_do_Esas
             lblTotal.Text = "0,00 €";
             qntItem.Refresh();
             comboBox1.ResetText();
+        }
+
+        private void totalAdicionado()
+        {
+            double total = 0;
+            int i = 0;
+
+            //Expand the array based in the total item in the lstComida
+            Array.Resize(ref coluna, lstComida.Items.Count);
+
+            foreach (ListViewItem item in lstComida.Items)
+            {
+                //remove the items from your respectives columns and atribute your value in variable
+                var valorString = item.SubItems[1].Text;
+                var quantidadeString = item.SubItems[2].Text;
+
+                if (double.TryParse(valorString, out double valor) && int.TryParse(quantidadeString, out int quantidade))
+                {
+                    total += valor * quantidade;
+                }
+
+                coluna[i].Valor_Comida = Convert.ToDouble(item.SubItems[1].Text);
+                coluna[i].Nome_Comida = item.SubItems[0].Text;
+                coluna[i].Quantidade = Convert.ToInt32(item.SubItems[2].Text);
+                i++;
+            }
+
+            //Variable receive the total value when something is added
+            totalAcumulado = total;
+            lblTotal.Text = totalAcumulado.ToString();
         }
 
         //Remove item in the lstComida and subtract value in the lblTotal
@@ -178,25 +201,7 @@ namespace Bar_do_Esas
         }
 
         //Sum value insert in the lstComida and sum value in the lblTotal
-        private void totalAdicionado()
-        {
-            double total = 0;
-
-            foreach (ListViewItem item in lstComida.Items)
-            {
-                //remove the items from your respectives columns and atribute your value in variables
-                var valorString = item.SubItems[1].Text;
-                var quantidadeString = item.SubItems[2].Text;
-
-                if (double.TryParse(valorString, out double valor) && int.TryParse(quantidadeString, out int quantidade))
-                {
-                    total += valor * quantidade;
-                }
-            }
-            //Variable receive the total value when something is added
-            totalAcumulado = total;
-            lblTotal.Text = totalAcumulado.ToString();
-        }
+   
 
         //Read the all items in the table "infocomida" and add in the combobox
         private void preencherCombo()
