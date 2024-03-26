@@ -128,11 +128,35 @@ namespace Bar_do_Esas
 
         private void btnConcluir_Click(object sender, EventArgs e)
         {
-            MessageBox.Show(coluna.Length.ToString());
-            for (int j = 0; j < coluna.Length; j++)
+            try 
             {
-                MessageBox.Show("nome " + coluna[j].Nome_Comida);
-                MessageBox.Show("valor " + coluna[j].Valor_Comida.ToString());
+                using (MySqlConnection conexao = new MySqlConnection(Globais.data_source))
+                {
+                    conexao.Open();
+                    for (int i = 0; i < coluna.Length; i++) 
+                    {
+                        double total = coluna[i].Valor_Comida * coluna[i].Quantidade;
+
+                        using (MySqlCommand cmd = new MySqlCommand())
+                        {
+                            cmd.Connection = conexao;
+                            cmd.CommandText = @"INSERT INTO bar (N_Aluno, Cod_Comida,Data_Compra,N_Funcionario, Valor_Gasto, Quantidade) 
+                                                VALUES (@N_Aluno, @Cod_Comida, @data_compra, @N_Funcionario, @valorGasto, @quantidade)";
+                            cmd.Parameters.AddWithValue("@N_Aluno", lblCodigoAluno.Text);
+                            cmd.Parameters.AddWithValue("@Cod_Comida", coluna[i].idComida);
+                            cmd.Parameters.AddWithValue("@data_compra", DateTime.Now);
+                            cmd.Parameters.AddWithValue("@N_Funcionario", 1922);
+                            cmd.Parameters.AddWithValue("@valorGasto", total);
+                            cmd.Parameters.AddWithValue("@quantidade", coluna[i].Quantidade);
+
+                            cmd.ExecuteNonQuery();
+                        }
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message);
             }
         }
 
@@ -152,6 +176,7 @@ namespace Bar_do_Esas
             comboBox1.ResetText();
         }
 
+        //Sum value insert in the lstComida and sum value in the lblTotal
         private void totalAdicionado()
         {
             double total = 0;
@@ -199,9 +224,6 @@ namespace Bar_do_Esas
 
             lblTotal.Text = Convert.ToString(Convert.ToDouble(lblTotal.Text) - totalAcumulado);
         }
-
-        //Sum value insert in the lstComida and sum value in the lblTotal
-   
 
         //Read the all items in the table "infocomida" and add in the combobox
         private void preencherCombo()
