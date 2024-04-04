@@ -215,15 +215,15 @@ namespace Bar_do_Esas
 
             foreach (ListViewItem item in lstComida.SelectedItems)
             {
-                totalAcumulado = double.Parse(item.SubItems[1].Text) * int.Parse(item.SubItems[2].Text);
+                totalAcumulado = decimal.Parse(item.SubItems[1].Text) * int.Parse(item.SubItems[2].Text);
                 lstComida.Items.Remove(item);
 
             }
 
-            somarValorFaltante = Convert.ToDouble(lblSaldoAluno.Text) + Convert.ToDouble(totalAcumulado);
+            somarValorFaltante = Convert.ToDecimal(lblSaldoAluno.Text) + Convert.ToDecimal(totalAcumulado);
             lblSaldoAluno.Text = somarValorFaltante.ToString();
 
-            lblTotal.Text = Convert.ToString(Convert.ToDouble(lblTotal.Text) - totalAcumulado);
+            lblTotal.Text = Convert.ToString(Convert.ToDecimal(lblTotal.Text) - totalAcumulado);
         }
 
         //Read the all items in the table "infocomida" and add in the combobox
