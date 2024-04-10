@@ -5,6 +5,7 @@ using System.ComponentModel;
 using System.Data;
 using System.Drawing;
 using System.Linq;
+using System.Security.Cryptography.X509Certificates;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
@@ -13,19 +14,14 @@ using static System.Windows.Forms.VisualStyles.VisualStyleElement;
 
 namespace Bar_do_Esas
 {
-    struct ColunasLst {
-        public int idComida;
-        public string Nome_Comida;
-        public decimal Valor_Comida;
-        public int Quantidade;
-    }
-
     public partial class FormularioBar : Form
     {    
         decimal totalAcumulado = 0; //variable that stores the balances        
         decimal somarValorFaltante = 0;  //Sum the value in your balance when you remove a item
         public int N_Funcionario;
-        ColunasLst[] coluna = new ColunasLst[1];
+
+        int[] idComidaTeste = new int[1];
+      
         public FormularioBar()
         {
             InitializeComponent();
@@ -56,7 +52,6 @@ namespace Bar_do_Esas
         private void btnAdd_Click(object sender, EventArgs e)
         {
             checarSaldo_addItem();
-            MessageBox.Show(N_Funcionario.ToString());
         }
 
         private void button1_Click(object sender, EventArgs e)
@@ -128,27 +123,39 @@ namespace Bar_do_Esas
 
         private void btnConcluir_Click(object sender, EventArgs e)
         {
-            try 
+            decimal total = 0;
+            try
             {
                 using (MySqlConnection conexao = new MySqlConnection(Globais.data_source))
                 {
                     conexao.Open();
-                    for (int i = 0; i < coluna.Length; i++) 
+
+                    foreach (ListViewItem item in lstComida.Items)
                     {
-                        decimal total = coluna[i].Valor_Comida * coluna[i].Quantidade;
+                        var valorString = item.SubItems[1].Text;
+                        var quantidadeString = item.SubItems[2].Text;
+
+                        if (decimal.TryParse(valorString, out decimal valor) && int.TryParse(quantidadeString, out int quantidade))
+                        {
+                            total = valor * quantidade;
+                        }
 
                         using (MySqlCommand cmd = new MySqlCommand())
                         {
                             cmd.Connection = conexao;
                             cmd.CommandText = @"INSERT INTO bar (N_Aluno, Cod_Comida,Data_Compra,N_Funcionario, Valor_Gasto, Quantidade) 
-                                                VALUES (@N_Aluno, @Cod_Comida, @data_compra, @N_Funcionario, @valorGasto, @quantidade)";
+                                        VALUES (@N_Aluno, @Cod_Comida, @data_compra, @N_Funcionario, @valorGasto, @quantidade)";
 
                             cmd.Parameters.AddWithValue("@N_Aluno", lblCodigoAluno.Text);
-                            cmd.Parameters.AddWithValue("@Cod_Comida", coluna[i].idComida);
+
+                            // Use o Cod_Comida associado ao item do ListView a partir da lista idComidaLista
+                            int index = lstComida.Items.IndexOf(item);
+                            cmd.Parameters.AddWithValue("@Cod_Comida", idComidaLista[index]);
+
                             cmd.Parameters.AddWithValue("@data_compra", DateTime.Now);
                             cmd.Parameters.AddWithValue("@N_Funcionario", N_Funcionario);
                             cmd.Parameters.AddWithValue("@valorGasto", total);
-                            cmd.Parameters.AddWithValue("@quantidade", coluna[i].Quantidade);
+                            cmd.Parameters.AddWithValue("@quantidade", quantidadeString);
 
                             cmd.ExecuteNonQuery();
                         }
@@ -160,7 +167,44 @@ namespace Bar_do_Esas
                 MessageBox.Show(ex.Message);
             }
         }
+        List<int> idComidaLista = new List<int>();
+        private void addItem()
+        {
+            try
+            {
+                using (MySqlConnection conexao = new MySqlConnection(Globais.data_source))
+                {
+                    conexao.Open();
+                    using (MySqlCommand cmd = new MySqlCommand())
+                    {
+                        cmd.Connection = conexao;
+                        cmd.CommandText = @"SELECT Descricao_Comida,Valor_Comida FROM infocomida WHERE Cod_Comida = @id";
+                        cmd.Parameters.AddWithValue("@id", idComidaTeste[0]);
 
+                        using (MySqlDataReader reader = cmd.ExecuteReader())
+                        {
+                            while (reader.Read())
+                            {
+                                var comida = reader.GetString(0);
+                                var valor = reader.GetDouble(1).ToString();
+                                var quantidade = qntItem.Value.ToString();
+                                string[] row = { comida, valor, quantidade };
+
+                                lstComida.Items.Add(new ListViewItem(row));
+                                // Adiciona o Cod_Comida correspondente ao item do ListView à lista
+                                idComidaLista.Add(idComidaTeste[lstComida.Items.Count - 1]);
+
+                            }
+                        }
+                    }
+                }
+                totalAdicionado();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+            }
+        }
         #endregion
 
         #region Functions
@@ -181,13 +225,12 @@ namespace Bar_do_Esas
         private void totalAdicionado()
         {
             decimal total = 0;
-            int i = 0;
 
             //Expand the array based in the total item in the lstComida
-            Array.Resize(ref coluna, lstComida.Items.Count);
 
             foreach (ListViewItem item in lstComida.Items)
             {
+                Array.Resize(ref idComidaTeste, lstComida.Items.Count);
                 //remove the items from your respectives columns and atribute your value in variable
                 var valorString = item.SubItems[1].Text;
                 var quantidadeString = item.SubItems[2].Text;
@@ -196,11 +239,6 @@ namespace Bar_do_Esas
                 {
                     total += valor * quantidade;
                 }
-
-                coluna[i].Valor_Comida = Convert.ToDecimal(item.SubItems[1].Text);
-                coluna[i].Nome_Comida = item.SubItems[0].Text;
-                coluna[i].Quantidade = Convert.ToInt32(item.SubItems[2].Text);
-                i++;
             }
 
             //Variable receive the total value when something is added
@@ -258,41 +296,7 @@ namespace Bar_do_Esas
             }
         }
 
-        private void addItem()
-        {
-            try
-            { 
-                using (MySqlConnection conexao = new MySqlConnection(Globais.data_source))
-                {
-                    conexao.Open();
-                    using (MySqlCommand cmd = new MySqlCommand())
-                    {
-                        cmd.Connection = conexao;
-                        cmd.CommandText = @"SELECT Descricao_Comida,Valor_Comida FROM infocomida WHERE Cod_Comida = @id";
-                        cmd.Parameters.AddWithValue("@id", coluna[0].idComida);
-
-                        using (MySqlDataReader reader = cmd.ExecuteReader())
-                        {
-                            while (reader.Read())
-                            {
-                                var comida = reader.GetString(0);
-                                var valor = reader.GetDouble(1).ToString();
-                                var quantidade = qntItem.Value.ToString();
-                                string[] row = { comida, valor, quantidade };
-
-                                lstComida.Items.Add(new ListViewItem(row));
-
-                            }
-                        }
-                    }
-                }
-                totalAdicionado();
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show(ex.Message);
-            }
-        }
+        
         private void checarSaldo_addItem()
         {
             try
@@ -311,7 +315,7 @@ namespace Bar_do_Esas
                         cmd.CommandText = "SELECT Valor_Comida FROM infocomida WHERE Cod_Comida = @id";
 
                         //Select the value when the id is equals a idComidaSelecionada
-                        cmd.Parameters.AddWithValue("@id", coluna[0].idComida);
+                        cmd.Parameters.AddWithValue("@id", idComidaTeste[0]);
 
                         using(MySqlDataReader reader = cmd.ExecuteReader())
                         {
@@ -364,7 +368,7 @@ namespace Bar_do_Esas
                             while (reader.Read())
                             {
                                 //Set the id from select item in the combo box
-                                coluna[0].idComida = reader.GetInt32("Cod_Comida");
+                                idComidaTeste[0] = reader.GetInt32("Cod_Comida");
                             }
                         }
                     }
