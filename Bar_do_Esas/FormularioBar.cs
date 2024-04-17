@@ -46,7 +46,7 @@ namespace Bar_do_Esas
         private void btnAluno_Click(object sender, EventArgs e)
         {
             FormularioAluno f_aluno = new FormularioAluno();
-            f_aluno.ShowDialog();
+            ChecarLogin(f_aluno);
         }
 
         private void btnAdd_Click(object sender, EventArgs e)
@@ -96,14 +96,13 @@ namespace Bar_do_Esas
         private void btnFuncionario_Click(object sender, EventArgs e)
         {
             FormularioFuncionario f = new FormularioFuncionario();
-
-            f.ShowDialog();
+            ChecarLogin(f);
         }
 
         private void btnComida_Click(object sender, EventArgs e)
         {
-            FormularioComida f = new FormularioComida();
-            f.ShowDialog();
+            FormularioComida f = new FormularioComida();       
+            ChecarLogin(f);
         }
 
         private void btnClear_Click(object sender, EventArgs e)
@@ -192,7 +191,7 @@ namespace Bar_do_Esas
 
                                 lstComida.Items.Add(new ListViewItem(row));
                                 // Adiciona o Cod_Comida correspondente ao item do ListView à lista
-                                idComidaLista.Add(idComidaTeste[lstComida.Items.Count - 1]);
+                                idComidaLista.Add(idComidaTeste[0]);
 
                             }
                         }
@@ -204,6 +203,15 @@ namespace Bar_do_Esas
             {
                 MessageBox.Show(ex.Message);
             }
+        }
+
+        private void ChecarLogin(Form f)
+        {
+            if (Globais.logado == true)
+            {
+                f.ShowDialog();
+            }
+            else MessageBox.Show("Necessário um login.");
         }
         #endregion
 
@@ -228,9 +236,9 @@ namespace Bar_do_Esas
 
             //Expand the array based in the total item in the lstComida
 
+            Array.Resize(ref idComidaTeste, lstComida.Items.Count);
             foreach (ListViewItem item in lstComida.Items)
             {
-                Array.Resize(ref idComidaTeste, lstComida.Items.Count);
                 //remove the items from your respectives columns and atribute your value in variable
                 var valorString = item.SubItems[1].Text;
                 var quantidadeString = item.SubItems[2].Text;
@@ -419,5 +427,23 @@ namespace Bar_do_Esas
 
         }
         #endregion
+
+        private void btnEntrar_Click(object sender, EventArgs e)
+        {
+            if(btnEntrarSair.Text == "Entrar")
+            {
+                LoginFuncionario f = new LoginFuncionario(this, N_Funcionario);
+                f.ShowDialog();
+                btnEntrarSair.Text = "Sair";
+               
+            }else
+            {
+                btnEntrarSair.Text = "Entrar";
+                pb_ledLogado.Image = Properties.Resources.led_vermelho;
+                lblNome.Text = "---";
+                Globais.logado = false;
+                N_Funcionario = 0;
+            }
+        }
     }
 }

@@ -62,6 +62,7 @@
             this.timer1 = new System.Windows.Forms.Timer(this.components);
             this.btnConcluir = new System.Windows.Forms.Button();
             this.label4 = new System.Windows.Forms.Label();
+            this.btnEntrarSair = new System.Windows.Forms.Button();
             this.panel1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pb_ledLogado)).BeginInit();
             this.panel2.SuspendLayout();
@@ -133,6 +134,7 @@
             // panel2
             // 
             this.panel2.BackColor = System.Drawing.SystemColors.ActiveCaption;
+            this.panel2.Controls.Add(this.btnEntrarSair);
             this.panel2.Controls.Add(this.btnClear);
             this.panel2.Controls.Add(this.button1);
             this.panel2.Controls.Add(this.btnFuncionario);
@@ -175,10 +177,10 @@
             // btnFuncionario
             // 
             this.btnFuncionario.Font = new System.Drawing.Font("Lucida Bright", 10.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnFuncionario.Location = new System.Drawing.Point(9, 422);
+            this.btnFuncionario.Location = new System.Drawing.Point(15, 428);
             this.btnFuncionario.Margin = new System.Windows.Forms.Padding(2);
             this.btnFuncionario.Name = "btnFuncionario";
-            this.btnFuncionario.Size = new System.Drawing.Size(141, 26);
+            this.btnFuncionario.Size = new System.Drawing.Size(124, 26);
             this.btnFuncionario.TabIndex = 8;
             this.btnFuncionario.Text = "Checar Funcionário";
             this.btnFuncionario.UseVisualStyleBackColor = true;
@@ -237,7 +239,7 @@
             this.lbl_Funcionario.AutoSize = true;
             this.lbl_Funcionario.Font = new System.Drawing.Font("Lucida Bright", 13.8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lbl_Funcionario.ForeColor = System.Drawing.SystemColors.ActiveCaptionText;
-            this.lbl_Funcionario.Location = new System.Drawing.Point(23, 399);
+            this.lbl_Funcionario.Location = new System.Drawing.Point(13, 404);
             this.lbl_Funcionario.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.lbl_Funcionario.Name = "lbl_Funcionario";
             this.lbl_Funcionario.Size = new System.Drawing.Size(127, 22);
@@ -485,6 +487,17 @@
             this.label4.TabIndex = 24;
             this.label4.Text = "Total:";
             // 
+            // btnEntrarSair
+            // 
+            this.btnEntrarSair.Font = new System.Drawing.Font("Lucida Bright", 10.2F);
+            this.btnEntrarSair.Location = new System.Drawing.Point(15, 468);
+            this.btnEntrarSair.Name = "btnEntrarSair";
+            this.btnEntrarSair.Size = new System.Drawing.Size(124, 26);
+            this.btnEntrarSair.TabIndex = 11;
+            this.btnEntrarSair.Text = "Entrar";
+            this.btnEntrarSair.UseVisualStyleBackColor = true;
+            this.btnEntrarSair.Click += new System.EventHandler(this.btnEntrar_Click);
+            // 
             // FormularioBar
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -557,6 +570,7 @@
         private System.Windows.Forms.Timer timer1;
         private System.Windows.Forms.Button btnConcluir;
         private System.Windows.Forms.Label label4;
+        public System.Windows.Forms.Button btnEntrarSair;
     }
 }
 

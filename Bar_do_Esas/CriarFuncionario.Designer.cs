@@ -109,6 +109,7 @@
             this.txtGunaSenha.HoverState.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(94)))), ((int)(((byte)(148)))), ((int)(((byte)(255)))));
             this.txtGunaSenha.Location = new System.Drawing.Point(50, 156);
             this.txtGunaSenha.Margin = new System.Windows.Forms.Padding(2, 4, 2, 4);
+            this.txtGunaSenha.MaxLength = 4;
             this.txtGunaSenha.Name = "txtGunaSenha";
             this.txtGunaSenha.PasswordChar = '*';
             this.txtGunaSenha.PlaceholderText = "";
@@ -129,6 +130,7 @@
             this.txtGunaCodigo.HoverState.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(94)))), ((int)(((byte)(148)))), ((int)(((byte)(255)))));
             this.txtGunaCodigo.Location = new System.Drawing.Point(50, 45);
             this.txtGunaCodigo.Margin = new System.Windows.Forms.Padding(4);
+            this.txtGunaCodigo.MaxLength = 4;
             this.txtGunaCodigo.Name = "txtGunaCodigo";
             this.txtGunaCodigo.PasswordChar = '\0';
             this.txtGunaCodigo.PlaceholderText = "";
@@ -181,6 +183,7 @@
             this.Controls.Add(this.txtGunaSenha);
             this.Controls.Add(this.txtGunaCodigo);
             this.Name = "CriarFuncionario";
+            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "CriarFuncionario";
             this.ResumeLayout(false);
             this.PerformLayout();

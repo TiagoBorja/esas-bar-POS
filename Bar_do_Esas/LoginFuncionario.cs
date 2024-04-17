@@ -65,6 +65,7 @@ namespace Bar_do_Esas
                                         Globais.logado = true;
                                         form1.pb_ledLogado.Image = Properties.Resources.led_verde;
                                         form1.N_Funcionario = Convert.ToInt32(txtGunaCodigo.Text);
+                                        form1.btnEntrarSair.Text = "Sair";
                                     }
                                     else MessageBox.Show("Dados Incorretos!!!");
                                     
