@@ -117,6 +117,7 @@
             this.lstComida.Size = new System.Drawing.Size(457, 285);
             this.lstComida.TabIndex = 18;
             this.lstComida.UseCompatibleStateImageBehavior = false;
+            this.lstComida.ItemSelectionChanged += new System.Windows.Forms.ListViewItemSelectionChangedEventHandler(this.lstComida_ItemSelectionChanged);
             this.lstComida.SelectedIndexChanged += new System.EventHandler(this.lstComida_SelectedIndexChanged);
             // 
             // panel1

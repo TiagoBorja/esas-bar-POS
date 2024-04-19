@@ -1,4 +1,5 @@
 ﻿using MySql.Data.MySqlClient;
+using Mysqlx;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -21,7 +22,8 @@ namespace Bar_do_Esas
         public int N_Funcionario;
 
         int[] idComidaTeste = new int[1];
-      
+
+        List<int> idComidaLista = new List<int>();
         public FormularioBar()
         {
             InitializeComponent();
@@ -51,40 +53,64 @@ namespace Bar_do_Esas
 
         private void btnAdd_Click(object sender, EventArgs e)
         {
-            checarSaldo_addItem();
+            if (comboBox1.SelectedItem != null)
+                checarSaldo_addItem();
+            else MessageBox.Show("Selecione um item antes de prosseguir.","Atenção",MessageBoxButtons.OK,MessageBoxIcon.Warning);
         }
 
         private void button1_Click(object sender, EventArgs e)
         {
             try
             {
-                //Search code from someone student
-                int numero = Convert.ToInt32(Microsoft.VisualBasic.Interaction.InputBox("Insira o código do aluno.", "Código Aluno"));
+                var numeroStr = Microsoft.VisualBasic.Interaction.InputBox("Insira o código do aluno.", "Código Aluno");
 
-                using (MySqlConnection conexao = new MySqlConnection(Globais.data_source))
+                // Verifica se o valor inserido é nulo ou composto apenas de espaços em branco
+                if (!string.IsNullOrWhiteSpace(numeroStr))
                 {
-                    conexao.Open();
-                    using (MySqlCommand cmd = new MySqlCommand())
-                    {
-                        cmd.Connection = conexao;
-                        cmd.CommandText = @"SELECT N_Aluno,Nome_Aluno,Saldo FROM aluno
-                                            WHERE N_Aluno = @codigo";
-                        cmd.Parameters.AddWithValue("@codigo", numero);
-                        
-                        using (MySqlDataReader reader = cmd.ExecuteReader())
-                        {
-                            while (reader.Read())
-                            {
-                                lblCodigoAluno.Text = reader.GetInt32(0).ToString();
-                                lblNomeAluno.Text = reader.GetString(1);
-                                lblSaldoAluno.Text = reader.GetDouble(2).ToString();
+                    int numero;
 
-                                lblCodigoAluno.Visible = true;
-                                lblNomeAluno.Visible = true;
-                                lblSaldoAluno.Visible = true;
+                    // Verifica se o valor inserido pode ser convertido para um número inteiro
+                    if (int.TryParse(numeroStr, out numero))
+                    {
+                        using (MySqlConnection conexao = new MySqlConnection(Globais.data_source))
+                        {
+                            conexao.Open();
+                            using (MySqlCommand cmd = new MySqlCommand())
+                            {
+                                cmd.Connection = conexao;
+                                cmd.CommandText = @"SELECT N_Aluno, Nome_Aluno, Saldo FROM aluno
+                                        WHERE N_Aluno = @codigo";
+                                cmd.Parameters.AddWithValue("@codigo", numero);
+
+                                using (MySqlDataReader reader = cmd.ExecuteReader())
+                                {
+                                    while (reader.Read())
+                                    {
+                                        lblCodigoAluno.Text = reader.GetInt32(0).ToString();
+                                        lblNomeAluno.Text = reader.GetString(1);
+                                        lblSaldoAluno.Text = reader.GetDouble(2).ToString();
+
+                                        lblCodigoAluno.Visible = true;
+                                        lblNomeAluno.Visible = true;
+                                        lblSaldoAluno.Visible = true;
+                                    }
+
+                                    if (!reader.HasRows)
+                                    {
+                                        MessageBox.Show("Código aluno não encontrado", "Atenção", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+                                    }
+                                }
                             }
                         }
                     }
+                    else
+                    {
+                        MessageBox.Show("Insira somente números para o código do aluno", "Atenção", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    }
+                }
+                else
+                {
+                    MessageBox.Show("Insira somente números para o código do aluno", "Atenção", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 }
             }
             catch (Exception ex)
@@ -157,6 +183,8 @@ namespace Bar_do_Esas
                             cmd.Parameters.AddWithValue("@quantidade", quantidadeString);
 
                             cmd.ExecuteNonQuery();
+
+                            limparTudo();
                         }
                     }
                 }
@@ -166,53 +194,8 @@ namespace Bar_do_Esas
                 MessageBox.Show(ex.Message);
             }
         }
-        List<int> idComidaLista = new List<int>();
-        private void addItem()
-        {
-            try
-            {
-                using (MySqlConnection conexao = new MySqlConnection(Globais.data_source))
-                {
-                    conexao.Open();
-                    using (MySqlCommand cmd = new MySqlCommand())
-                    {
-                        cmd.Connection = conexao;
-                        cmd.CommandText = @"SELECT Descricao_Comida,Valor_Comida FROM infocomida WHERE Cod_Comida = @id";
-                        cmd.Parameters.AddWithValue("@id", idComidaTeste[0]);
-
-                        using (MySqlDataReader reader = cmd.ExecuteReader())
-                        {
-                            while (reader.Read())
-                            {
-                                var comida = reader.GetString(0);
-                                var valor = reader.GetDouble(1).ToString();
-                                var quantidade = qntItem.Value.ToString();
-                                string[] row = { comida, valor, quantidade };
-
-                                lstComida.Items.Add(new ListViewItem(row));
-                                // Adiciona o Cod_Comida correspondente ao item do ListView à lista
-                                idComidaLista.Add(idComidaTeste[0]);
-
-                            }
-                        }
-                    }
-                }
-                totalAdicionado();
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show(ex.Message);
-            }
-        }
-
-        private void ChecarLogin(Form f)
-        {
-            if (Globais.logado == true)
-            {
-                f.ShowDialog();
-            }
-            else MessageBox.Show("Necessário um login.");
-        }
+        
+        
         #endregion
 
         #region Functions
@@ -302,9 +285,7 @@ namespace Bar_do_Esas
             {
                 MessageBox.Show(ex.Message);
             }
-        }
-
-        
+        }      
         private void checarSaldo_addItem()
         {
             try
@@ -334,11 +315,10 @@ namespace Bar_do_Esas
 
                                 //Sum the value the food * quantity solicited
                                 valorComidaSelecionada *= Convert.ToDouble(quantidade);
-                                
+
                                 if (valorComidaSelecionada <= saldoAluno)
                                 {
                                     addItem();
-
                                     //after add a item, subtract the value in your balance in an abstract way
                                     saldoAluno -= valorComidaSelecionada;
                                     lblSaldoAluno.Text = saldoAluno.ToString();
@@ -351,14 +331,63 @@ namespace Bar_do_Esas
             }
             catch (Exception ex)
             {
+                var code = ex.HResult;
+               // Error e= new Error();   
+                
+                MessageBox.Show(code.ToString());
+            }
+
+
+        }
+        private void addItem()
+        {
+            try
+            {
+                using (MySqlConnection conexao = new MySqlConnection(Globais.data_source))
+                {
+                    conexao.Open();
+                    using (MySqlCommand cmd = new MySqlCommand())
+                    {
+                        cmd.Connection = conexao;
+                        cmd.CommandText = @"SELECT Descricao_Comida,Valor_Comida FROM infocomida WHERE Cod_Comida = @id";
+                        cmd.Parameters.AddWithValue("@id", idComidaTeste[0]);
+
+                        using (MySqlDataReader reader = cmd.ExecuteReader())
+                        {
+                            while (reader.Read())
+                            {
+                                var comida = reader.GetString(0);
+                                var valor = reader.GetDouble(1).ToString();
+                                var quantidade = qntItem.Value.ToString();
+                                string[] row = { comida, valor, quantidade };
+
+                                lstComida.Items.Add(new ListViewItem(row));
+                                // Adiciona o Cod_Comida correspondente ao item do ListView à lista
+                                idComidaLista.Add(idComidaTeste[0]);
+
+                            }
+                        }
+                    }
+                }
+                totalAdicionado();
+            }
+            catch (Exception ex)
+            {
                 MessageBox.Show(ex.Message);
             }
         }
-
+        private void ChecarLogin(Form f)
+        {
+            if (Globais.logado == true)
+            {
+                f.ShowDialog();
+            }
+            else MessageBox.Show("Necessário um login.");
+        }
         private void comboBox1_SelectedIndexChanged(object sender, EventArgs e)
         {
-            //Keep the name food in the combo
-            string nomeComida = comboBox1.SelectedItem.ToString();           
+            //Keep the name food in the combo           
+                string nomeComida = comboBox1.SelectedItem.ToString();
             try
             {
                 using (MySqlConnection conexao = new MySqlConnection(Globais.data_source))
@@ -385,7 +414,7 @@ namespace Bar_do_Esas
             catch (Exception ex)
             {
                 MessageBox.Show(ex.Message);
-            }
+            }   
         }
         #endregion
 
