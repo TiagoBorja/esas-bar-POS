@@ -35,6 +35,7 @@
             this.label1 = new System.Windows.Forms.Label();
             this.pb_ledLogado = new System.Windows.Forms.PictureBox();
             this.panel2 = new System.Windows.Forms.Panel();
+            this.btnEntrarSair = new System.Windows.Forms.Button();
             this.btnClear = new System.Windows.Forms.Button();
             this.button1 = new System.Windows.Forms.Button();
             this.btnFuncionario = new System.Windows.Forms.Button();
@@ -62,7 +63,6 @@
             this.timer1 = new System.Windows.Forms.Timer(this.components);
             this.btnConcluir = new System.Windows.Forms.Button();
             this.label4 = new System.Windows.Forms.Label();
-            this.btnEntrarSair = new System.Windows.Forms.Button();
             this.panel1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pb_ledLogado)).BeginInit();
             this.panel2.SuspendLayout();
@@ -149,6 +149,17 @@
             this.panel2.Name = "panel2";
             this.panel2.Size = new System.Drawing.Size(158, 526);
             this.panel2.TabIndex = 1;
+            // 
+            // btnEntrarSair
+            // 
+            this.btnEntrarSair.Font = new System.Drawing.Font("Lucida Bright", 10.2F);
+            this.btnEntrarSair.Location = new System.Drawing.Point(15, 468);
+            this.btnEntrarSair.Name = "btnEntrarSair";
+            this.btnEntrarSair.Size = new System.Drawing.Size(124, 26);
+            this.btnEntrarSair.TabIndex = 11;
+            this.btnEntrarSair.Text = "Entrar";
+            this.btnEntrarSair.UseVisualStyleBackColor = true;
+            this.btnEntrarSair.Click += new System.EventHandler(this.btnEntrar_Click);
             // 
             // btnClear
             // 
@@ -486,17 +497,6 @@
             this.label4.Size = new System.Drawing.Size(52, 20);
             this.label4.TabIndex = 24;
             this.label4.Text = "Total:";
-            // 
-            // btnEntrarSair
-            // 
-            this.btnEntrarSair.Font = new System.Drawing.Font("Lucida Bright", 10.2F);
-            this.btnEntrarSair.Location = new System.Drawing.Point(15, 468);
-            this.btnEntrarSair.Name = "btnEntrarSair";
-            this.btnEntrarSair.Size = new System.Drawing.Size(124, 26);
-            this.btnEntrarSair.TabIndex = 11;
-            this.btnEntrarSair.Text = "Entrar";
-            this.btnEntrarSair.UseVisualStyleBackColor = true;
-            this.btnEntrarSair.Click += new System.EventHandler(this.btnEntrar_Click);
             // 
             // FormularioBar
             // 

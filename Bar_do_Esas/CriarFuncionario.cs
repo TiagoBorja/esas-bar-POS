@@ -23,21 +23,21 @@ namespace Bar_do_Esas
             txtGunaSenha.KeyPress += SomenteNumeros;
             txtGunaNome.KeyPress += SomenteLetras;
             
-            txtGunaCodigo.TextChanged += RemoverEspacos;
-            txtGunaNome.TextChanged += RemoverEspacos;
-            txtGunaSenha.TextChanged += RemoverEspacos;
+            txtGunaCodigo.TextChanged += RemoverEspacos;            
+            txtGunaSenha.TextChanged += RemoverEspacos;           
         }
 
         private void btnGuna_Click(object sender, EventArgs e)
         {
             try
             {
-                if (this.Controls.OfType<Guna2TextBox>().Any(f => string.IsNullOrEmpty(f.Text)))                
-                    MessageBox.Show("É necessário preencher todos os campos.", "Atenção", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);                
+                if (this.Controls.OfType<Guna2TextBox>().Any(f => string.IsNullOrWhiteSpace(f.Text)))                
+                    MessageBox.Show("É necessário preencher todos os campos antes de prosseguir.", "Atenção", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);                
                 else                
                     NovoFuncionario();
-                
-            }catch(Exception ex)
+
+            }
+            catch(Exception ex)
             {
                 MessageBox.Show(ex.Message);
             }
@@ -79,24 +79,33 @@ namespace Bar_do_Esas
         
         private void NovoFuncionario()
         {
-            using (MySqlConnection conexao = new MySqlConnection(Globais.data_source))
+            try
             {
-                conexao.Open();
-
-                using (MySqlCommand cmd = new MySqlCommand())
+                string senha = BCrypt.Net.BCrypt.EnhancedHashPassword(txtGunaSenha.Text, 13);
+                using (MySqlConnection conexao = new MySqlConnection(Globais.data_source))
                 {
-                    cmd.Connection = conexao;
-                    cmd.CommandText = @"INSERT INTO dados_funcionario
-                                           VALUES(@codigo,@nome,@senha)";
-                    cmd.Parameters.AddWithValue("@codigo", txtGunaCodigo.Text);
-                    cmd.Parameters.AddWithValue("@nome", txtGunaNome.Text);
-                    cmd.Parameters.AddWithValue("@senha", txtGunaSenha.Text);
-                    cmd.ExecuteNonQuery();
+                    conexao.Open();
 
-                    this.Close();
-                    MessageBox.Show("Funcionário criado com sucesso!");
+                    using (MySqlCommand cmd = new MySqlCommand())
+                    {
+                        cmd.Connection = conexao;
+                        cmd.CommandText = @"INSERT INTO dados_funcionario
+                                           VALUES(@codigo,@nome,@senha)";
+                        cmd.Parameters.AddWithValue("@codigo", txtGunaCodigo.Text);
+                        cmd.Parameters.AddWithValue("@nome", txtGunaNome.Text);
+                        cmd.Parameters.AddWithValue("@senha", senha);
+                        cmd.ExecuteNonQuery();
+
+                        this.Close();
+                        MessageBox.Show("Funcionário criado com sucesso!");
+                    }
                 }
             }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+            }
         }
+
     }
 }

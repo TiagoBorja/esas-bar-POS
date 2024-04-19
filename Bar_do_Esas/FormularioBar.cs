@@ -391,11 +391,6 @@ namespace Bar_do_Esas
 
         #region Dont Used
 
-        private void lstComida_SelectedIndexChanged(object sender, EventArgs e)
-        {
-
-        }
-
         private void timer1_Tick(object sender, EventArgs e)
         {
 
@@ -444,6 +439,11 @@ namespace Bar_do_Esas
                 Globais.logado = false;
                 N_Funcionario = 0;
             }
+        }
+
+        private void lstComida_SelectedIndexChanged(object sender, EventArgs e)
+        {
+
         }
     }
 }

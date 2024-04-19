@@ -31,19 +31,6 @@ namespace Bar_do_Esas
             carregarComida();
         }
 
-        private void lstComida_ItemSelectionChanged(object sender, ListViewItemSelectionChangedEventArgs e)
-        {
-            ListView.SelectedListViewItemCollection itens_selecionados = lstComida.SelectedItems;
-
-            foreach (ListViewItem item in itens_selecionados)
-            {
-                txtCodigo.Text = item.SubItems[0].Text;
-                txtNome.Text = item.SubItems[1].Text;
-                txtValor.Text = item.SubItems[2].Text;
-            }
-
-        }
-
         private void carregarComida()
         {
             try
