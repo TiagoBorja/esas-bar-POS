@@ -53,7 +53,7 @@ namespace Bar_do_Esas
 
         private void btnAdd_Click(object sender, EventArgs e)
         {
-            if (comboBox1.SelectedItem != null)
+            if (cbItem.SelectedItem != null && !string.IsNullOrEmpty(lblCodigoAluno.Text))
                 checarSaldo_addItem();
             else MessageBox.Show("Selecione um item antes de prosseguir.","Atenção",MessageBoxButtons.OK,MessageBoxIcon.Warning);
         }
@@ -209,7 +209,7 @@ namespace Bar_do_Esas
             lstComida.Items.Clear();
             lblTotal.Text = "0,00 €";
             qntItem.Refresh();
-            comboBox1.ResetText();
+            cbItem.ResetText();
         }
 
         //Sum value insert in the lstComida and sum value in the lblTotal
@@ -272,10 +272,10 @@ namespace Bar_do_Esas
                         {
                             while (reader.Read())
                             {
-                                comboBox1.Items.Add(reader["Descricao_Comida"]).ToString();
-                                comboBox1.DisplayMember = reader["Descricao_Comida"].ToString();
-                                comboBox1.ValueMember = reader["Cod_Comida"].ToString();
-                                comboBox1.SelectedIndex = -1;
+                                cbItem.Items.Add(reader["Descricao_Comida"]).ToString();
+                                cbItem.DisplayMember = reader["Descricao_Comida"].ToString();
+                                cbItem.ValueMember = reader["Cod_Comida"].ToString();
+                                cbItem.SelectedIndex = -1;
                             }
                         }
                     }
@@ -291,52 +291,48 @@ namespace Bar_do_Esas
             try
             {
                 //This variable holds the id when one has an item selected
-                double valorComidaSelecionada = 0;
+                decimal valorComidaSelecionada = 0;
 
                 int quantidade = Convert.ToInt32(qntItem.Value);
-                double saldoAluno = Convert.ToDouble(lblSaldoAluno.Text);
+                decimal saldoAluno = Convert.ToDecimal(lblSaldoAluno.Text);
                 using (MySqlConnection conexao = new MySqlConnection(Globais.data_source))
-                {
-                    conexao.Open();
-                    using (MySqlCommand cmd = new MySqlCommand())
                     {
-                        cmd.Connection = conexao;
-                        cmd.CommandText = "SELECT Valor_Comida FROM infocomida WHERE Cod_Comida = @id";
-
-                        //Select the value when the id is equals a idComidaSelecionada
-                        cmd.Parameters.AddWithValue("@id", idComidaTeste[0]);
-
-                        using(MySqlDataReader reader = cmd.ExecuteReader())
+                        conexao.Open();
+                        using (MySqlCommand cmd = new MySqlCommand())
                         {
-                            while (reader.Read())
+                            cmd.Connection = conexao;
+                            cmd.CommandText = "SELECT Valor_Comida FROM infocomida WHERE Cod_Comida = @id";
+
+                            //Select the value when the id is equals a idComidaSelecionada
+                            cmd.Parameters.AddWithValue("@id", idComidaTeste[0]);
+
+                            using (MySqlDataReader reader = cmd.ExecuteReader())
                             {
-                                //Search the column in the database
-                                valorComidaSelecionada = reader.GetDouble("Valor_Comida");
-
-                                //Sum the value the food * quantity solicited
-                                valorComidaSelecionada *= Convert.ToDouble(quantidade);
-
-                                if (valorComidaSelecionada <= saldoAluno)
+                                while (reader.Read())
                                 {
-                                    addItem();
-                                    //after add a item, subtract the value in your balance in an abstract way
-                                    saldoAluno -= valorComidaSelecionada;
-                                    lblSaldoAluno.Text = saldoAluno.ToString();
+                                    //Search the column in the database
+                                    valorComidaSelecionada = reader.GetDecimal("Valor_Comida");
+
+                                    //Sum the value the food * quantity solicited
+                                    valorComidaSelecionada *= Convert.ToDecimal(quantidade);
+
+                                    if (valorComidaSelecionada <= saldoAluno)
+                                    {
+                                        addItem();
+                                        //after add a item, subtract the value in your balance in an abstract way
+                                        saldoAluno -= valorComidaSelecionada;
+                                        lblSaldoAluno.Text = saldoAluno.ToString();
+                                    }
+                                    else MessageBox.Show("Seu saldo é inferior ao saldo requisitado", "Saldo Insuficiente");
                                 }
-                                else MessageBox.Show("Seu saldo é inferior ao saldo requisitado", "Saldo Insuficiente");
                             }
                         }
                     }
-                }
             }
             catch (Exception ex)
             {
-                var code = ex.HResult;
-               // Error e= new Error();   
-                
-                MessageBox.Show(code.ToString());
+                MessageBox.Show(ex.Message);
             }
-
 
         }
         private void addItem()
@@ -387,7 +383,7 @@ namespace Bar_do_Esas
         private void comboBox1_SelectedIndexChanged(object sender, EventArgs e)
         {
             //Keep the name food in the combo           
-                string nomeComida = comboBox1.SelectedItem.ToString();
+                string nomeComida = cbItem.SelectedItem.ToString();
             try
             {
                 using (MySqlConnection conexao = new MySqlConnection(Globais.data_source))
