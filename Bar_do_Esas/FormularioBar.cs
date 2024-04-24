@@ -9,6 +9,7 @@ using System.Linq;
 using System.Security.Cryptography.X509Certificates;
 using System.Text;
 using System.Threading.Tasks;
+using System.Web.UI;
 using System.Windows.Forms;
 using System.Xml;
 using static System.Windows.Forms.VisualStyles.VisualStyleElement;
@@ -55,7 +56,7 @@ namespace Bar_do_Esas
         {
             if (cbItem.SelectedItem != null && !string.IsNullOrEmpty(lblCodigoAluno.Text))
                 checarSaldo_addItem();
-            else MessageBox.Show("Selecione um item antes de prosseguir.","Atenção",MessageBoxButtons.OK,MessageBoxIcon.Warning);
+            else MessageBox.Show("Selecione um item antes de prosseguir ou Insira um código aluno.","Atenção",MessageBoxButtons.OK,MessageBoxIcon.Warning);
         }
 
         private void button1_Click(object sender, EventArgs e)
@@ -184,18 +185,16 @@ namespace Bar_do_Esas
 
                             cmd.ExecuteNonQuery();
 
-                            limparTudo();
                         }
                     }
                 }
+                limparTudo();
             }
             catch (Exception ex)
             {
                 MessageBox.Show(ex.Message);
             }
         }
-        
-        
         #endregion
 
         #region Functions
@@ -270,13 +269,29 @@ namespace Bar_do_Esas
                         cmd.CommandText = sql;
                         using(MySqlDataReader reader = cmd.ExecuteReader())
                         {
+                            //while (reader.Read())
+                            //{
+                            //    cbItem.Items.Add(reader["Descricao_Comida"]).ToString();
+                            //    cbItem.DisplayMember = reader["Descricao_Comida"].ToString();
+                            //    cbItem.SelectedIndex = -1;
+                            //    cbItem.ValueMember = reader["Cod_Comida"].ToString();
+                            //}
+
                             while (reader.Read())
                             {
-                                cbItem.Items.Add(reader["Descricao_Comida"]).ToString();
-                                cbItem.DisplayMember = reader["Descricao_Comida"].ToString();
+                                string nomeProduto = reader.GetString("Descricao_Comida");
+                                decimal valorProduto = reader.GetDecimal("Valor_Comida");
+
+                                // Concatena o nome do produto e seu valor em uma única string
+                                string item = $"{nomeProduto} - {valorProduto.ToString("N2")}€";
+
+                                // Adiciona o item ao ComboBox
+                                cbItem.Items.Add(item);
+
+                                // Configura o ValueMember do ComboBox
                                 cbItem.ValueMember = reader["Cod_Comida"].ToString();
-                                cbItem.SelectedIndex = -1;
                             }
+                            cbItem.DisplayMember = reader.GetString("Descricao_Comida");
                         }
                     }
                 }
@@ -383,7 +398,8 @@ namespace Bar_do_Esas
         private void comboBox1_SelectedIndexChanged(object sender, EventArgs e)
         {
             //Keep the name food in the combo           
-                string nomeComida = cbItem.SelectedItem.ToString();
+            string itemSelecionado = cbItem.SelectedItem.ToString();
+            string nomeComida = itemSelecionado.Split('-')[0].Trim();
             try
             {
                 using (MySqlConnection conexao = new MySqlConnection(Globais.data_source))
@@ -402,6 +418,8 @@ namespace Bar_do_Esas
                             {
                                 //Set the id from select item in the combo box
                                 idComidaTeste[0] = reader.GetInt32("Cod_Comida");
+
+                                MessageBox.Show(idComidaTeste[0].ToString());
                             }
                         }
                     }
@@ -450,19 +468,21 @@ namespace Bar_do_Esas
 
         private void btnEntrar_Click(object sender, EventArgs e)
         {
-            if(btnEntrarSair.Text == "Entrar")
+            if (btnEntrarSair.Text == "Entrar")
             {
                 LoginFuncionario f = new LoginFuncionario(this, N_Funcionario);
                 f.ShowDialog();
                 btnEntrarSair.Text = "Sair";
-               
-            }else
+
+            }
+            else
             {
                 btnEntrarSair.Text = "Entrar";
                 pb_ledLogado.Image = Properties.Resources.led_vermelho;
                 lblNome.Text = "---";
                 Globais.logado = false;
                 N_Funcionario = 0;
+                limparTudo();
             }
         }
 

@@ -52,6 +52,7 @@
             this.txtGunaCodigo.HoverState.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(94)))), ((int)(((byte)(148)))), ((int)(((byte)(255)))));
             this.txtGunaCodigo.Location = new System.Drawing.Point(49, 63);
             this.txtGunaCodigo.Margin = new System.Windows.Forms.Padding(4);
+            this.txtGunaCodigo.MaxLength = 4;
             this.txtGunaCodigo.Name = "txtGunaCodigo";
             this.txtGunaCodigo.PasswordChar = '\0';
             this.txtGunaCodigo.PlaceholderText = "";
