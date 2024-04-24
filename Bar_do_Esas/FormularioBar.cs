@@ -158,8 +158,9 @@ namespace Bar_do_Esas
 
                     foreach (ListViewItem item in lstComida.Items)
                     {
-                        var valorString = item.SubItems[1].Text;
-                        var quantidadeString = item.SubItems[2].Text;
+                        string descricaoComida = item.SubItems[0].Text;
+                        string valorString = item.SubItems[1].Text;
+                        string quantidadeString = item.SubItems[2].Text;
 
                         if (decimal.TryParse(valorString, out decimal valor) && int.TryParse(quantidadeString, out int quantidade))
                         {
@@ -173,21 +174,16 @@ namespace Bar_do_Esas
                                         VALUES (@N_Aluno, @Cod_Comida, @data_compra, @N_Funcionario, @valorGasto, @quantidade)";
 
                             cmd.Parameters.AddWithValue("@N_Aluno", lblCodigoAluno.Text);
-
-                            // Use o Cod_Comida associado ao item do ListView a partir da lista idComidaLista
-                            int index = lstComida.Items.IndexOf(item);
-                            cmd.Parameters.AddWithValue("@Cod_Comida", idComidaLista[index]);
-
+                            cmd.Parameters.AddWithValue("@Cod_Comida", obterIdComida(descricaoComida));
                             cmd.Parameters.AddWithValue("@data_compra", DateTime.Now);
                             cmd.Parameters.AddWithValue("@N_Funcionario", N_Funcionario);
                             cmd.Parameters.AddWithValue("@valorGasto", total);
                             cmd.Parameters.AddWithValue("@quantidade", quantidadeString);
-
                             cmd.ExecuteNonQuery();
-
                         }
                     }
                 }
+                MessageBox.Show("Compra realizada com sucesso!", "Concluído", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 limparTudo();
             }
             catch (Exception ex)
@@ -418,8 +414,6 @@ namespace Bar_do_Esas
                             {
                                 //Set the id from select item in the combo box
                                 idComidaTeste[0] = reader.GetInt32("Cod_Comida");
-
-                                MessageBox.Show(idComidaTeste[0].ToString());
                             }
                         }
                     }
@@ -429,6 +423,36 @@ namespace Bar_do_Esas
             {
                 MessageBox.Show(ex.Message);
             }   
+        }
+
+        private int obterIdComida(string descricao)
+        {
+            int codComida = -1;
+            try
+            {
+                using (MySqlConnection conexao = new MySqlConnection(Globais.data_source))
+                {
+                    conexao.Open();
+                    using (MySqlCommand cmd = new MySqlCommand())
+                    {
+                        cmd.Connection = conexao;
+                        cmd.CommandText = "SELECT Cod_Comida FROM infocomida WHERE Descricao_Comida = @descricao";
+                        cmd.Parameters.AddWithValue("@descricao", descricao);
+
+                        object result = cmd.ExecuteScalar();
+                        if (result != null && result != DBNull.Value)
+                        {
+                            codComida = Convert.ToInt32(result);
+                        }
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+            }
+
+            return codComida;
         }
         #endregion
 
