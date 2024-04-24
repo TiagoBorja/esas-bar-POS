@@ -180,6 +180,8 @@ namespace Bar_do_Esas
                             cmd.Parameters.AddWithValue("@valorGasto", total);
                             cmd.Parameters.AddWithValue("@quantidade", quantidadeString);
                             cmd.ExecuteNonQuery();
+
+                            BaseDados.AtualizarSaldoAluno(Convert.ToDecimal(lblSaldoAluno.Text), Convert.ToInt32(lblCodigoAluno.Text));
                         }
                     }
                 }
