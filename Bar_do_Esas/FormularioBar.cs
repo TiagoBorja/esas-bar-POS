@@ -88,7 +88,7 @@ namespace Bar_do_Esas
                                     {
                                         lblCodigoAluno.Text = reader.GetInt32(0).ToString();
                                         lblNomeAluno.Text = reader.GetString(1);
-                                        lblSaldoAluno.Text = reader.GetDouble(2).ToString();
+                                        lblSaldoAluno.Text = reader.GetDecimal(2).ToString("N2");
 
                                         lblCodigoAluno.Visible = true;
                                         lblNomeAluno.Visible = true;
@@ -234,7 +234,7 @@ namespace Bar_do_Esas
 
             //Variable receive the total value when something is added
             totalAcumulado = total;
-            lblTotal.Text = totalAcumulado.ToString();
+            lblTotal.Text = totalAcumulado.ToString("N2");
         }
 
         //Remove item in the lstComida and subtract value in the lblTotal
@@ -250,7 +250,7 @@ namespace Bar_do_Esas
             }
 
             somarValorFaltante = Convert.ToDecimal(lblSaldoAluno.Text) + Convert.ToDecimal(totalAcumulado);
-            lblSaldoAluno.Text = somarValorFaltante.ToString();
+            lblSaldoAluno.Text = somarValorFaltante.ToString("N2");
 
             lblTotal.Text = Convert.ToString(Convert.ToDecimal(lblTotal.Text) - totalAcumulado);
         }
@@ -321,7 +321,7 @@ namespace Bar_do_Esas
                                         addItem();
                                         //after add a item, subtract the value in your balance in an abstract way
                                         saldoAluno -= valorComidaSelecionada;
-                                        lblSaldoAluno.Text = saldoAluno.ToString();
+                                        lblSaldoAluno.Text = saldoAluno.ToString("N2");
                                     }
                                     else MessageBox.Show("Seu saldo é inferior ao saldo requisitado", "Saldo Insuficiente");
                                 }
@@ -353,7 +353,7 @@ namespace Bar_do_Esas
                             while (reader.Read())
                             {
                                 var comida = reader.GetString(0);
-                                var valor = reader.GetDouble(1).ToString();
+                                var valor = reader.GetDecimal(1).ToString("N2");
                                 var quantidade = qntItem.Value.ToString();
                                 string[] row = { comida, valor, quantidade };
 
