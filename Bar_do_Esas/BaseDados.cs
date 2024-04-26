@@ -9,7 +9,7 @@ using System.Windows.Forms;
 
 namespace Bar_do_Esas
 {
-    internal class BaseDados
+    class BaseDados
     {
         public static MySqlConnection ConectarBD()
         {
@@ -29,25 +29,32 @@ namespace Bar_do_Esas
 
         public static void AtualizarSaldoAluno(decimal novoSaldo, int N_Aluno)
         {
+            MySqlTransaction transaction = null;
             try
             {
                 using (MySqlConnection conexao = ConectarBD())
                 {
-                    using (MySqlCommand cmd = new MySqlCommand())
+                    transaction = conexao.BeginTransaction();
                     {
-                        cmd.Connection = conexao;
-                        cmd.CommandText = @"UPDATE aluno
+                        using (MySqlCommand cmd = new MySqlCommand())
+                        {
+                            cmd.Connection = conexao;
+                            cmd.Transaction = transaction;
+                            cmd.CommandText = @"UPDATE aluno
                                         SET Saldo = @novoSaldo
                                         WHERE N_Aluno = @N_Aluno";
-                        cmd.Parameters.AddWithValue("@novoSaldo",novoSaldo);
-                        cmd.Parameters.AddWithValue("@N_Aluno",N_Aluno);
-                        cmd.ExecuteNonQuery();
+                            cmd.Parameters.AddWithValue("@novoSaldo", novoSaldo);
+                            cmd.Parameters.AddWithValue("@N_Aluno", N_Aluno);
+                            cmd.ExecuteNonQuery();
+                            transaction.Commit();
+                        }
                     }
                 }
             }
             catch (Exception ex)
             {
                 MessageBox.Show(ex.Message);
+                transaction.Rollback();
             }
         }
     }
