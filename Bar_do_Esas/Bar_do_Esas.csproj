@@ -113,7 +113,6 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Aluno.cs" />
     <Compile Include="BaseDados.cs" />
     <Compile Include="GerirAcoesListView.cs" />
     <Compile Include="CriarFuncionario.cs">

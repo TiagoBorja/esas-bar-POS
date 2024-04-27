@@ -171,4 +171,21 @@ namespace Bar_do_Esas
             lstComida.Columns.Add("Valor", 147, HorizontalAlignment.Left);
         }
     }
+
+    public class GerirAcoesLstAluno
+    {
+        public static void CriarColunasLstAluno(ListView lstAluno)
+        {
+            lstAluno.View = View.Details;
+            lstAluno.LabelEdit = true;
+            lstAluno.AllowColumnReorder = true;
+            lstAluno.FullRowSelect = true;
+            lstAluno.GridLines = true;
+
+            lstAluno.Columns.Add("Código", 60, HorizontalAlignment.Left);
+            lstAluno.Columns.Add("Nome", 120, HorizontalAlignment.Left);
+            lstAluno.Columns.Add("Data de Nascimento", 100, HorizontalAlignment.Left);
+            lstAluno.Columns.Add("Saldo", 60, HorizontalAlignment.Left);
+        }
+    }
 }

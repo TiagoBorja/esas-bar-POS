@@ -40,22 +40,37 @@ namespace Bar_do_Esas
             TextBox txt = (TextBox)sender;
             txt.Text = txt.Text.Replace(" ", "");
         }
-        public static void HabilitarEdicao(params TextBox[] textBoxes)
+        public static void HabilitarEdicao(params Control[] controls)
         {
-            foreach (TextBox textBox in textBoxes)
+            foreach (Control control in controls)
             {
-                textBox.ReadOnly = false;
-                textBox.BackColor = Color.White;
+                if (control is TextBox textBox)
+                {
+                    textBox.ReadOnly = false;
+                }
+                else if (control is MaskedTextBox maskedTextBox)
+                {
+                    maskedTextBox.ReadOnly = false;
+                }
             }
         }
-        public static void DesabilitarEdicao(params TextBox[] textBoxes)
+
+        public static void DesabilitarEdicao(params Control[] controls)
         {
-            foreach (TextBox textBox in textBoxes)
+            foreach (Control control in controls)
             {
-                textBox.ReadOnly = true;
-                textBox.BackColor = SystemColors.Control;
+                if (control is TextBox textBox)
+                {
+                    textBox.ReadOnly = true;
+                }
+                else if (control is MaskedTextBox maskedTextBox)
+                {
+                    maskedTextBox.ReadOnly = true;
+                }
             }
         }
+
+
         #endregion
 
         #region Functions GunaTextBox

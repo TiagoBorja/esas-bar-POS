@@ -14,20 +14,12 @@ namespace Bar_do_Esas
 {
     public partial class FormularioAluno : Form
     {
+        TextBoxConfig txtConfig = new TextBoxConfig();
+        bool modoEdicaoAtivado = false; 
         public FormularioAluno()
         {
             InitializeComponent();
-
-            lstAluno.View = View.Details;
-            lstAluno.LabelEdit = true;
-            lstAluno.AllowColumnReorder = true;
-            lstAluno.FullRowSelect = true;
-            lstAluno.GridLines = true;
-
-            lstAluno.Columns.Add("Código", 60, HorizontalAlignment.Left);
-            lstAluno.Columns.Add("Nome", 120, HorizontalAlignment.Left);
-            lstAluno.Columns.Add("Data de Nascimento", 100, HorizontalAlignment.Left);
-            lstAluno.Columns.Add("Saldo", 60, HorizontalAlignment.Left);
+            GerirAcoesLstAluno.CriarColunasLstAluno(lstAluno);
 
             carregarAluno();
         }
@@ -47,9 +39,11 @@ namespace Bar_do_Esas
             try
             { 
                 //check if the text box "readOnly" are active. If are, set all text box true.
-                if(!txtNome.ReadOnly == false && !txtData.ReadOnly == false && !txtSaldo.ReadOnly == false && !txtCodigo.ReadOnly == false)
+                if(!modoEdicaoAtivado)
                 {
-                    tirarReadOnly();
+                    TextBoxConfig.HabilitarEdicao(txtCodigo,txtNome,txtSaldo,txtData);
+                    modoEdicaoAtivado = true;
+
                 }
                 else
                 { 
@@ -67,7 +61,8 @@ namespace Bar_do_Esas
                             cmd.ExecuteNonQuery();
 
                             //After add a new row, set all text boxes with ReadOnly.
-                            adicionarReadOnly();
+                            TextBoxConfig.DesabilitarEdicao(txtCodigo,txtNome, txtData, txtSaldo);
+                            modoEdicaoAtivado = false;
 
                             MessageBox.Show("Dados inseridos com sucesso!!!");
                             carregarAluno();

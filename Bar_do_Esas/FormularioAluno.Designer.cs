@@ -108,6 +108,7 @@
             // txtCodigo
             // 
             this.txtCodigo.Location = new System.Drawing.Point(12, 110);
+            this.txtCodigo.MaxLength = 11;
             this.txtCodigo.Name = "txtCodigo";
             this.txtCodigo.ReadOnly = true;
             this.txtCodigo.Size = new System.Drawing.Size(183, 22);
@@ -116,6 +117,7 @@
             // txtNome
             // 
             this.txtNome.Location = new System.Drawing.Point(12, 187);
+            this.txtNome.MaxLength = 140;
             this.txtNome.Name = "txtNome";
             this.txtNome.ReadOnly = true;
             this.txtNome.Size = new System.Drawing.Size(183, 22);
@@ -125,6 +127,7 @@
             // txtSaldo
             // 
             this.txtSaldo.Location = new System.Drawing.Point(16, 343);
+            this.txtSaldo.MaxLength = 4;
             this.txtSaldo.Name = "txtSaldo";
             this.txtSaldo.ReadOnly = true;
             this.txtSaldo.Size = new System.Drawing.Size(135, 22);

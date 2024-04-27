@@ -73,7 +73,7 @@ namespace Bar_do_Esas
             {
                 if (!modoEdicaoAtivado)
                 {
-                    TextBoxConfig.HabilitarEdicao(txtCodigo, txtNome,txtValor);
+                    TextBoxConfig.HabilitarEdicao(txtNome,txtValor);
                     modoEdicaoAtivado = true;
                 }
                 else
@@ -103,7 +103,7 @@ namespace Bar_do_Esas
                             }   
                         }
                     }
-                    TextBoxConfig.DesabilitarEdicao();
+                    TextBoxConfig.DesabilitarEdicao(txtNome,txtValor);
                 }
             }
             catch (Exception ex)
@@ -158,7 +158,7 @@ namespace Bar_do_Esas
                         else MessageBox.Show("Nenhum dado foi alterado.");   
                     }
 
-                    TextBoxConfig.DesabilitarEdicao(txtNome);
+                    TextBoxConfig.DesabilitarEdicao(txtNome,txtValor);
                     modoEdicaoAtivado = false;
                     btnUpdate.Text = "Atualizar Comida";
                 }
