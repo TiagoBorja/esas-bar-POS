@@ -8,19 +8,19 @@ using System.Windows.Forms;
 
 namespace Bar_do_Esas
 {
-    public class GerirAcoesLstComida
+    public class GerirAcoesLstBar
     {
-        public static void CriarColunasLstComida(ListView lstComida)
+        public static void CriarColunasLstComida(ListView lstBar)
         {
-            lstComida.View = View.Details;
-            lstComida.LabelEdit = true;
-            lstComida.AllowColumnReorder = true;
-            lstComida.FullRowSelect = true;
-            lstComida.GridLines = true;
+            lstBar.View = View.Details;
+            lstBar.LabelEdit = true;
+            lstBar.AllowColumnReorder = true;
+            lstBar.FullRowSelect = true;
+            lstBar.GridLines = true;
 
-            lstComida.Columns.Add("Nome", 158, HorizontalAlignment.Left);
-            lstComida.Columns.Add("Valor", 80, HorizontalAlignment.Left);
-            lstComida.Columns.Add("Quantidade", 80, HorizontalAlignment.Left);
+            lstBar.Columns.Add("Nome", 158, HorizontalAlignment.Left);
+            lstBar.Columns.Add("Valor", 80, HorizontalAlignment.Left);
+            lstBar.Columns.Add("Quantidade", 80, HorizontalAlignment.Left);
         }
 
         public static void AdicionarItemNoListView(int[] idComida, NumericUpDown qntItem, ListView lstComida, Label lblTotal)
@@ -152,6 +152,23 @@ namespace Bar_do_Esas
 
             lstFuncionario.Columns.Add("Código Funcionário", 150, HorizontalAlignment.Center);
             lstFuncionario.Columns.Add("Nome", 305, HorizontalAlignment.Left);
+        }
+    }
+
+    public class GerirAcoesLstComida
+    {
+        public static void CriarColunasLstComida(ListView lstComida)
+        {
+
+            lstComida.View = View.Details;
+            lstComida.LabelEdit = true;
+            lstComida.AllowColumnReorder = true;
+            lstComida.FullRowSelect = true;
+            lstComida.GridLines = true;
+
+            lstComida.Columns.Add("Código", 148, HorizontalAlignment.Left);
+            lstComida.Columns.Add("Nome", 158, HorizontalAlignment.Left);
+            lstComida.Columns.Add("Valor", 147, HorizontalAlignment.Left);
         }
     }
 }

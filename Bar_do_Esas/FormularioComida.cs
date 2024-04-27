@@ -14,20 +14,13 @@ namespace Bar_do_Esas
 {
     public partial class FormularioComida : Form
     {
+        TextBoxConfig txtConfig = new TextBoxConfig();
+        bool modoEdicaoAtivado = false;
         public FormularioComida()
         {
             InitializeComponent();
 
-            lstComida.View = View.Details;
-            lstComida.LabelEdit = true;
-            lstComida.AllowColumnReorder = true;
-            lstComida.FullRowSelect = true;
-            lstComida.GridLines = true;
-
-            lstComida.Columns.Add("Código", 148, HorizontalAlignment.Left);
-            lstComida.Columns.Add("Nome", 158, HorizontalAlignment.Left);
-            lstComida.Columns.Add("Valor", 147, HorizontalAlignment.Left);
-
+            GerirAcoesLstComida.CriarColunasLstComida(lstComida);
             carregarComida();
         }
 
@@ -70,42 +63,6 @@ namespace Bar_do_Esas
         {
 
         }
-        private void tirarReadOnly()
-        {
-            txtNome.ReadOnly = false;
-            txtValor.ReadOnly = false;
-            txtCodigo.ReadOnly = false;
-
-            txtCodigo.Clear();
-            txtNome.Clear();
-            txtValor.Clear();
-        }
-        private void adicionarReadOnly()
-        {
-            txtNome.ReadOnly = true;
-            txtValor.ReadOnly = true;
-            txtCodigo.ReadOnly = true;
-
-            txtCodigo.Clear();
-            txtNome.Clear();
-            txtValor.Clear();
-        }
-
-        private void tirarReadOnlyEmUpdate()
-        {
-            txtValor.ReadOnly = false;
-            txtNome.ReadOnly = false;
-        }
-        private void adicionarReadOnlyEmUpdate()
-        {
-            txtNome.ReadOnly = true;
-            txtValor.ReadOnly = true;
-            txtCodigo.ReadOnly = true;
-
-            txtCodigo.Clear();
-            txtNome.Clear();
-            txtValor.Clear();
-        }
 
         private void btnAdd_Click(object sender, EventArgs e)
         {
@@ -114,14 +71,15 @@ namespace Bar_do_Esas
             var valor = txtValor.Text;
             try
             {
-                if (!txtNome.ReadOnly == false && !txtCodigo.ReadOnly == false && !txtValor.ReadOnly == false)
+                if (!modoEdicaoAtivado)
                 {
-                    tirarReadOnly();
+                    TextBoxConfig.HabilitarEdicao(txtCodigo, txtNome,txtValor);
+                    modoEdicaoAtivado = true;
                 }
                 else
                 {
 
-                    if (!String.IsNullOrEmpty(codigo) && !String.IsNullOrEmpty(nome) && !String.IsNullOrEmpty(valor))
+                    if (txtConfig.ChecarCamposVazios(this))
                     {
                         using (MySqlConnection conexao = new MySqlConnection(Globais.data_source))
                         {
@@ -132,21 +90,20 @@ namespace Bar_do_Esas
                                 cmd.Connection = conexao;
                                 cmd.CommandText = @"INSERT INTO infocomida (Cod_Comida,Descricao_Comida,Valor_Comida)
                                                    VALUES (@codigo,@descricao,@valor)";
-                                cmd.Parameters.AddWithValue("@codigo", txtCodigo.Text);
-                                cmd.Parameters.AddWithValue("@descricao", txtNome.Text);
-                                cmd.Parameters.AddWithValue("@valor", Convert.ToDouble(txtValor.Text));
+                                cmd.Parameters.AddWithValue("@codigo", codigo);
+                                cmd.Parameters.AddWithValue("@descricao", nome);
+                                cmd.Parameters.AddWithValue("@valor", valor);
 
                                 cmd.ExecuteNonQuery();
 
-                                MessageBox.Show("Comida inserida com sucesso!!!");
+                                MessageBox.Show("Novo item inserido","Inserido com sucesso!",MessageBoxButtons.OK,MessageBoxIcon.Information);
 
                                 //After insert, uptade the list view
                                 carregarComida();
                             }   
                         }
                     }
-                    else MessageBox.Show("Sem dados suficientes para a inserção de dados.");
-                    adicionarReadOnly();
+                    TextBoxConfig.DesabilitarEdicao();
                 }
             }
             catch (Exception ex)
@@ -162,13 +119,15 @@ namespace Bar_do_Esas
             var valor = txtValor.Text;
             try
             {
-                if (!txtNome.ReadOnly == false && !txtValor.ReadOnly == false)
+                if (!modoEdicaoAtivado)
                 {
-                    tirarReadOnlyEmUpdate();
+                    TextBoxConfig.HabilitarEdicao(txtNome,txtValor);
+                    modoEdicaoAtivado = true;
+                    btnUpdate.Text = "Salvar Alterações";
                 }
                 else
                 {
-                    if (!String.IsNullOrEmpty(nome) && !String.IsNullOrEmpty(valor))
+                    if (txtConfig.ChecarCamposVazios(this))
                     {
                         DialogResult msg = MessageBox.Show("Confirmar atualização?", "Atualizar Comida", MessageBoxButtons.YesNo);
 
@@ -198,8 +157,10 @@ namespace Bar_do_Esas
                         }
                         else MessageBox.Show("Nenhum dado foi alterado.");   
                     }
-                    else MessageBox.Show("Sem dados suficientes para a atualização dos dados.");
-                    adicionarReadOnlyEmUpdate();
+
+                    TextBoxConfig.DesabilitarEdicao(txtNome);
+                    modoEdicaoAtivado = false;
+                    btnUpdate.Text = "Atualizar Comida";
                 }
             }
             catch (Exception ex)
@@ -233,9 +194,6 @@ namespace Bar_do_Esas
                     }
                 }
                 else MessageBox.Show("Nenhum item foi excluido.");
-
-                //Use the "adicionarReadOnly" for clear the all text boxes.
-                adicionarReadOnly();
             }
             catch (Exception ex)
             {

@@ -9,7 +9,7 @@ using System.Windows.Forms;
 
 namespace Bar_do_Esas
 {
-    class BaseDados
+    public abstract class BaseDados
     {
         public static MySqlConnection ConectarBD()
         {
@@ -57,5 +57,10 @@ namespace Bar_do_Esas
                 transaction.Rollback();
             }
         }
+
+        public abstract void Vizualizar();
+        public abstract void Inserir();
+        public abstract void Atualizar();
+        public abstract void Excluir();
     }
 }

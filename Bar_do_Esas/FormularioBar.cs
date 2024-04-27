@@ -28,7 +28,7 @@ namespace Bar_do_Esas
         {
             InitializeComponent();
 
-            GerirAcoesLstComida.CriarColunasLstComida(lstComida);
+            GerirAcoesLstComida.CriarColunasLstComida(lstBar);
 
             LoginFuncionario f_login = new LoginFuncionario(this, N_Funcionario);
             f_login.ShowDialog();
@@ -45,10 +45,10 @@ namespace Bar_do_Esas
 
         private void btnAdd_Click(object sender, EventArgs e)
         {
-            GerirAcoesLstComida checarSaldo = new GerirAcoesLstComida();
+            GerirAcoesLstBar checarSaldo = new GerirAcoesLstBar();
 
             if (cbItem.SelectedItem != null && !string.IsNullOrEmpty(lblCodigoAluno.Text))
-                checarSaldo.ChecarSaldoAluno(idComida, lstComida, lblSaldoAluno, lblTotal, qntItem);
+                checarSaldo.ChecarSaldoAluno(idComida, lstBar, lblSaldoAluno, lblTotal, qntItem);
             else MessageBox.Show("Selecione um item antes de prosseguir ou Insira um código aluno.", "Atenção", MessageBoxButtons.OK, MessageBoxIcon.Warning);
         }
 
@@ -132,7 +132,7 @@ namespace Bar_do_Esas
 
         private void btnRemover_Click(object sender, EventArgs e)
         {
-            GerirAcoesLstComida.ValorTotalRemovido(totalAcumulado,somarValorFaltante,lstComida,lblTotal,lblSaldoAluno);
+            GerirAcoesLstBar.ValorTotalRemovido(totalAcumulado,somarValorFaltante,lstBar,lblTotal,lblSaldoAluno);
         }
 
         private void timer1_Tick_1(object sender, EventArgs e)
@@ -149,7 +149,7 @@ namespace Bar_do_Esas
                 {
                     conexao.Open();
 
-                    foreach (ListViewItem item in lstComida.Items)
+                    foreach (ListViewItem item in lstBar.Items)
                     {
                         string descricaoComida = item.SubItems[0].Text;
                         string valorString = item.SubItems[1].Text;
@@ -196,7 +196,7 @@ namespace Bar_do_Esas
             lblCodigoAluno.ResetText();
             lblNomeAluno.ResetText();
             lblSaldoAluno.ResetText();
-            lstComida.Items.Clear();
+            lstBar.Items.Clear();
             lblTotal.Text = "0,00 €";
             qntItem.ResetText();
             cbItem.ResetText();
