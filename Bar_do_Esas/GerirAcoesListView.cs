@@ -8,7 +8,7 @@ using System.Windows.Forms;
 
 namespace Bar_do_Esas
 {
-    public class GerirAcoesListView
+    public class GerirAcoesLstComida
     {
         public static void CriarColunasLstComida(ListView lstComida)
         {
@@ -95,7 +95,7 @@ namespace Bar_do_Esas
             lblTotal.Text = Convert.ToString(Convert.ToDecimal(lblTotal.Text) - totalAcumulado);
         }
 
-        public void ChecarSaldoAluno(int[] idComida,ListView lstComida,Label lblSaldoAluno,Label lblTotal,NumericUpDown qntItem)
+        public void ChecarSaldoAluno(int[] idComida, ListView lstComida, Label lblSaldoAluno, Label lblTotal, NumericUpDown qntItem)
         {
             decimal valorComidaSelecionada = 0;
 
@@ -136,6 +136,22 @@ namespace Bar_do_Esas
                     }
                 }
             }
+        }
+    }
+
+    public class GerirAcoesLstFuncionario
+    {
+        public static void CriarColunasLstFuncionario(ListView lstFuncionario)
+        {
+
+            lstFuncionario.View = View.Details;
+            lstFuncionario.LabelEdit = true;
+            lstFuncionario.AllowColumnReorder = true;
+            lstFuncionario.FullRowSelect = true;
+            lstFuncionario.GridLines = true;
+
+            lstFuncionario.Columns.Add("Código Funcionário", 150, HorizontalAlignment.Center);
+            lstFuncionario.Columns.Add("Nome", 305, HorizontalAlignment.Left);
         }
     }
 }

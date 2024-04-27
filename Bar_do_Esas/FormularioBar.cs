@@ -28,7 +28,7 @@ namespace Bar_do_Esas
         {
             InitializeComponent();
 
-            GerirAcoesListView.CriarColunasLstComida(lstComida);
+            GerirAcoesLstComida.CriarColunasLstComida(lstComida);
 
             LoginFuncionario f_login = new LoginFuncionario(this, N_Funcionario);
             f_login.ShowDialog();
@@ -45,7 +45,7 @@ namespace Bar_do_Esas
 
         private void btnAdd_Click(object sender, EventArgs e)
         {
-            GerirAcoesListView checarSaldo = new GerirAcoesListView();
+            GerirAcoesLstComida checarSaldo = new GerirAcoesLstComida();
 
             if (cbItem.SelectedItem != null && !string.IsNullOrEmpty(lblCodigoAluno.Text))
                 checarSaldo.ChecarSaldoAluno(idComida, lstComida, lblSaldoAluno, lblTotal, qntItem);
@@ -132,7 +132,7 @@ namespace Bar_do_Esas
 
         private void btnRemover_Click(object sender, EventArgs e)
         {
-            GerirAcoesListView.ValorTotalRemovido(totalAcumulado,somarValorFaltante,lstComida,lblTotal,lblSaldoAluno);
+            GerirAcoesLstComida.ValorTotalRemovido(totalAcumulado,somarValorFaltante,lstComida,lblTotal,lblSaldoAluno);
         }
 
         private void timer1_Tick_1(object sender, EventArgs e)

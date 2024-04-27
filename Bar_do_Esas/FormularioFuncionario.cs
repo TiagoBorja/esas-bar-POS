@@ -13,117 +13,60 @@ namespace Bar_do_Esas
 {
     public partial class FormularioFuncionario : Form
     {
+        TextBoxConfig txtConfig = new TextBoxConfig();
+        bool modoEdicaoAtivado = false;
         public FormularioFuncionario()
         {
             InitializeComponent();
 
-            lstFuncionario.View = View.Details;
-            lstFuncionario.LabelEdit = true;
-            lstFuncionario.AllowColumnReorder = true;
-            lstFuncionario.FullRowSelect = true;
-            lstFuncionario.GridLines = true;
-
-            lstFuncionario.Columns.Add("Código", 60, HorizontalAlignment.Left);
-            lstFuncionario.Columns.Add("Nome", 120, HorizontalAlignment.Left);
-            lstFuncionario.Columns.Add("Senha", 120, HorizontalAlignment.Left);
+            GerirAcoesLstFuncionario.CriarColunasLstFuncionario(lstFuncionario);
 
             carregarFuncionario();
         }
 
         private void btnAdd_Click(object sender, EventArgs e)
         {
-            var codigo = txtCodigo.Text;
-            var nome = txtNome.Text;
-            var senha = BCrypt.Net.BCrypt.EnhancedHashPassword(txtSenha.Text, 13);
-            try
-            {
-                if (!txtNome.ReadOnly == false && !txtCodigo.ReadOnly == false && !txtSenha.ReadOnly == false)
-                {
-                    tirarReadOnly();
-                }
-                else
-                {
-                    if (!String.IsNullOrEmpty(codigo) && !String.IsNullOrEmpty(nome) && !String.IsNullOrEmpty(senha))
-                    {
-                        using (MySqlConnection conexao = new MySqlConnection(Globais.data_source))
-                        {
-                            conexao.Open();
-
-                            using (MySqlCommand cmd = new MySqlCommand())
-                            {
-                                cmd.Connection = conexao;
-                                cmd.CommandText = @"INSERT INTO dados_funcionario
-                                           VALUES(@codigo,@nome,@senha)";
-                                cmd.Parameters.AddWithValue("@codigo", codigo);
-                                cmd.Parameters.AddWithValue("@nome", nome);
-                                cmd.Parameters.AddWithValue("@senha", senha);
-                                cmd.ExecuteNonQuery();
-
-                                MessageBox.Show("Funcionário criado com sucesso!");
-                            }
-                            carregarFuncionario();
-                            adicionarReadOnly();
-                        }
-                    }
-                    else MessageBox.Show("Sem dados suficientes para a inserção de dados.");
-                }
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show(ex.Message);
-            }
-        }
-        private void tirarReadOnly()
-        {
-            txtCodigo.ReadOnly = false;
-            txtNome.ReadOnly = false;
-            txtSenha.ReadOnly = false;
-
-            txtCodigo.Clear();
-            txtNome.Clear();
-            txtSenha.Clear();
+            CriarFuncionario f = new CriarFuncionario();
+            f.ShowDialog();
+            carregarFuncionario();
         }
         private void adicionarReadOnly()
         {
             txtNome.ReadOnly = true;
             txtCodigo.ReadOnly = true;
-            txtSenha.ReadOnly = true;
 
             txtCodigo.Clear();
             txtNome.Clear();
-            txtSenha.Clear();
         }
 
         private void tirarReadOnlyEmUpdate()
         {
             txtNome.ReadOnly = false;
-            txtSenha.ReadOnly = false;
         }
         private void adicionarReadOnlyEmUpdate()
         {
-            txtNome.ReadOnly = true;           
-            txtSenha.ReadOnly = true;
+            txtNome.ReadOnly = true;                    
 
             txtCodigo.Clear();
             txtNome.Clear();
-            txtSenha.Clear();
         }
 
         private void btnUpdate_Click(object sender, EventArgs e)
         {
             var codigo = txtCodigo.Text;
             var nome = txtNome.Text;
-            var senha = BCrypt.Net.BCrypt.EnhancedHashPassword(txtSenha.Text, 13);
 
             try
             {
-                if (!txtNome.ReadOnly == false && !txtSenha.ReadOnly == false)
+                if (!modoEdicaoAtivado)
                 {
-                    tirarReadOnlyEmUpdate();
+                    TextBoxConfig.HabilitarEdicao(txtNome);
+                    modoEdicaoAtivado = true;
+                    btnUpdate.Text = "Salvar Alterações";
                 }
                 else
                 {
-                    if (!String.IsNullOrEmpty(codigo) && !String.IsNullOrEmpty(nome) && !String.IsNullOrEmpty(senha))
+                    if (txtConfig.ChecarCamposVazios(this))
                     {
                         DialogResult msg = MessageBox.Show("Confirmar atualização?", "Atualizar Aluno", MessageBoxButtons.YesNo);
 
@@ -136,23 +79,24 @@ namespace Bar_do_Esas
                                 {
                                     cmd.Connection = conexao;
                                     cmd.CommandText = @"UPDATE dados_funcionario
-                                                    SET Nome_Funcionario = @nome, Senha = @senha
+                                                    SET Nome_Funcionario = @nome
                                                     WHERE N_Funcionario = @codigo";
                                     cmd.Parameters.AddWithValue("@codigo", codigo);
                                     cmd.Parameters.AddWithValue("@nome", nome);
-                                    cmd.Parameters.AddWithValue("@senha", senha);
                                     cmd.ExecuteNonQuery();
 
                                     MessageBox.Show("Funcionário atualizado com sucesso!");
                                 }
                             }
                             carregarFuncionario();
-                            adicionarReadOnlyEmUpdate();
+
+                            TextBoxConfig.DesabilitarEdicao(txtNome);
+                            modoEdicaoAtivado = false;
+                            btnUpdate.Text = "Atualizar Funcionário";
                         }
                         else MessageBox.Show("Nenhum dado foi alterado.");
                         
                     }
-                    else MessageBox.Show("Sem dados suficientes para a atualização dos dados.");
                 }
                     
             }catch(Exception ex)
@@ -201,7 +145,6 @@ namespace Bar_do_Esas
             {
                 txtCodigo.Text = item.SubItems[0].Text;
                 txtNome.Text = item.SubItems[1].Text;
-                txtSenha.Text = item.SubItems[2].Text;
             }
         }
 

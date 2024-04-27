@@ -15,27 +15,25 @@ namespace Bar_do_Esas
 {
     public partial class CriarFuncionario : Form
     {
+        TextBoxConfig txt = new TextBoxConfig();
         public CriarFuncionario()
         {
             InitializeComponent();
 
-            txtGunaCodigo.KeyPress += SomenteNumeros;
-            txtGunaSenha.KeyPress += SomenteNumeros;
-            txtGunaNome.KeyPress += SomenteLetras;
+            txtGunaCodigo.KeyPress += txt.SomenteNumeros;
+            txtGunaSenha.KeyPress += txt.SomenteNumeros;
+            txtGunaNome.KeyPress += txt.SomenteLetrasGuna;
             
-            txtGunaCodigo.TextChanged += RemoverEspacos;            
-            txtGunaSenha.TextChanged += RemoverEspacos;           
+            txtGunaCodigo.TextChanged += txt.RemoverEspacosGuna;            
+            txtGunaSenha.TextChanged += txt.RemoverEspacosGuna;           
         }
 
         private void btnGuna_Click(object sender, EventArgs e)
         {
             try
             {
-                if (this.Controls.OfType<Guna2TextBox>().Any(f => string.IsNullOrWhiteSpace(f.Text)))                
-                    MessageBox.Show("É necessário preencher todos os campos antes de prosseguir.", "Atenção", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);                
-                else                
+                if (txt.ChecarCamposVaziosGuna(this))
                     NovoFuncionario();
-
             }
             catch(Exception ex)
             {
@@ -46,37 +44,12 @@ namespace Bar_do_Esas
         private void checkSenha_CheckedChanged(object sender, EventArgs e)
         {
             if (checkSenha.Checked)
-            {
                 txtGunaSenha.PasswordChar = '\0';
-            }
             else
-            {
                 txtGunaSenha.PasswordChar = '*';
-            }
         }
 
-        private void RemoverEspacos(object sender, EventArgs e)
-        {
-            Guna2TextBox txt = (Guna2TextBox)sender;
-
-            txt.Text = txt.Text.Replace(" ", "");
-        }
-
-        private void SomenteNumeros(object sender, KeyPressEventArgs e)
-        {
-            if (!char.IsDigit(e.KeyChar) && !char.IsControl(e.KeyChar))           
-                e.Handled = true;            
-        }
-
-        private void SomenteLetras(object sender, KeyPressEventArgs e)
-        {
-            Guna2TextBox txt = (Guna2TextBox)sender;
-
-            if (!char.IsLetter(e.KeyChar) && !char.IsWhiteSpace(e.KeyChar) && !char.IsControl(e.KeyChar))
-                // Se não for uma letra, um espaço ou uma tecla de controle, cancela o evento de pressionar tecla
-                e.Handled = true;            
-        }
-        
+       
         private void NovoFuncionario()
         {
             try
