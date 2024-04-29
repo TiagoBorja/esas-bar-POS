@@ -198,7 +198,7 @@ namespace Bar_do_Esas
             lblSaldoAluno.ResetText();
             lstBar.Items.Clear();
             lblTotal.Text = "0,00 €";
-            qntItem.ResetText();
+            qntItem.Value = 1;
             cbItem.ResetText();
         }
       

@@ -37,37 +37,29 @@ namespace Bar_do_Esas
         private void btnFuncionario_Click(object sender, EventArgs e)
         {
             try
-            { 
+            {
                 //check if the text box "readOnly" are active. If are, set all text box true.
-                if(!modoEdicaoAtivado)
+                if (!modoEdicaoAtivado)
                 {
-                    TextBoxConfig.HabilitarEdicao(txtCodigo,txtNome,txtSaldo,txtData);
+                    TextBoxConfig.HabilitarEdicao(txtCodigo, txtNome, txtSaldo, txtData);
                     modoEdicaoAtivado = true;
-
                 }
                 else
-                { 
-                    using (MySqlConnection conexao = new MySqlConnection(Globais.data_source))
+                {
+                    Aluno aluno = new Aluno();
+                    if(txtConfig.ChecarCamposVazios(this))
                     {
-                        conexao.Open();
-                        using (MySqlCommand cmd = new MySqlCommand())
-                        {
-                            cmd.Connection = conexao;
-                            cmd.CommandText = @"INSERT INTO aluno VALUES (@codigo,@nome,@data,@saldo)";
-                            cmd.Parameters.AddWithValue("@codigo", txtCodigo.Text);
-                            cmd.Parameters.AddWithValue("@nome", txtNome.Text);
-                            cmd.Parameters.AddWithValue("@data", txtData.Text);
-                            cmd.Parameters.AddWithValue("@saldo", txtSaldo.Text);
-                            cmd.ExecuteNonQuery();
+                        string codigo = txtCodigo.Text;
+                        string nome = txtNome.Text;
+                        DateTime dataNascimento = DateTime.Parse(txtData.Text);
+                        decimal saldo = decimal.Parse(txtSaldo.Text);
 
-                            //After add a new row, set all text boxes with ReadOnly.
-                            TextBoxConfig.DesabilitarEdicao(txtCodigo,txtNome, txtData, txtSaldo);
-                            modoEdicaoAtivado = false;
-
-                            MessageBox.Show("Dados inseridos com sucesso!!!");
-                            carregarAluno();
-                        }
+                        aluno.CriarNovoAluno(codigo,nome,dataNascimento,saldo);
                     }
+                    
+                    TextBoxConfig.DesabilitarEdicao(txtCodigo, txtNome, txtData, txtSaldo);
+                    modoEdicaoAtivado = false;
+                    carregarAluno();
                 }
                 
             }catch(Exception ex)
