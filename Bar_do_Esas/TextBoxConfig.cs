@@ -29,8 +29,6 @@ namespace Bar_do_Esas
         }
         public void SomenteLetras(object sender, KeyPressEventArgs e)
         {
-            TextBox txt = (TextBox)sender;
-
             if (!char.IsLetter(e.KeyChar) && !char.IsWhiteSpace(e.KeyChar) && !char.IsControl(e.KeyChar))
                 // Se não for uma letra, um espaço ou uma tecla de controle, cancela o evento de pressionar tecla
                 e.Handled = true;
@@ -54,7 +52,6 @@ namespace Bar_do_Esas
                 }
             }
         }
-
         public static void DesabilitarEdicao(params Control[] controls)
         {
             foreach (Control control in controls)
@@ -69,8 +66,20 @@ namespace Bar_do_Esas
                 }
             }
         }
-
-
+        public void LimparTextBox(params Control[] controls)
+        {
+            foreach (Control control in controls)
+            {
+                if (control is TextBox textBox)
+                {
+                    textBox.Clear();
+                }
+                else if (control is MaskedTextBox maskedTextBox)
+                {
+                    maskedTextBox.Clear();
+                }
+            }
+        }
         #endregion
 
         #region Functions GunaTextBox
