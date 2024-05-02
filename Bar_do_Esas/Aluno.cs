@@ -96,6 +96,44 @@ namespace Bar_do_Esas
                 MessageBox.Show("Erro ao atualizar aluno: " + ex.Message, "Erro", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
+        public void ExcluirAluno(int codigo)
+        {
+            try
+            {
+                TextBoxConfig txtConfig = new TextBoxConfig();
+                using (MySqlConnection conexao = BaseDados.ConectarBD())
+                {
+                    using (MySqlCommand cmd = new MySqlCommand())
+                    {
+                        if (conexao.State == ConnectionState.Open)
+                        {
+                            DialogResult msg = MessageBox.Show("Confirmar exclusão?", "Excluir Aluno", MessageBoxButtons.YesNo);
+
+                            if (msg == DialogResult.Yes)
+                            {
+                                cmd.Connection = conexao;
+                                cmd.CommandText = @"DELETE FROM aluno
+                                           WHERE N_Aluno = @codigo";
+                                cmd.Parameters.AddWithValue("@codigo", codigo);
+                                cmd.ExecuteNonQuery();
+
+                                MessageBox.Show("Aluno excluido com sucesso!", "Aluno Excluido", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                            }
+                            else MessageBox.Show("Nenhum dado alterado!", "Aviso", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                        }
+                        else
+                        {
+                            MessageBox.Show("Não foi possível abrir a conexão com o banco de dados!", "Erro de Conexão", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                        }
+                    }
+                }
+            }
+
+            catch (Exception ex)
+            {
+                MessageBox.Show("Erro ao excluir aluno: " + ex.Message, "Erro", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
         public void CarregarAluno(ListView lstAluno)
         {
             try

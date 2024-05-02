@@ -104,37 +104,24 @@ namespace Bar_do_Esas
 
         private void btnRemove_Click(object sender, EventArgs e)
         {
-            try
+            Aluno aluno = new Aluno();
+
+            if (!modoEdicaoAtivado)
             {
-                Aluno aluno = new Aluno();
-                using (MySqlConnection conexao = new MySqlConnection(Globais.data_source))
+                TextBoxConfig.HabilitarEdicao(txtNome, txtSaldo, txtData);
+                modoEdicaoAtivado = true;
+            }
+            else
+            {
+                if (txtConfig.ChecarCamposVazios(this))
                 {
-                    conexao.Open();
-                    using (MySqlCommand cmd = new MySqlCommand())
-                    {
-                        //Check if the user really want delete a student.
-                        DialogResult msg = MessageBox.Show("Confirmar exclusão?", "Deletar Aluno", MessageBoxButtons.YesNo);
-
-                        if (msg == DialogResult.Yes)
-                        {
-                            cmd.Connection = conexao;
-                            cmd.CommandText = @"DELETE FROM aluno
-                                           WHERE N_Aluno = @codigo";
-                            cmd.Parameters.AddWithValue("@codigo", txtCodigo.Text);
-                            cmd.ExecuteNonQuery();
-
-                            MessageBox.Show("Dados deletados com sucesso!");
-                            aluno.CarregarAluno(lstAluno);
-                        }
-                        else MessageBox.Show("Nenhum dado foi deletado.");
-                        
-                    }
+                    int codigo = Convert.ToInt32(txtCodigo.Text);
+                    aluno.ExcluirAluno(codigo);
                 }
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show(ex.Message);
-            }
+
+                aluno.CarregarAluno(lstAluno);
+                txtConfig.LimparTextBox(txtCodigo, txtNome, txtSaldo, txtData);
+            }   
         }
     }
 }
