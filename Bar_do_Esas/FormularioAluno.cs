@@ -1,14 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Linq;
-using System.Runtime.InteropServices;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
-using MySql.Data.MySqlClient;
 
 namespace Bar_do_Esas
 {
@@ -16,21 +7,25 @@ namespace Bar_do_Esas
     {
         TextBoxConfig txtConfig = new TextBoxConfig();
         bool modoEdicaoAtivado = false;
-        
+        Aluno aluno;
         public FormularioAluno()
         {
             InitializeComponent();
             GerirAcoesLstAluno.CriarColunasLstAluno(lstAluno);
 
-            Aluno aluno = new Aluno();
+            aluno = new Aluno();
             aluno.CarregarAluno(lstAluno);
+
+            txtCodigo.KeyPress += txtConfig.SomenteNumeros;
+            txtSaldo.KeyPress += txtConfig.SomenteNumeros;
+            txtData.KeyPress += txtConfig.SomenteNumeros;
+            txtNome.KeyPress += txtConfig.SomenteLetras;
+            
         }
         private void btnFuncionario_Click(object sender, EventArgs e)
         {
             try
             {
-                Aluno aluno = new Aluno();
-
                 if (!modoEdicaoAtivado)
                 {
                     TextBoxConfig.HabilitarEdicao(txtCodigo, txtNome, txtSaldo, txtData);
@@ -62,8 +57,6 @@ namespace Bar_do_Esas
         }
         private void btnUpdate_Click(object sender, EventArgs e)
         {
-            Aluno aluno = new Aluno();
-
             if (!modoEdicaoAtivado)
             {
                 TextBoxConfig.HabilitarEdicao(txtNome, txtSaldo, txtData);
@@ -104,8 +97,6 @@ namespace Bar_do_Esas
 
         private void btnRemove_Click(object sender, EventArgs e)
         {
-            Aluno aluno = new Aluno();
-
             if (!modoEdicaoAtivado)
             {
                 TextBoxConfig.HabilitarEdicao(txtNome, txtSaldo, txtData);

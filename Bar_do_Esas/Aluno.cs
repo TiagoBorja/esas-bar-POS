@@ -53,7 +53,6 @@ namespace Bar_do_Esas
                 MessageBox.Show("Erro ao criar aluno: " + ex.Message, "Erro", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
-
         public void AtualizarAluno(int codigo, string nome, DateTime dataNascimento, decimal saldo)
         {
             try

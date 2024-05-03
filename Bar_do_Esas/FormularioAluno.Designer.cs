@@ -53,7 +53,7 @@
             this.panel1.Controls.Add(this.btnAdd);
             this.panel1.Dock = System.Windows.Forms.DockStyle.Bottom;
             this.panel1.Location = new System.Drawing.Point(0, 408);
-            this.panel1.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.panel1.Margin = new System.Windows.Forms.Padding(2);
             this.panel1.Name = "panel1";
             this.panel1.Size = new System.Drawing.Size(688, 32);
             this.panel1.TabIndex = 0;
@@ -63,7 +63,7 @@
             this.btnRemove.BackColor = System.Drawing.Color.Red;
             this.btnRemove.Font = new System.Drawing.Font("Lucida Bright", 10.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.btnRemove.Location = new System.Drawing.Point(431, 2);
-            this.btnRemove.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.btnRemove.Margin = new System.Windows.Forms.Padding(2);
             this.btnRemove.Name = "btnRemove";
             this.btnRemove.Size = new System.Drawing.Size(141, 26);
             this.btnRemove.TabIndex = 11;
@@ -76,7 +76,7 @@
             this.btnUpdate.BackColor = System.Drawing.Color.MediumTurquoise;
             this.btnUpdate.Font = new System.Drawing.Font("Lucida Bright", 10.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.btnUpdate.Location = new System.Drawing.Point(252, 3);
-            this.btnUpdate.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.btnUpdate.Margin = new System.Windows.Forms.Padding(2);
             this.btnUpdate.Name = "btnUpdate";
             this.btnUpdate.Size = new System.Drawing.Size(141, 26);
             this.btnUpdate.TabIndex = 10;
@@ -89,7 +89,7 @@
             this.btnAdd.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(192)))), ((int)(((byte)(0)))));
             this.btnAdd.Font = new System.Drawing.Font("Lucida Bright", 10.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.btnAdd.Location = new System.Drawing.Point(81, 3);
-            this.btnAdd.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.btnAdd.Margin = new System.Windows.Forms.Padding(2);
             this.btnAdd.Name = "btnAdd";
             this.btnAdd.Size = new System.Drawing.Size(141, 26);
             this.btnAdd.TabIndex = 9;
@@ -112,8 +112,8 @@
             // txtCodigo
             // 
             this.txtCodigo.Location = new System.Drawing.Point(9, 89);
-            this.txtCodigo.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
-            this.txtCodigo.MaxLength = 11;
+            this.txtCodigo.Margin = new System.Windows.Forms.Padding(2);
+            this.txtCodigo.MaxLength = 5;
             this.txtCodigo.Name = "txtCodigo";
             this.txtCodigo.ReadOnly = true;
             this.txtCodigo.Size = new System.Drawing.Size(138, 20);
@@ -122,7 +122,7 @@
             // txtNome
             // 
             this.txtNome.Location = new System.Drawing.Point(9, 152);
-            this.txtNome.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.txtNome.Margin = new System.Windows.Forms.Padding(2);
             this.txtNome.MaxLength = 140;
             this.txtNome.Name = "txtNome";
             this.txtNome.ReadOnly = true;
@@ -132,7 +132,7 @@
             // txtSaldo
             // 
             this.txtSaldo.Location = new System.Drawing.Point(12, 279);
-            this.txtSaldo.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.txtSaldo.Margin = new System.Windows.Forms.Padding(2);
             this.txtSaldo.MaxLength = 4;
             this.txtSaldo.Name = "txtSaldo";
             this.txtSaldo.ReadOnly = true;
@@ -178,7 +178,7 @@
             // txtData
             // 
             this.txtData.Location = new System.Drawing.Point(9, 215);
-            this.txtData.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.txtData.Margin = new System.Windows.Forms.Padding(2);
             this.txtData.Mask = "0000-00-00";
             this.txtData.Name = "txtData";
             this.txtData.ReadOnly = true;
@@ -201,7 +201,7 @@
             // 
             this.lstAluno.HideSelection = false;
             this.lstAluno.Location = new System.Drawing.Point(218, 54);
-            this.lstAluno.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.lstAluno.Margin = new System.Windows.Forms.Padding(2);
             this.lstAluno.MultiSelect = false;
             this.lstAluno.Name = "lstAluno";
             this.lstAluno.Size = new System.Drawing.Size(457, 285);
@@ -225,7 +225,7 @@
             this.Controls.Add(this.lbl_Aluno);
             this.Controls.Add(this.lstAluno);
             this.Controls.Add(this.panel1);
-            this.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.Margin = new System.Windows.Forms.Padding(2);
             this.Name = "FormularioAluno";
             this.Text = "FormularioAluno";
             this.panel1.ResumeLayout(false);
