@@ -21,15 +21,10 @@ namespace Bar_do_Esas
         {
             try
             {
-                TextBoxConfig txtConfig = new TextBoxConfig();
-                using (MySqlConnection conexao = BaseDados.ConectarBD())
-                {
-                    // Verifica se a conexão foi aberta com sucesso
-                    if (conexao.State == ConnectionState.Open)
-                    {
+                using (BaseDados.ConectarBD())
+                {                  
                         using (MySqlCommand cmd = new MySqlCommand())
                         {
-                            cmd.Connection = conexao;
                             cmd.CommandText = @"INSERT INTO aluno (N_Aluno,Nome_Aluno,Data_Nasc,Saldo)
                                                 VALUES (@codigo, @nome, @data, @saldo)";
 
@@ -41,11 +36,6 @@ namespace Bar_do_Esas
                             cmd.ExecuteNonQuery();
                             MessageBox.Show("Aluno criado com sucesso!", "Aluno Criado", MessageBoxButtons.OK, MessageBoxIcon.Information);
                         }   
-                    }
-                    else
-                    {
-                        MessageBox.Show("Não foi possível abrir a conexão com o banco de dados!", "Erro de Conexão", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                    }
                 }
             }
             catch (Exception ex)
@@ -58,17 +48,14 @@ namespace Bar_do_Esas
             try
             {
                 TextBoxConfig txtConfig = new TextBoxConfig();
-                using (MySqlConnection conexao = BaseDados.ConectarBD())
+                using (BaseDados.ConectarBD())
                 {
                     using (MySqlCommand cmd = new MySqlCommand())
                     {
-                        if (conexao.State == ConnectionState.Open)
-                        {
                             DialogResult msg = MessageBox.Show("Confirmar atualização?", "Atualizar Aluno", MessageBoxButtons.YesNo);
 
                             if (msg == DialogResult.Yes)
                             {
-                                cmd.Connection = conexao;
                                 cmd.CommandText = @"UPDATE aluno 
                                             SET Nome_Aluno = @nome, Data_Nasc = @data, Saldo = @saldo
                                             WHERE N_Aluno = @codigo";
@@ -80,12 +67,7 @@ namespace Bar_do_Esas
 
                                 MessageBox.Show("Aluno atualizado com sucesso!", "Aluno Atualizado", MessageBoxButtons.OK, MessageBoxIcon.Information);
                             }
-                            else MessageBox.Show("Nenhum dado alterado!", "Aviso", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                        }
-                        else
-                        {
-                            MessageBox.Show("Não foi possível abrir a conexão com o banco de dados!", "Erro de Conexão", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                        }
+                            else MessageBox.Show("Nenhum dado alterado!", "Aviso", MessageBoxButtons.OK, MessageBoxIcon.Information);                      
                     }
                 }
             }
@@ -99,33 +81,25 @@ namespace Bar_do_Esas
         {
             try
             {
-                TextBoxConfig txtConfig = new TextBoxConfig();
-                using (MySqlConnection conexao = BaseDados.ConectarBD())
+                using (BaseDados.ConectarBD())
                 {
                     using (MySqlCommand cmd = new MySqlCommand())
                     {
-                        if (conexao.State == ConnectionState.Open)
-                        {
-                            DialogResult msg = MessageBox.Show("Confirmar exclusão?", "Excluir Aluno", MessageBoxButtons.YesNo);
 
-                            if (msg == DialogResult.Yes)
-                            {
-                                cmd.Connection = conexao;
-                                cmd.CommandText = @"DELETE FROM aluno
+                        DialogResult msg = MessageBox.Show("Confirmar exclusão?", "Excluir Aluno", MessageBoxButtons.YesNo);
+
+                        if (msg == DialogResult.Yes)
+                        {
+                            cmd.CommandText = @"DELETE FROM aluno
                                            WHERE N_Aluno = @codigo";
-                                cmd.Parameters.AddWithValue("@codigo", codigo);
-                                cmd.ExecuteNonQuery();
+                            cmd.Parameters.AddWithValue("@codigo", codigo);
+                            cmd.ExecuteNonQuery();
 
-                                MessageBox.Show("Aluno excluido com sucesso!", "Aluno Excluido", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                            }
-                            else MessageBox.Show("Nenhum dado alterado!", "Aviso", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                            MessageBox.Show("Aluno excluido com sucesso!", "Aluno Excluido", MessageBoxButtons.OK, MessageBoxIcon.Information);
                         }
-                        else
-                        {
-                            MessageBox.Show("Não foi possível abrir a conexão com o banco de dados!", "Erro de Conexão", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                        }
+                        else MessageBox.Show("Nenhum dado alterado!", "Aviso", MessageBoxButtons.OK, MessageBoxIcon.Information);
                     }
-                }
+                }              
             }
 
             catch (Exception ex)

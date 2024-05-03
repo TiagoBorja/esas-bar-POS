@@ -13,74 +13,27 @@ namespace Bar_do_Esas
 {
     public partial class LoginFuncionario : Form
     {
-       FormularioBar form1;
-        public LoginFuncionario(FormularioBar form1,int id)
+        FormularioBar formularioBar;
+        TextBoxConfig txtConfig = new TextBoxConfig();
+        Funcionario funcionario = new Funcionario();
+        public LoginFuncionario(FormularioBar formularioBar, int id)
         {
             InitializeComponent();
-            this.form1 = form1;
+            this.formularioBar = formularioBar;
             this.txtGunaCodigo.Text = id.ToString();
         }
 
         private void btnGuna_Click(object sender, EventArgs e)
         {
-            var codigo = txtGunaCodigo.Text;
-            var senha = txtGunaSenha.Text;
-            try
+            if (txtConfig.ChecarCamposVaziosGuna(this))
             {
-                using (MySqlConnection conexao = new MySqlConnection(Globais.data_source))
-                {
-                    // Check if the textboxes are not null or empty
-                    if (!String.IsNullOrEmpty(codigo) || !String.IsNullOrEmpty(senha))
-                    {
-                        conexao.Open();
-                        using (MySqlCommand cmd = new MySqlCommand())
-                        {
-                            cmd.Connection = conexao;
+                int codigo = Convert.ToInt32(txtGunaCodigo.Text);
+                string senha = txtGunaSenha.Text;
+                Label lblNome = formularioBar.lblNome;
 
-                            // Search for an employee with the given Code and Password
-                            cmd.CommandText = @"SELECT * FROM dados_funcionario
-                                                WHERE N_Funcionario = @codigo";
-                            cmd.Parameters.AddWithValue("@codigo", codigo);
-                           
-                            using (MySqlDataReader reader = cmd.ExecuteReader())
-                            {
-                               
-                                if (reader.Read())
-                                {
-                                    //Search column "senha" and read a password hashed
-                                    string senhaHash = reader.GetString("Senha");
-
-                                    //Check if the password hashed are correct
-
-                                    bool senhaCorreta = BCrypt.Net.BCrypt.EnhancedVerify(senha, senhaHash);
-                                    if (senhaCorreta)
-                                    {
-                                        MessageBox.Show("Login bem sucedido!!!");
-                                        this.Close();
-
-                                        string nomeFuncionario = reader.GetString("Nome_Funcionario");
-                                        form1.lblNome.Text = nomeFuncionario;
-
-                                        // Set a variable indicating that the user is logged in and update a picture box with a green LED
-                                        Globais.logado = true;
-                                        form1.pb_ledLogado.Image = Properties.Resources.led_verde;
-                                        form1.N_Funcionario = Convert.ToInt32(txtGunaCodigo.Text);
-                                        form1.btnEntrarSair.Text = "Sair";
-                                    }
-                                    else MessageBox.Show("Dados Incorretos!!!");
-                                    
-                                }
-                                else MessageBox.Show("Dados Incorretos!!!");
-                            }
-                        }
-                    }
-                    else MessageBox.Show("Insira dados para poder prosseguir.");
-
-                }
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show(ex.Message);
+                funcionario.FazerLogin(codigo, senha, lblNome);
+                this.Close();
+                FuncionarioLogado();
             }
         }
 
@@ -101,5 +54,14 @@ namespace Bar_do_Esas
             CriarFuncionario funcionario = new CriarFuncionario();
             funcionario.ShowDialog();
         }
+
+        private void FuncionarioLogado()
+        {
+            Globais.logado = true;
+            formularioBar.pb_ledLogado.Image = Properties.Resources.led_verde;
+            formularioBar.N_Funcionario = Convert.ToInt32(txtGunaCodigo.Text);
+            formularioBar.btnEntrarSair.Text = "Sair";
+        }
+
     }
 }

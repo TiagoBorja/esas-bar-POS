@@ -162,6 +162,7 @@
             this.txtGunaNome.HoverState.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(94)))), ((int)(((byte)(148)))), ((int)(((byte)(255)))));
             this.txtGunaNome.Location = new System.Drawing.Point(50, 103);
             this.txtGunaNome.Margin = new System.Windows.Forms.Padding(2, 4, 2, 4);
+            this.txtGunaNome.MaxLength = 140;
             this.txtGunaNome.Name = "txtGunaNome";
             this.txtGunaNome.PasswordChar = '\0';
             this.txtGunaNome.PlaceholderText = "";

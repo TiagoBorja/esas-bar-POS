@@ -15,25 +15,35 @@ namespace Bar_do_Esas
 {
     public partial class CriarFuncionario : Form
     {
-        TextBoxConfig txt = new TextBoxConfig();
+        TextBoxConfig txtConfig = new TextBoxConfig();
+        Funcionario funcionario;
         public CriarFuncionario()
         {
             InitializeComponent();
 
-            txtGunaCodigo.KeyPress += txt.SomenteNumeros;
-            txtGunaSenha.KeyPress += txt.SomenteNumeros;
-            txtGunaNome.KeyPress += txt.SomenteLetrasGuna;
+            txtGunaCodigo.KeyPress += txtConfig.SomenteNumeros;
+            txtGunaSenha.KeyPress += txtConfig.SomenteNumeros;
+            txtGunaNome.KeyPress += txtConfig.SomenteLetrasGuna;
             
-            txtGunaCodigo.TextChanged += txt.RemoverEspacosGuna;            
-            txtGunaSenha.TextChanged += txt.RemoverEspacosGuna;           
+            txtGunaCodigo.TextChanged += txtConfig.RemoverEspacosGuna;            
+            txtGunaSenha.TextChanged += txtConfig.RemoverEspacosGuna;
+
+            funcionario = new Funcionario();
         }
 
         private void btnGuna_Click(object sender, EventArgs e)
         {
             try
             {
-                if (txt.ChecarCamposVaziosGuna(this))
-                    NovoFuncionario();
+                if (txtConfig.ChecarCamposVaziosGuna(this))
+                {
+                    int codigo = Convert.ToInt32(txtGunaCodigo.Text);
+                    string nome = txtGunaNome.Text;
+                    string senha = txtGunaSenha.Text;
+
+                    funcionario.CriarNovoFuncionario(codigo,nome,senha);
+                    this.Close();
+                }
             }
             catch(Exception ex)
             {
@@ -48,37 +58,5 @@ namespace Bar_do_Esas
             else
                 txtGunaSenha.PasswordChar = '*';
         }
-
-       
-        private void NovoFuncionario()
-        {
-            try
-            {
-                string senha = BCrypt.Net.BCrypt.EnhancedHashPassword(txtGunaSenha.Text, 13);
-                using (MySqlConnection conexao = new MySqlConnection(Globais.data_source))
-                {
-                    conexao.Open();
-
-                    using (MySqlCommand cmd = new MySqlCommand())
-                    {
-                        cmd.Connection = conexao;
-                        cmd.CommandText = @"INSERT INTO dados_funcionario
-                                           VALUES(@codigo,@nome,@senha)";
-                        cmd.Parameters.AddWithValue("@codigo", txtGunaCodigo.Text);
-                        cmd.Parameters.AddWithValue("@nome", txtGunaNome.Text);
-                        cmd.Parameters.AddWithValue("@senha", senha);
-                        cmd.ExecuteNonQuery();
-
-                        this.Close();
-                        MessageBox.Show("Funcionário criado com sucesso!");
-                    }
-                }
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show(ex.Message);
-            }
-        }
-
     }
 }

@@ -1,11 +1,6 @@
 ﻿using MySql.Data.MySqlClient;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Web.UI;
 using System.Windows.Forms;
+using System;
 
 namespace Bar_do_Esas
 {
@@ -20,42 +15,48 @@ namespace Bar_do_Esas
                 conexao.Open();
                 return conexao;
             }
-            catch
+            catch (Exception ex)
             {
-                conexao.Dispose(); 
+                MessageBox.Show("Erro ao conectar ao banco de dados: " + ex.Message);
                 return null;
             }
         }
 
         public static void AtualizarSaldoAluno(decimal novoSaldo, int N_Aluno)
         {
-            MySqlTransaction transaction = null;
-            try
+            using (MySqlConnection conexao = ConectarBD())
             {
-                using (MySqlConnection conexao = ConectarBD())
+                if (conexao == null)
+                {
+                    MessageBox.Show("Não foi possível conectar ao banco de dados.");
+                    return;
+                }
+
+                MySqlTransaction transaction = null;
+                try
                 {
                     transaction = conexao.BeginTransaction();
+                    using (MySqlCommand cmd = new MySqlCommand())
                     {
-                        using (MySqlCommand cmd = new MySqlCommand())
-                        {
-                            cmd.Connection = conexao;
-                            cmd.Transaction = transaction;
-                            cmd.CommandText = @"UPDATE aluno
-                                        SET Saldo = @novoSaldo
-                                        WHERE N_Aluno = @N_Aluno";
-                            cmd.Parameters.AddWithValue("@novoSaldo", novoSaldo);
-                            cmd.Parameters.AddWithValue("@N_Aluno", N_Aluno);
-                            cmd.ExecuteNonQuery();
-                            transaction.Commit();
-                        }
+                        cmd.Connection = conexao;
+                        cmd.Transaction = transaction;
+                        cmd.CommandText = @"UPDATE aluno
+                                            SET Saldo = @novoSaldo
+                                            WHERE N_Aluno = @N_Aluno";
+                        cmd.Parameters.AddWithValue("@novoSaldo", novoSaldo);
+                        cmd.Parameters.AddWithValue("@N_Aluno", N_Aluno);
+                        cmd.ExecuteNonQuery();
+                        transaction.Commit();
                     }
                 }
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show(ex.Message);
-                transaction.Rollback();
+                catch (Exception ex)
+                {
+                    if (transaction != null)
+                        transaction.Rollback();
+                    MessageBox.Show("Erro ao atualizar saldo do aluno: " + ex.Message);
+                }
             }
         }
+
     }
 }
