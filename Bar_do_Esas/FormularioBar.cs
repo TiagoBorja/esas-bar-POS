@@ -10,6 +10,7 @@ using System.Security.Cryptography.X509Certificates;
 using System.Text;
 using System.Threading.Tasks;
 using System.Web.UI;
+using System.Web.WebSockets;
 using System.Windows.Forms;
 using System.Xml;
 using static System.Windows.Forms.VisualStyles.VisualStyleElement;
@@ -23,13 +24,11 @@ namespace Bar_do_Esas
         public int N_Funcionario;
 
         int[] idComida = new int[1];
-
         public FormularioBar()
         {
             InitializeComponent();
 
             GerirAcoesLstComida.CriarColunasLstComida(lstBar);
-
             LoginFuncionario f_login = new LoginFuncionario(this, N_Funcionario);
             f_login.ShowDialog();
 
@@ -174,7 +173,7 @@ namespace Bar_do_Esas
                             cmd.Parameters.AddWithValue("@quantidade", quantidadeString);
                             cmd.ExecuteNonQuery();
 
-                            BaseDados.AtualizarSaldoAluno(Convert.ToDecimal(lblSaldoAluno.Text), Convert.ToInt32(lblCodigoAluno.Text));
+                            Aluno.AtualizarSaldoAluno(Convert.ToDecimal(lblSaldoAluno.Text), Convert.ToInt32(lblCodigoAluno.Text));
                         }
                     }
                 }

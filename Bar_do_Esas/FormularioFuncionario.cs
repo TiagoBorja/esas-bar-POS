@@ -31,14 +31,6 @@ namespace Bar_do_Esas
             f.ShowDialog();
             funcionario.CarregarFuncionario(lstFuncionario);
         }
-        private void adicionarReadOnly()
-        {
-            txtNome.ReadOnly = true;
-            txtCodigo.ReadOnly = true;
-
-            txtCodigo.Clear();
-            txtNome.Clear();
-        }
 
         private void btnUpdate_Click(object sender, EventArgs e)
         {
@@ -82,30 +74,18 @@ namespace Bar_do_Esas
         {
             try
             {
-                DialogResult msg = MessageBox.Show("Confirmar exclusão?", "Excluir Aluno", MessageBoxButtons.YesNo);
-
-                if(msg == DialogResult.Yes)
+                if (txtConfig.ChecarCamposVazios(this))
                 {
-                    using (MySqlConnection conexao = new MySqlConnection(Globais.data_source))
-                    {
-                        conexao.Open();
+                    int codigo = Convert.ToInt32(txtCodigo.Text);
+                    string nome = txtNome.Text;
 
-                        using (MySqlCommand cmd = new MySqlCommand())
-                        {
-                            cmd.Connection = conexao;
-                            cmd.CommandText = @"DELETE FROM dados_funcionario
-                                           WHERE N_Funcionario = @codigo";
-                            cmd.Parameters.AddWithValue("@codigo", txtCodigo.Text);
-                            cmd.ExecuteNonQuery();
+                    funcionario.ExcluirFuncionario(codigo);
+                }
+                funcionario.CarregarFuncionario(lstFuncionario);
+                txtConfig.LimparTextBox(txtCodigo,txtNome);
 
-                            MessageBox.Show("Funcionário deletado com sucesso!");
-                        }
-                    }
-                    funcionario.CarregarFuncionario(lstFuncionario);
-                    adicionarReadOnly();
-                }    
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 MessageBox.Show(ex.Message);
             }

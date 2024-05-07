@@ -10,7 +10,7 @@ using System.Windows.Forms;
 
 namespace Bar_do_Esas
 {
-    public class Funcionario : BaseDados
+    public class Funcionario
     {
         public int N_Funcionario { get; set; }
         public string Nome_Funcionario { get; set; }
@@ -21,19 +21,26 @@ namespace Bar_do_Esas
             try
             {
                 senha = BCrypt.Net.BCrypt.EnhancedHashPassword(senha, 13);
-                using (ConectarBD())
+                using (MySqlConnection conexao = BaseDados.ConectarBD())
                 {
-
-                    using (MySqlCommand cmd = new MySqlCommand())
+                    if (conexao.State == ConnectionState.Open)
                     {
-                        cmd.CommandText = @"INSERT INTO dados_funcionario
-                                           VALUES(@codigo,@nome,@senha)";
-                        cmd.Parameters.AddWithValue("@codigo", codigo);
-                        cmd.Parameters.AddWithValue("@nome", nome);
-                        cmd.Parameters.AddWithValue("@senha", senha);
-                        cmd.ExecuteNonQuery();
+                        using (MySqlCommand cmd = new MySqlCommand())
+                        {
+                            cmd.Connection = conexao;
+                            cmd.CommandText = @"INSERT INTO dados_funcionario
+                                                VALUES(@codigo,@nome,@senha)";
+                            cmd.Parameters.AddWithValue("@codigo", codigo);
+                            cmd.Parameters.AddWithValue("@nome", nome);
+                            cmd.Parameters.AddWithValue("@senha", senha);
+                            cmd.ExecuteNonQuery();
 
-                        MessageBox.Show("Funcionário criado com sucesso!", "Funcionário Criado", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                            MessageBox.Show("Funcionário criado com sucesso!", "Funcionário Criado", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                        }
+                    }
+                    else
+                    {
+                        MessageBox.Show("Não foi possível abrir a conexão com o banco de dados!", "Erro de Conexão", MessageBoxButtons.OK, MessageBoxIcon.Error);
                     }
                 }
             }
@@ -89,15 +96,21 @@ namespace Bar_do_Esas
                 {
                     if(conexao.State == ConnectionState.Open)
                     {
-                        using(MySqlCommand cmd = new MySqlCommand())
+                        DialogResult msg = MessageBox.Show("Confirmar exclusão?", "Excluir Aluno", MessageBoxButtons.YesNo,MessageBoxIcon.Question);
+
+                        if (msg == DialogResult.Yes)
                         {
-                            cmd.Connection = conexao;
-                            cmd.CommandText = @"DELETE FROM dados_funcionario
+                            using (MySqlCommand cmd = new MySqlCommand())
+                            {
+                                cmd.Connection = conexao;
+                                cmd.CommandText = @"DELETE FROM dados_funcionario
                                                 WHERE N_Funcionario = @codigo";
-                            cmd.Parameters.AddWithValue("@codigo",codigo);
-                            cmd.ExecuteNonQuery();
-                            MessageBox.Show("Funcionário excluido com sucesso!", "Funcionário Excluido", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                                cmd.Parameters.AddWithValue("@codigo", codigo);
+                                cmd.ExecuteNonQuery();
+                                MessageBox.Show("Funcionário excluido com sucesso!", "Funcionário Excluido", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                            }
                         }
+                           
                     }
                     else
                     {
@@ -114,44 +127,51 @@ namespace Bar_do_Esas
         {
             try
             {
-                using (var conexao = ConectarBD())
+                using (MySqlConnection conexao = BaseDados.ConectarBD())
                 {
-                    using (MySqlCommand cmd = new MySqlCommand())
+                    if (conexao.State == ConnectionState.Open)
                     {
-                        cmd.Connection = conexao;
-                        // Search for an employee with the given Code and Password
-                        cmd.CommandText = @"SELECT * FROM dados_funcionario
-                                            WHERE N_Funcionario = @codigo";
-                        cmd.Parameters.AddWithValue("@codigo", codigo);
-
-                        using (MySqlDataReader reader = cmd.ExecuteReader())
+                        using (MySqlCommand cmd = new MySqlCommand())
                         {
+                            cmd.Connection = conexao;
+                            // Search for an employee with the given Code and Password
+                            cmd.CommandText = @"SELECT * FROM dados_funcionario
+                                            WHERE N_Funcionario = @codigo";
+                            cmd.Parameters.AddWithValue("@codigo", codigo);
 
-                            if (reader.Read())
+                            using (MySqlDataReader reader = cmd.ExecuteReader())
                             {
-                                //Search column "senha" and read a password hashed
-                                string senhaHash = reader.GetString("Senha");
 
-                                //Check if the password hashed are correct
-                                bool senhaCorreta = BCrypt.Net.BCrypt.EnhancedVerify(senha, senhaHash);
-                                if (senhaCorreta)
+                                if (reader.Read())
                                 {
-                                    MessageBox.Show("Login realizado com sucesso!", "Sucesso", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                                    //Search column "senha" and read a password hashed
+                                    string senhaHash = reader.GetString("Senha");
 
-                                    string nomeFuncionario = reader.GetString("Nome_Funcionario");
-                                    lblNome.Text = nomeFuncionario;
+                                    //Check if the password hashed are correct
+                                    bool senhaCorreta = BCrypt.Net.BCrypt.EnhancedVerify(senha, senhaHash);
+                                    if (senhaCorreta)
+                                    {
+                                        MessageBox.Show("Login realizado com sucesso!", "Sucesso", MessageBoxButtons.OK, MessageBoxIcon.Information);
+
+                                        string nomeFuncionario = reader.GetString("Nome_Funcionario");
+                                        lblNome.Text = nomeFuncionario;
+                                    }
+                                    else
+                                    {
+                                        MessageBox.Show("Funcionário não encontrado.", "Falha no Login", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                                    }
                                 }
                                 else
                                 {
                                     MessageBox.Show("Funcionário não encontrado.", "Falha no Login", MessageBoxButtons.OK, MessageBoxIcon.Error);
                                 }
                             }
-                            else
-                            {
-                                MessageBox.Show("Funcionário não encontrado.", "Falha no Login", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                            }
                         }
-                    }                
+                    }
+                    else
+                    {
+                        MessageBox.Show("Não foi possível abrir a conexão com o banco de dados!", "Erro de Conexão", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    }
                 }
             }
             catch (Exception ex)
