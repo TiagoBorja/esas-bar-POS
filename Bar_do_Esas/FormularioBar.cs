@@ -1,19 +1,6 @@
 ﻿using MySql.Data.MySqlClient;
-using Mysqlx;
 using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Linq;
-using System.Security.Cryptography.X509Certificates;
-using System.Text;
-using System.Threading.Tasks;
-using System.Web.UI;
-using System.Web.WebSockets;
 using System.Windows.Forms;
-using System.Xml;
-using static System.Windows.Forms.VisualStyles.VisualStyleElement;
 
 namespace Bar_do_Esas
 {
@@ -24,11 +11,16 @@ namespace Bar_do_Esas
         public int N_Funcionario;
 
         int[] idComida = new int[1];
+
+        Aluno aluno = new Aluno();
+        Bar bar = new Bar();
+        InfoComida infoComida = new InfoComida();
+
         public FormularioBar()
         {
             InitializeComponent();
 
-            GerirAcoesLstComida.CriarColunasLstComida(lstBar);
+            GerirAcoesLstBar.CriarColunasLstBar(lstBar);
             LoginFuncionario f_login = new LoginFuncionario(this, N_Funcionario);
             f_login.ShowDialog();
 
@@ -53,63 +45,8 @@ namespace Bar_do_Esas
 
         private void button1_Click(object sender, EventArgs e)
         {
-            try
-            {
-                var numeroStr = Microsoft.VisualBasic.Interaction.InputBox("Insira o código do aluno.", "Código Aluno");
-
-                // Verifica se o valor inserido é nulo ou composto apenas de espaços em branco
-                if (!string.IsNullOrWhiteSpace(numeroStr))
-                {
-                    int numero;
-
-                    // Verifica se o valor inserido pode ser convertido para um número inteiro
-                    if (int.TryParse(numeroStr, out numero))
-                    {
-                        using (MySqlConnection conexao = new MySqlConnection(Globais.data_source))
-                        {
-                            conexao.Open();
-                            using (MySqlCommand cmd = new MySqlCommand())
-                            {
-                                cmd.Connection = conexao;
-                                cmd.CommandText = @"SELECT N_Aluno, Nome_Aluno, Saldo FROM aluno
-                                        WHERE N_Aluno = @codigo";
-                                cmd.Parameters.AddWithValue("@codigo", numero);
-
-                                using (MySqlDataReader reader = cmd.ExecuteReader())
-                                {
-                                    while (reader.Read())
-                                    {
-                                        lblCodigoAluno.Text = reader.GetInt32(0).ToString();
-                                        lblNomeAluno.Text = reader.GetString(1);
-                                        lblSaldoAluno.Text = reader.GetDecimal(2).ToString("N2");
-
-                                        lblCodigoAluno.Visible = true;
-                                        lblNomeAluno.Visible = true;
-                                        lblSaldoAluno.Visible = true;
-                                    }
-
-                                    if (!reader.HasRows)
-                                    {
-                                        MessageBox.Show("Código aluno não encontrado", "Atenção", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
-                                    }
-                                }
-                            }
-                        }
-                    }
-                    else
-                    {
-                        MessageBox.Show("Insira somente números para o código do aluno", "Atenção", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                    }
-                }
-                else
-                {
-                    MessageBox.Show("Insira somente números para o código do aluno", "Atenção", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                }
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show(ex.Message);
-            }
+          
+            aluno.VerificarInfoAluno(lblCodigoAluno,lblNomeAluno,lblSaldoAluno);
         }
 
         private void btnFuncionario_Click(object sender, EventArgs e)
@@ -166,7 +103,7 @@ namespace Bar_do_Esas
                                         VALUES (@N_Aluno, @Cod_Comida, @data_compra, @N_Funcionario, @valorGasto, @quantidade)";
 
                             cmd.Parameters.AddWithValue("@N_Aluno", lblCodigoAluno.Text);
-                            cmd.Parameters.AddWithValue("@Cod_Comida", obterIdComida(descricaoComida));
+                            cmd.Parameters.AddWithValue("@Cod_Comida", infoComida.ObterIdComida(descricaoComida));
                             cmd.Parameters.AddWithValue("@data_compra", DateTime.Now);
                             cmd.Parameters.AddWithValue("@N_Funcionario", N_Funcionario);
                             cmd.Parameters.AddWithValue("@valorGasto", total);
@@ -184,6 +121,9 @@ namespace Bar_do_Esas
             {
                 MessageBox.Show(ex.Message);
             }
+
+            //bar.ConcluirCompra(N_Funcionario,lstBar,lblCodigoAluno,lblSaldoAluno);           
+            //limparTudo();
         }
         #endregion
 
@@ -283,36 +223,7 @@ namespace Bar_do_Esas
                 MessageBox.Show(ex.Message);
             }   
         }
-
-        private int obterIdComida(string descricao)
-        {
-            int codComida = -1;
-            try
-            {
-                using (MySqlConnection conexao = new MySqlConnection(Globais.data_source))
-                {
-                    conexao.Open();
-                    using (MySqlCommand cmd = new MySqlCommand())
-                    {
-                        cmd.Connection = conexao;
-                        cmd.CommandText = "SELECT Cod_Comida FROM infocomida WHERE Descricao_Comida = @descricao";
-                        cmd.Parameters.AddWithValue("@descricao", descricao);
-
-                        object result = cmd.ExecuteScalar();
-                        if (result != null && result != DBNull.Value)
-                        {
-                            codComida = Convert.ToInt32(result);
-                        }
-                    }
-                }
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show(ex.Message);
-            }
-
-            return codComida;
-        }
+    
         #endregion
 
         #region Dont Used

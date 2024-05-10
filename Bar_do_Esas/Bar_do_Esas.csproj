@@ -114,6 +114,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Aluno.cs" />
+    <Compile Include="Bar.cs" />
     <Compile Include="BaseDados.cs" />
     <Compile Include="Funcionario.cs" />
     <Compile Include="GerirAcoesListView.cs" />
@@ -148,6 +149,7 @@
       <DependentUpon>FormularioFuncionario.cs</DependentUpon>
     </Compile>
     <Compile Include="Globais.cs" />
+    <Compile Include="InfoComida.cs" />
     <Compile Include="LoginFuncionario.cs">
       <SubType>Form</SubType>
     </Compile>

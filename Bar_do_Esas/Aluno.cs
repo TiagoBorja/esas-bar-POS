@@ -183,6 +183,55 @@ namespace Bar_do_Esas
                 }
             }
         }
+        public void VerificarInfoAluno(Label CodigoAluno, Label NomeAluno, Label SaldoAluno)
+        {
+            try
+            {
+                var numeroStr = Microsoft.VisualBasic.Interaction.InputBox("Insira o código do aluno.", "Código Aluno");
+
+                int numero;
+
+                if (int.TryParse(numeroStr, out numero))
+                {
+                    using (MySqlConnection conexao = BaseDados.ConectarBD())
+                    {
+                        using (MySqlCommand cmd = new MySqlCommand())
+                        {
+                            cmd.Connection = conexao;
+                            cmd.CommandText = @"SELECT N_Aluno, Nome_Aluno, Saldo FROM aluno
+                                                WHERE N_Aluno = @codigo";
+                            cmd.Parameters.AddWithValue("@codigo", numero);
+
+                            using (MySqlDataReader reader = cmd.ExecuteReader())
+                            {
+                                if (reader.Read())
+                                {
+                                    CodigoAluno.Text = reader.GetInt32(0).ToString();
+                                    NomeAluno.Text = reader.GetString(1);
+                                    SaldoAluno.Text = reader.GetDecimal(2).ToString("N2");
+
+                                    CodigoAluno.Visible = true;
+                                    NomeAluno.Visible = true;
+                                    SaldoAluno.Visible = true;
+                                }
+                                else
+                                {
+                                    MessageBox.Show("Código aluno não encontrado", "Atenção", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+                                }
+                            }
+                        }
+                    }
+                }
+                else
+                {
+                    MessageBox.Show("Insira somente números para o código do aluno", "Atenção", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+            }
+        }
 
     }
 }

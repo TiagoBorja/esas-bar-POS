@@ -10,7 +10,7 @@ namespace Bar_do_Esas
 {
     public class GerirAcoesLstBar
     {
-        public static void CriarColunasLstComida(ListView lstBar)
+        public static void CriarColunasLstBar(ListView lstBar)
         {
             lstBar.View = View.Details;
             lstBar.LabelEdit = true;
