@@ -23,28 +23,29 @@ USE `bar_do_esas`;
 -- A despejar estrutura para tabela bar_do_esas.aluno
 DROP TABLE IF EXISTS `aluno`;
 CREATE TABLE IF NOT EXISTS `aluno` (
-  `N_Aluno` int(11) NOT NULL,
-  `Nome_Aluno` varchar(50) NOT NULL,
+  `N_Aluno` int(5) NOT NULL,
+  `Nome_Aluno` varchar(140) NOT NULL,
   `Data_Nasc` date NOT NULL,
-  `Saldo` double DEFAULT NULL,
+  `Saldo` decimal(20,6) DEFAULT NULL,
   PRIMARY KEY (`N_Aluno`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- A despejar dados para tabela bar_do_esas.aluno: ~3 rows (aproximadamente)
 DELETE FROM `aluno`;
 INSERT INTO `aluno` (`N_Aluno`, `Nome_Aluno`, `Data_Nasc`, `Saldo`) VALUES
-	(16742, 'Marcos Santos', '2007-04-29', 1.5),
-	(19018, 'Tiago Rodrigues', '2005-12-02', 0),
-	(19019, 'Guilherme Rodrigues', '2007-06-21', 0.57);
+	(13131, 'asdfasd', '1111-11-11', 5.000000),
+	(16742, 'Marcos Santos', '2007-04-29', 0.400000),
+	(19018, 'Tiago Rodrigues', '2005-12-02', 0.200000);
 
 -- A despejar estrutura para tabela bar_do_esas.bar
 DROP TABLE IF EXISTS `bar`;
 CREATE TABLE IF NOT EXISTS `bar` (
-  `N_Aluno` int(11) NOT NULL,
-  `Cod_Comida` int(11) NOT NULL,
+  `N_Aluno` int(5) NOT NULL,
+  `Cod_Comida` int(3) NOT NULL,
   `Data_Compra` datetime NOT NULL,
-  `N_Funcionario` int(11) NOT NULL,
-  `Qt_Pedida` int(11) NOT NULL,
+  `N_Funcionario` int(5) NOT NULL,
+  `Valor_Gasto` decimal(20,6) NOT NULL,
+  `Quantidade` int(2) NOT NULL,
   PRIMARY KEY (`N_Aluno`,`Cod_Comida`,`Data_Compra`,`N_Funcionario`),
   KEY `FK_bar_infocomida` (`Cod_Comida`),
   KEY `FK_bar_dados_funcionario` (`N_Funcionario`),
@@ -53,25 +54,31 @@ CREATE TABLE IF NOT EXISTS `bar` (
   CONSTRAINT `FK_bar_infocomida` FOREIGN KEY (`Cod_Comida`) REFERENCES `infocomida` (`Cod_Comida`) ON DELETE NO ACTION ON UPDATE NO ACTION
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
--- A despejar dados para tabela bar_do_esas.bar: ~0 rows (aproximadamente)
+-- A despejar dados para tabela bar_do_esas.bar: ~1 rows (aproximadamente)
 DELETE FROM `bar`;
+INSERT INTO `bar` (`N_Aluno`, `Cod_Comida`, `Data_Compra`, `N_Funcionario`, `Valor_Gasto`, `Quantidade`) VALUES
+	(13131, 1, '2024-05-10 10:57:44', 1922, 2.000000, 2);
 
 -- A despejar estrutura para tabela bar_do_esas.dados_funcionario
 DROP TABLE IF EXISTS `dados_funcionario`;
 CREATE TABLE IF NOT EXISTS `dados_funcionario` (
-  `N_Funcionario` int(11) NOT NULL,
-  `Nome_Funcionario` varchar(140) DEFAULT NULL,
-  `Senha` varchar(255) DEFAULT NULL,
+  `N_Funcionario` int(5) NOT NULL,
+  `Nome_Funcionario` varchar(140) NOT NULL,
+  `Senha` varchar(255) NOT NULL,
   PRIMARY KEY (`N_Funcionario`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
--- A despejar dados para tabela bar_do_esas.dados_funcionario: ~0 rows (aproximadamente)
+-- A despejar dados para tabela bar_do_esas.dados_funcionario: ~3 rows (aproximadamente)
 DELETE FROM `dados_funcionario`;
+INSERT INTO `dados_funcionario` (`N_Funcionario`, `Nome_Funcionario`, `Senha`) VALUES
+	(1922, 'asa', '$2a$13$D0jRvNco37ApemudiYyVTOlXzQO/uP3LT2NtcQjxcy.49vOY6oNWy'),
+	(3423, 'ewwf', '$2a$13$HL75TEcCDQHK6RP8xnNdmuO1wUfxnbgkAOEzj3DIJM3EsgCWRYc3y'),
+	(9347, 'Jubi', '$2a$13$dWCUAuzCHuAIRarkbtlrk.e28YA3eBAhK5xSkfyCqVFk2KA9.Zc1e');
 
 -- A despejar estrutura para tabela bar_do_esas.funcionario
 DROP TABLE IF EXISTS `funcionario`;
 CREATE TABLE IF NOT EXISTS `funcionario` (
-  `N_Funcionario` int(11) NOT NULL,
+  `N_Funcionario` int(5) NOT NULL,
   `Horario_Entrada` time NOT NULL,
   `Horario_Saida` time NOT NULL,
   PRIMARY KEY (`Horario_Entrada`,`Horario_Saida`,`N_Funcionario`) USING BTREE,
@@ -91,24 +98,28 @@ CREATE TABLE IF NOT EXISTS `horarios` (
   PRIMARY KEY (`Horario_Entrada`,`Horario_Saida`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
--- A despejar dados para tabela bar_do_esas.horarios: ~0 rows (aproximadamente)
+-- A despejar dados para tabela bar_do_esas.horarios: ~3 rows (aproximadamente)
 DELETE FROM `horarios`;
+INSERT INTO `horarios` (`Horario_Entrada`, `Horario_Saida`) VALUES
+	('08:00:00', '10:00:00'),
+	('10:00:00', '12:00:00'),
+	('14:00:00', '16:00:00');
 
 -- A despejar estrutura para tabela bar_do_esas.infocomida
 DROP TABLE IF EXISTS `infocomida`;
 CREATE TABLE IF NOT EXISTS `infocomida` (
-  `Cod_Comida` int(11) NOT NULL,
-  `Descricao_Comida` varchar(50) DEFAULT NULL,
-  `Valor_Comida` double DEFAULT NULL,
+  `Cod_Comida` int(5) NOT NULL,
+  `Descricao_Comida` varchar(50) NOT NULL,
+  `Valor_Comida` decimal(20,6) NOT NULL,
   PRIMARY KEY (`Cod_Comida`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
--- A despejar dados para tabela bar_do_esas.infocomida: ~2 rows (aproximadamente)
+-- A despejar dados para tabela bar_do_esas.infocomida: ~3 rows (aproximadamente)
 DELETE FROM `infocomida`;
 INSERT INTO `infocomida` (`Cod_Comida`, `Descricao_Comida`, `Valor_Comida`) VALUES
-	(11, 'Pão com Fiambre', 0.35),
-	(12, 'Galão e Pão com Manteiga', 0.35),
-	(32, 'Queque de Chocolate', 0.55);
+	(1, 'Queque', 1.000000),
+	(12, 'Galão e Pão com Manteiga', 0.550000),
+	(21, 'Café com leite', 2.000000);
 
 /*!40103 SET TIME_ZONE=IFNULL(@OLD_TIME_ZONE, 'system') */;
 /*!40101 SET SQL_MODE=IFNULL(@OLD_SQL_MODE, '') */;
